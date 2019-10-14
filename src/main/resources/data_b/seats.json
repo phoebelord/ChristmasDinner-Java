@@ -1,0 +1,90 @@
+[
+  {
+    "tableNum": 0,
+    "seatNum": 0,
+    "neighbours": [
+      9,
+      1,
+      8
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 1,
+    "neighbours": [
+      0,
+      2,
+      7
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 2,
+    "neighbours": [
+      1,
+      3,
+      6
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 3,
+    "neighbours": [
+      2,
+      4,
+      5
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 4,
+    "neighbours": [
+      3,
+      5
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 5,
+    "neighbours": [
+      4,
+      6,
+      3
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 6,
+    "neighbours": [
+      5,
+      7,
+      2
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 7,
+    "neighbours": [
+      6,
+      8,
+      1
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 8,
+    "neighbours": [
+      7,
+      9,
+      0
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 9,
+    "neighbours": [
+      8,
+      0
+    ]
+  }
+]

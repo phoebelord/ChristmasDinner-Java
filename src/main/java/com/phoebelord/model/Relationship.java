@@ -4,30 +4,30 @@ import java.io.Serializable;
 
 public class Relationship implements Serializable {
 
-  private int id;
-  private int value;
+  private int personId;
+  private int likability;
 
-  public Relationship(int target, int value) {
-    this.id = target;
-    this.value = value;
+  public Relationship(int target, int likability) {
+    this.personId = target;
+    this.likability = likability;
   }
 
   public Relationship() {
   }
 
-  public int getId() {
-    return id;
+  public int getPersonId() {
+    return personId;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public void setPersonId(int personId) {
+    this.personId = personId;
   }
 
-  public int getValue() {
-    return value;
+  public int getLikability() {
+    return likability;
   }
 
-  public void setValue(int value) {
-    this.value = value;
+  public void setLikability(int likability) {
+    this.likability = likability;
   }
 }

@@ -16,7 +16,7 @@ public class ChristmasDinner {
   private static int calls = 0;
 
   public static void main(String[] args) {
-    initialiseFromFile("data_a");
+    initialiseFromFile("data_b");
     System.out.println("Seats: " + Arrays.toString(seats));
     System.out.println("\nPeople: " + Arrays.toString(people));
     getPermutations(people.length, people);

@@ -43,8 +43,8 @@ public class Person implements Serializable {
   public int getRelationshipWith(Person person) {
     int value = 0;
     for(Relationship relationship: relationships) {
-      if(relationship.getId() == person.getId()) {
-        value = relationship.getValue();
+      if(relationship.getPersonId() == person.getId()) {
+        value = relationship.getLikability();
         break;
       }
     }
