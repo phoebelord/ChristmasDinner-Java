@@ -1,28 +1,33 @@
 package com.phoebelord.model;
 
-public class Relationship {
+import java.io.Serializable;
 
-  private Person target;
-  private int weight;
+public class Relationship implements Serializable {
 
-  public Relationship(Person target, int weight) {
-    this.target = target;
-    this.weight = weight;
+  private int id;
+  private int value;
+
+  public Relationship(int target, int value) {
+    this.id = target;
+    this.value = value;
   }
 
-  public Person getTarget() {
-    return target;
+  public Relationship() {
   }
 
-  public void setTarget(Person target) {
-    this.target = target;
+  public int getId() {
+    return id;
   }
 
-  public int getWeight() {
-    return weight;
+  public void setId(int id) {
+    this.id = id;
   }
 
-  public void setWeight(int weight) {
-    this.weight = weight;
+  public int getValue() {
+    return value;
+  }
+
+  public void setValue(int value) {
+    this.value = value;
   }
 }

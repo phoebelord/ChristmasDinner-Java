@@ -5,17 +5,12 @@ import com.phoebelord.model.Person;
 import com.phoebelord.model.Seat;
 import org.apache.commons.lang3.SerializationUtils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.List;
 
 public class ChristmasDinner {
   private static Person[] people;
   private static Seat[] seats;
-  private static int[][] relationships;
   private static int bestSolution;
   private static Person[] solution;
   private static int calls = 0;
@@ -24,8 +19,7 @@ public class ChristmasDinner {
     initialiseFromFile();
     System.out.println("Seats: " + Arrays.toString(seats));
     System.out.println("\nPeople: " + Arrays.toString(people));
-    System.out.println("\nRelationships: " + Arrays.toString(relationships));
-    getPermutations(10, people);
+    getPermutations(people.length, people);
     System.out.println("End: " + Arrays.toString(people));
     System.out.println("Solution: " + Arrays.toString(solution));
     System.out.println(bestSolution);
@@ -33,29 +27,11 @@ public class ChristmasDinner {
 
   }
 
-//  private static void initialise() {
-//    people = new Person[10];
-//    seats = new Seat[10];
-//
-//    for(int i = 0; i < 10; i++) {
-//      people[i] = new Person(String.valueOf(i), i);
-//      seats[i] = new Seat(1, i);
-//    }
-//
-//    for(int i = 0; i < 10; i++) {
-//      Seat seat = seats[i];
-//      seat.addNeighbour(seats[(((i - 1) % 10) + 10) % 10]);
-//      seat.addNeighbour(seats[(i + 1) % 10]);
-//    }
-//  }
-
   private static void initialiseFromFile() {
     ObjectMapper mapper = new ObjectMapper();
     try {
       people = mapper.readValue(getResource("people.json"), Person[].class);
       seats = mapper.readValue(getResource("seats.json"), Seat[].class);
-      relationships = mapper.readValue(getResource("relationships.json"), int[][].class);
-
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -70,7 +46,7 @@ public class ChristmasDinner {
       int[] neighbouringSeats = seats[i].getNeighbours();
       for(int neighbouringSeat: neighbouringSeats) {
         Person neighbour = people[neighbouringSeat];
-        personHappiness += relationships[currentPerson.getNum()][neighbour.getNum()];
+        personHappiness += currentPerson.getRelationshipWith(neighbour);
       }
       total += personHappiness;
     }

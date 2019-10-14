@@ -4,23 +4,24 @@ import java.io.Serializable;
 
 public class Person implements Serializable {
 
-  private int num;
+  private int id;
   private String name;
+  private Relationship[] relationships;
 
-  public Person(String name, int num) {
-    this.num = num;
+  public Person(String name, int id) {
+    this.id = id;
     this.name = name;
   }
 
   public Person() {
   }
 
-  public int getNum() {
-    return num;
+  public int getId() {
+    return id;
   }
 
-  public void setNum(int num) {
-    this.num = num;
+  public void setId(int id) {
+    this.id = id;
   }
 
   public String getName() {
@@ -31,8 +32,27 @@ public class Person implements Serializable {
     this.name = name;
   }
 
+  public Relationship[] getRelationships() {
+    return relationships;
+  }
+
+  public void setRelationships(Relationship[] relationships) {
+    this.relationships = relationships;
+  }
+
+  public int getRelationshipWith(Person person) {
+    int value = 0;
+    for(Relationship relationship: relationships) {
+      if(relationship.getId() == person.getId()) {
+        value = relationship.getValue();
+        break;
+      }
+    }
+    return value;
+  }
+
   @Override
   public String toString() {
-    return "[num:" + num + ", name: " + name + "]";
+    return "[id:" + id + ", name: " + name + "]";
   }
 }
