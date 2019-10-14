@@ -16,22 +16,21 @@ public class ChristmasDinner {
   private static int calls = 0;
 
   public static void main(String[] args) {
-    initialiseFromFile();
+    initialiseFromFile("data_a");
     System.out.println("Seats: " + Arrays.toString(seats));
     System.out.println("\nPeople: " + Arrays.toString(people));
     getPermutations(people.length, people);
-    System.out.println("End: " + Arrays.toString(people));
     System.out.println("Solution: " + Arrays.toString(solution));
     System.out.println(bestSolution);
     System.out.println(calls);
 
   }
 
-  private static void initialiseFromFile() {
+  private static void initialiseFromFile(String dataSet) {
     ObjectMapper mapper = new ObjectMapper();
     try {
-      people = mapper.readValue(getResource("people.json"), Person[].class);
-      seats = mapper.readValue(getResource("seats.json"), Seat[].class);
+      people = mapper.readValue(getResource(dataSet + "/people.json"), Person[].class);
+      seats = mapper.readValue(getResource(dataSet + "/seats.json"), Seat[].class);
     } catch (Exception e) {
       e.printStackTrace();
     }
