@@ -3,10 +3,10 @@ package com.phoebelord;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.phoebelord.algorithms.Algorithm;
-import com.phoebelord.algorithms.NaiveAlgorithm;
+import com.phoebelord.algorithms.GeneticAlgorithm;
+import com.phoebelord.algorithms.Solution;
 import com.phoebelord.model.Person;
 import com.phoebelord.model.Seat;
-import com.phoebelord.algorithms.Solution;
 
 import java.net.URL;
 import java.util.List;
@@ -20,8 +20,8 @@ public class ChristmasDinner {
     System.out.println("Seats: " + seats);
     System.out.println("\nPeople: " + people);
 
-    Algorithm naiveAlgorithm = new NaiveAlgorithm();
-    Solution solution = naiveAlgorithm.calculateSolution(people, seats);
+    Algorithm geneticAlgorithm = new GeneticAlgorithm(seats.size(), people, seats, 58);
+    Solution solution = geneticAlgorithm.calculateSolution(people, seats);
     System.out.println("Arrangement: " + solution.getArrangement());
     System.out.println("Score: " + solution.getHappinessScore());
   }
@@ -29,8 +29,8 @@ public class ChristmasDinner {
   private static void initialiseFromFile(String dataSet) {
     ObjectMapper mapper = new ObjectMapper();
     try {
-      people = mapper.readValue(getResource(dataSet + "/people.json"), new TypeReference<List<Person>>(){});
-      seats = mapper.readValue(getResource(dataSet + "/seats.json"),new TypeReference<List<Seat>>(){});
+      people = mapper.readValue(getResource(dataSet + "/people.json"), new TypeReference<List<Person>>() {});
+      seats = mapper.readValue(getResource(dataSet + "/seats.json"), new TypeReference<List<Seat>>() {});
     } catch (Exception e) {
       e.printStackTrace();
     }

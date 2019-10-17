@@ -1,12 +1,12 @@
 package com.phoebelord.model;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class Seat {
 
   private int tableNum;
   private int seatNum;
-  private int[] neighbours;
+  private List<Integer> neighbours;
 
   public Seat(int tableNum, int seatNum) {
     this.tableNum = tableNum;
@@ -33,16 +33,16 @@ public class Seat {
     this.seatNum = seatNum;
   }
 
-  public int[] getNeighbours() {
+  public List<Integer> getNeighbours() {
     return neighbours;
   }
 
-  public void setNeighbours(int[] neighbours) {
+  public void setNeighbours(List<Integer> neighbours) {
     this.neighbours = neighbours;
   }
 
   @Override
   public String toString() {
-    return "[table: " + tableNum + ", seat: " + seatNum + ", neighbours: " + Arrays.toString(neighbours) + "]";
+    return "[table: " + tableNum + ", seat: " + seatNum + ", neighbours: " + neighbours + "]";
   }
 }

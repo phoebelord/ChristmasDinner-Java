@@ -1,12 +1,13 @@
 package com.phoebelord.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Person implements Serializable {
 
   private int id;
   private String name;
-  private Relationship[] relationships;
+  private List<Relationship> relationships;
 
   public Person(String name, int id) {
     this.id = id;
@@ -32,18 +33,18 @@ public class Person implements Serializable {
     this.name = name;
   }
 
-  public Relationship[] getRelationships() {
+  public List<Relationship> getRelationships() {
     return relationships;
   }
 
-  public void setRelationships(Relationship[] relationships) {
+  public void setRelationships(List<Relationship> relationships) {
     this.relationships = relationships;
   }
 
   public int getRelationshipWith(Person person) {
     int value = 0;
-    for(Relationship relationship: relationships) {
-      if(relationship.getPersonId() == person.getId()) {
+    for (Relationship relationship : relationships) {
+      if (relationship.getPersonId() == person.getId()) {
         value = relationship.getLikability();
         break;
       }
