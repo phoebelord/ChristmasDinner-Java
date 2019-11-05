@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.phoebelord.algorithms.Algorithm;
 import com.phoebelord.algorithms.GeneticAlgorithm;
+import com.phoebelord.algorithms.NaiveAlgorithm;
 import com.phoebelord.algorithms.Solution;
 import com.phoebelord.model.Person;
 import com.phoebelord.model.Seat;
@@ -20,8 +21,12 @@ public class ChristmasDinner {
     System.out.println("Seats: " + seats);
     System.out.println("\nPeople: " + people);
 
-    Algorithm geneticAlgorithm = new GeneticAlgorithm(seats.size(), people, seats, 58);
-    Solution solution = geneticAlgorithm.calculateSolution(people, seats);
+//    Algorithm naiveAlgorithm = new NaiveAlgorithm(people, seats);
+//    Solution solution = naiveAlgorithm.calculateSolution();
+
+    Algorithm geneticAlgorithm = new GeneticAlgorithm(people, seats);
+    Solution solution = geneticAlgorithm.calculateSolution();
+
     System.out.println("Arrangement: " + solution.getArrangement());
     System.out.println("Score: " + solution.getHappinessScore());
   }

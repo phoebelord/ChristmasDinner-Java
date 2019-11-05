@@ -7,39 +7,39 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ArrangementGenome implements Comparable {
+public class ArrangementChromosome implements Comparable {
 
-  final List<Integer> genome;
+  final List<Integer> chromosome;
   final List<Person> people;
   final List<Seat> seats;
   final int fitness;
 
-  public ArrangementGenome(List<Integer> genome, List<Person> people, List<Seat> seats) {
-    this.genome = genome;
+  public ArrangementChromosome(List<Integer> chromosome, List<Person> people, List<Seat> seats) {
+    this.chromosome = chromosome;
     this.people = people;
     this.seats = seats;
     this.fitness = this.calculateFitness();
   }
 
-  public ArrangementGenome(List<Person> people, List<Seat> seats) {
+  public ArrangementChromosome(List<Person> people, List<Seat> seats) {
     this.people = people;
     this.seats = seats;
-    this.genome = randomGenome();
+    this.chromosome = randomChromosome();
     this.fitness = this.calculateFitness();
 
   }
 
-  private List<Integer> randomGenome() {
-    List<Integer> genome = new ArrayList<Integer>();
+  private List<Integer> randomChromosome() {
+    List<Integer> chromosome = new ArrayList<Integer>();
     for (int i = 0; i < people.size(); i++) {
-      genome.add(i);
+      chromosome.add(i);
     }
-    Collections.shuffle(genome);
-    return genome;
+    Collections.shuffle(chromosome);
+    return chromosome;
   }
 
-  public List<Integer> getGenome() {
-    return genome;
+  public List<Integer> getChromosome() {
+    return chromosome;
   }
 
   private int calculateFitness() {
@@ -52,8 +52,8 @@ public class ArrangementGenome implements Comparable {
 
   public List<Person> getPersonList() {
     List<Person> personList = new ArrayList<Person>();
-    for (int i = 0; i < genome.size(); i++) {
-      personList.add(i, people.get(genome.get(i)));
+    for (int i = 0; i < chromosome.size(); i++) {
+      personList.add(i, people.get(chromosome.get(i)));
     }
     return personList;
   }
@@ -61,10 +61,10 @@ public class ArrangementGenome implements Comparable {
 
   @Override
   public int compareTo(Object o) {
-    ArrangementGenome genome = (ArrangementGenome) o;
-    if (this.fitness > genome.getFitness()) {
+    ArrangementChromosome chromosome = (ArrangementChromosome) o;
+    if (this.fitness > chromosome.getFitness()) {
       return 1;
-    } else if (this.fitness < genome.getFitness()) {
+    } else if (this.fitness < chromosome.getFitness()) {
       return -1;
     } else {
       return 0;
@@ -73,6 +73,6 @@ public class ArrangementGenome implements Comparable {
 
   @Override
   public String toString() {
-    return "[" + genome + ", " + fitness + "]";
+    return "[" + chromosome + ", " + fitness + "]";
   }
 }

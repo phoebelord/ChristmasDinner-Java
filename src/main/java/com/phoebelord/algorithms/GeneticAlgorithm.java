@@ -10,82 +10,81 @@ import java.util.Random;
 
 public class GeneticAlgorithm extends Algorithm {
 
-  private final int GENERATION_SIZE = 5000;
-  private final int REPRODUCTION_SIZE = 200;
+  private final int GENERATION_SIZE = 100;
+  private final int SELECTION_SIZE = 50;
   private final int MAX_ITERATIONS = 1000;
   private final float RATE_OF_MUTATION = 0.1f;
   private final int TOURNAMENT_SIZE = 40;
-  private final int GENOME_SIZE;
-  private final int HAPPINESS_TARGET;
+  private final int CHROMOSOME_SIZE;
   private final List<Seat> SEATS;
   private final List<Person> PEOPLE;
 
-  public GeneticAlgorithm(int genomeSize, List<Person> people, List<Seat> seats, int targetHappiness) {
-    this.GENOME_SIZE = genomeSize;
+  public GeneticAlgorithm(List<Person> people, List<Seat> seats) {
     this.PEOPLE = people;
     this.SEATS = seats;
-    this.HAPPINESS_TARGET = targetHappiness;
+    this.CHROMOSOME_SIZE = seats.size();
   }
 
-  private List<ArrangementGenome> initialisePopulation() {
-    List<ArrangementGenome> population = new ArrayList<ArrangementGenome>();
+  private List<ArrangementChromosome> initialisePopulation() {
+    List<ArrangementChromosome> population = new ArrayList<ArrangementChromosome>();
     for (int i = 0; i < GENERATION_SIZE; i++) {
-      population.add(new ArrangementGenome(PEOPLE, SEATS));
+      population.add(new ArrangementChromosome(PEOPLE, SEATS));
     }
     return population;
   }
 
-  private List<ArrangementGenome> selectParents(List<ArrangementGenome> population) {
-    List<ArrangementGenome> selected = new ArrayList<ArrangementGenome>();
-    for (int i = 0; i < REPRODUCTION_SIZE; i++) {
+  private List<ArrangementChromosome> selectParents(List<ArrangementChromosome> population) {
+    List<ArrangementChromosome> selected = new ArrayList<ArrangementChromosome>();
+    selected.add(Collections.max(population)); //elitism
+    for (int i = 1; i < SELECTION_SIZE; i++) {
       selected.add(tournamentSelection(population));
     }
     return selected;
   }
 
-  // TODO multiple selection procedures
+  // TODO multiple selection procedures + elitism
   // pick the best from a number of random arrangements
-  private ArrangementGenome tournamentSelection(List<ArrangementGenome> population) {
-    List<ArrangementGenome> selected = getRandomElements(population, TOURNAMENT_SIZE);
+  private ArrangementChromosome tournamentSelection(List<ArrangementChromosome> population) {
+    List<ArrangementChromosome> selected = getRandomElements(population, TOURNAMENT_SIZE);
     return Collections.max(selected);
   }
 
-  private List<ArrangementGenome> getRandomElements(List<ArrangementGenome> list, int n) {
+  private List<ArrangementChromosome> getRandomElements(List<ArrangementChromosome> list, int n) {
     Random r = new Random();
     int length = list.size();
     if (length < n) {
       return null;
     }
-    List<ArrangementGenome> genomes = new ArrayList<ArrangementGenome>(list);
-    Collections.shuffle(genomes);
-    return genomes.subList(0, n);
+    List<ArrangementChromosome> chromosomes = new ArrayList<ArrangementChromosome>(list);
+    Collections.shuffle(chromosomes);
+    return chromosomes.subList(0, n);
   }
 
-  private ArrangementGenome mutate(ArrangementGenome arrangement) {
+  private ArrangementChromosome mutate(ArrangementChromosome arrangement) {
     Random random = new Random();
     float mutate = random.nextFloat();
     if (mutate < RATE_OF_MUTATION) {
-      List<Integer> genome = arrangement.getGenome();
-      Collections.swap(genome, random.nextInt(GENOME_SIZE), random.nextInt(GENOME_SIZE));
-      return new ArrangementGenome(genome, PEOPLE, SEATS);
+      List<Integer> chromosome = arrangement.getChromosome();
+      Collections.swap(chromosome, random.nextInt(CHROMOSOME_SIZE), random.nextInt(CHROMOSOME_SIZE));
+      return new ArrangementChromosome(chromosome, PEOPLE, SEATS);
     }
     return arrangement;
   }
 
-  private List<ArrangementGenome> mutate(List<ArrangementGenome> genomes) {
-    for (int i = 0; i < genomes.size(); i++) {
-      genomes.set(i, mutate(genomes.get(i)));
+  private List<ArrangementChromosome> mutate(List<ArrangementChromosome> chromosomes) {
+    for (int i = 0; i < chromosomes.size(); i++) {
+      chromosomes.set(i, mutate(chromosomes.get(i)));
     }
-    return genomes;
+    return chromosomes;
   }
 
   // TODO 2 point crossover + others
-  private List<ArrangementGenome> performOnePointOX(List<ArrangementGenome> parents) {
+  private List<ArrangementChromosome> performOnePointOX(List<ArrangementChromosome> parents) {
     Random random = new Random();
-    int crossoverPoint = random.nextInt(GENOME_SIZE);
+    int crossoverPoint = random.nextInt(CHROMOSOME_SIZE);
 
-    List<Integer> parent1 = new ArrayList<Integer>(parents.get(0).getGenome());
-    List<Integer> parent2 = new ArrayList<Integer>(parents.get(1).getGenome());
+    List<Integer> parent1 = new ArrayList<Integer>(parents.get(0).getChromosome());
+    List<Integer> parent2 = new ArrayList<Integer>(parents.get(1).getChromosome());
 
     List<Integer> child1 = new ArrayList<Integer>();
     List<Integer> child2 = new ArrayList<Integer>();
@@ -95,7 +94,7 @@ public class GeneticAlgorithm extends Algorithm {
       child2.add(i, parent2.get(i));
     }
 
-    for (int i = 0; i < GENOME_SIZE; i++) {
+    for (int i = 0; i < CHROMOSOME_SIZE; i++) {
       if (!child1.contains(parent2.get(i))) {
         child1.add(parent2.get(i));
       }
@@ -104,37 +103,37 @@ public class GeneticAlgorithm extends Algorithm {
       }
     }
 
-    List<ArrangementGenome> children = new ArrayList<ArrangementGenome>();
-    children.add(new ArrangementGenome(child1, PEOPLE, SEATS));
-    children.add(new ArrangementGenome(child2, PEOPLE, SEATS));
+    List<ArrangementChromosome> children = new ArrayList<ArrangementChromosome>();
+    children.add(new ArrangementChromosome(child1, PEOPLE, SEATS));
+    children.add(new ArrangementChromosome(child2, PEOPLE, SEATS));
 
     return children;
   }
 
-  private ArrangementGenome getBestGenome() {
-    List<ArrangementGenome> population = initialisePopulation();
-    ArrangementGenome bestGenome = population.get(0);
+  private ArrangementChromosome getBestChromosome() {
+    List<ArrangementChromosome> population = initialisePopulation();
+    ArrangementChromosome bestChromosome = population.get(0);
     for (int i = 0; i < MAX_ITERATIONS; i++) {
-      List<ArrangementGenome> selected = selectParents(population);
-      List<ArrangementGenome> generation = new ArrayList<ArrangementGenome>();
-      int currentGenerationSize = 0;
+      List<ArrangementChromosome> selected = selectParents(population);
+      List<ArrangementChromosome> generation = new ArrayList<ArrangementChromosome>();
+      generation.add(Collections.max(selected)); //elitism
+      int currentGenerationSize = 1;
       while (currentGenerationSize < GENERATION_SIZE) {
-        List<ArrangementGenome> parents = getRandomElements(selected, 2);
-        List<ArrangementGenome> children = performOnePointOX(parents);
+        List<ArrangementChromosome> parents = getRandomElements(selected, 2);
+        List<ArrangementChromosome> children = performOnePointOX(parents);
         generation.addAll(mutate(children));
         currentGenerationSize += 2;
       }
-      bestGenome = Collections.max(generation);
-      if (bestGenome.getFitness() > HAPPINESS_TARGET) {
-        break;
-      }
+      bestChromosome = Collections.max(generation); //stop if no improvement in 10 gens
+      System.out.println(bestChromosome);
+      population = new ArrayList<ArrangementChromosome>(generation);
     }
-    return bestGenome;
+    return bestChromosome;
   }
 
   @Override
-  public Solution calculateSolution(List<Person> people, List<Seat> seats) {
-    ArrangementGenome answer = getBestGenome();
+  public Solution calculateSolution() {
+    ArrangementChromosome answer = getBestChromosome();
     return new Solution(answer.getPersonList(), answer.getFitness());
   }
 }

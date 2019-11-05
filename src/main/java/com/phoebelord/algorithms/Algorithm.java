@@ -23,5 +23,5 @@ public abstract class Algorithm {
     return total;
   }
 
-  public abstract Solution calculateSolution(List<Person> people, List<Seat> seats);
+  public abstract Solution calculateSolution();
 }

@@ -11,12 +11,20 @@ public class NaiveAlgorithm extends Algorithm {
 
   private int bestSolution = 0;
   private List<Person> solution;
+  private List<Person> people;
   private List<Seat> seats;
+  private float counter = 0;
+  private float lastCount = 0;
+  private long noSolutions;
 
+  public NaiveAlgorithm(List<Person> people, List<Seat> seats) {
+    this.people = people;
+    this.seats = seats;
+    noSolutions = factorial(seats.size());
+  }
 
   @Override
-  public Solution calculateSolution(List<Person> people, List<Seat> seats) {
-    this.seats = seats;
+  public Solution calculateSolution() {
     calculateAllSolutions(people.size(), people);
     return new Solution(solution, bestSolution);
   }
@@ -25,6 +33,12 @@ public class NaiveAlgorithm extends Algorithm {
 
   private void calculateAllSolutions(int n, List<Person> elements) {
     if(n == 1) {
+      counter++;
+      if(((counter / noSolutions)*100) - ((lastCount / noSolutions)*100) >= 10)
+      {
+        System.out.println("" + (counter / noSolutions)*100);
+        lastCount = counter;
+      }
       int solutionHappiness = calculateHappiness(elements, seats);
       if(solutionHappiness > bestSolution) {
         bestSolution = solutionHappiness;
@@ -40,6 +54,14 @@ public class NaiveAlgorithm extends Algorithm {
         }
       }
       calculateAllSolutions(n - 1, elements);
+    }
+  }
+
+  private long factorial(int n) {
+    if(n == 0) {
+      return 1;
+    } else {
+      return n * factorial(n - 1);
     }
   }
 }
