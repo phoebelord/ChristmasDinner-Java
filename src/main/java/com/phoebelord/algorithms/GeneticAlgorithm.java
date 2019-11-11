@@ -2,6 +2,7 @@ package com.phoebelord.algorithms;
 
 import com.phoebelord.model.Person;
 import com.phoebelord.model.Seat;
+import com.phoebelord.model.Table;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,17 +19,19 @@ public class GeneticAlgorithm extends Algorithm {
   private final int CHROMOSOME_SIZE;
   private final List<Seat> SEATS;
   private final List<Person> PEOPLE;
+  private final List<Table> TABLES;
 
-  public GeneticAlgorithm(List<Person> people, List<Seat> seats) {
+  public GeneticAlgorithm(List<Person> people, List<Seat> seats, List<Table> tables) {
     this.PEOPLE = people;
     this.SEATS = seats;
+    this.TABLES = tables;
     this.CHROMOSOME_SIZE = seats.size();
   }
 
   private List<ArrangementChromosome> initialisePopulation() {
     List<ArrangementChromosome> population = new ArrayList<ArrangementChromosome>();
     for (int i = 0; i < GENERATION_SIZE; i++) {
-      population.add(new ArrangementChromosome(PEOPLE, SEATS));
+      population.add(new ArrangementChromosome(PEOPLE, SEATS, TABLES));
     }
     return population;
   }
@@ -66,7 +69,7 @@ public class GeneticAlgorithm extends Algorithm {
     if (mutate < RATE_OF_MUTATION) {
       List<Integer> chromosome = arrangement.getChromosome();
       Collections.swap(chromosome, random.nextInt(CHROMOSOME_SIZE), random.nextInt(CHROMOSOME_SIZE));
-      return new ArrangementChromosome(chromosome, PEOPLE, SEATS);
+      return new ArrangementChromosome(chromosome, PEOPLE, SEATS, TABLES);
     }
     return arrangement;
   }
@@ -104,8 +107,8 @@ public class GeneticAlgorithm extends Algorithm {
     }
 
     List<ArrangementChromosome> children = new ArrayList<ArrangementChromosome>();
-    children.add(new ArrangementChromosome(child1, PEOPLE, SEATS));
-    children.add(new ArrangementChromosome(child2, PEOPLE, SEATS));
+    children.add(new ArrangementChromosome(child1, PEOPLE, SEATS, TABLES));
+    children.add(new ArrangementChromosome(child2, PEOPLE, SEATS, TABLES));
 
     return children;
   }
@@ -124,7 +127,7 @@ public class GeneticAlgorithm extends Algorithm {
         generation.addAll(mutate(children));
         currentGenerationSize += 2;
       }
-      bestChromosome = Collections.max(generation); //stop if no improvement in 10 gens
+      bestChromosome = Collections.max(generation); // TODO stop if no improvement in 10 gens
       System.out.println(bestChromosome);
       population = new ArrayList<ArrangementChromosome>(generation);
     }
@@ -134,6 +137,6 @@ public class GeneticAlgorithm extends Algorithm {
   @Override
   public Solution calculateSolution() {
     ArrangementChromosome answer = getBestChromosome();
-    return new Solution(answer.getPersonList(), answer.getFitness());
+    return new Solution(answer.getPersonList(PEOPLE), answer.getFitness());
   }
 }
