@@ -2,6 +2,7 @@ package com.phoebelord.algorithms;
 
 import com.phoebelord.model.Person;
 import com.phoebelord.model.Seat;
+import com.phoebelord.model.Solution;
 import com.phoebelord.model.Table;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class NaiveAlgorithm extends Algorithm {
   private float lastCount = 0;
   private long noSolutions;
 
-  public NaiveAlgorithm(List<Person> people, List<Seat> seats, List<Table> tables) {
+  NaiveAlgorithm(List<Person> people, List<Seat> seats, List<Table> tables) {
     this.people = people;
     this.seats = seats;
     this.tables = tables;
@@ -45,7 +46,7 @@ public class NaiveAlgorithm extends Algorithm {
       int solutionHappiness = calculateHappiness(elements, seats, tables);
       if(solutionHappiness > bestSolution) {
         bestSolution = solutionHappiness;
-        solution = new ArrayList<Person>(elements);
+        solution = new ArrayList<>(elements);
       }
     } else {
       for(int i = 0; i < n-1; i++) {

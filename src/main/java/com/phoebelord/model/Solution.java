@@ -1,6 +1,4 @@
-package com.phoebelord.algorithms;
-
-import com.phoebelord.model.Person;
+package com.phoebelord.model;
 
 import java.util.List;
 
@@ -8,7 +6,7 @@ public class Solution {
   private List<Person> arrangement;
   private int happinessScore;
 
-  Solution(List<Person> arrangement, int happinessScore) {
+  public Solution(List<Person> arrangement, int happinessScore) {
     this.arrangement = arrangement;
     this.happinessScore = happinessScore;
   }

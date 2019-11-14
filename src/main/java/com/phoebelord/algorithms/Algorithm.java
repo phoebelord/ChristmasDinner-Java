@@ -2,13 +2,14 @@ package com.phoebelord.algorithms;
 
 import com.phoebelord.model.Person;
 import com.phoebelord.model.Seat;
+import com.phoebelord.model.Solution;
 import com.phoebelord.model.Table;
 
 import java.util.List;
 
 public abstract class Algorithm {
 
-  static int calculateHappiness(List<Person> people, List<Seat> seats, List<Table> tables) {
+  public static int calculateHappiness(List<Person> people, List<Seat> seats, List<Table> tables) {
     int total = 0;
     for (int i = 0; i < people.size(); i++) {
       int personHappiness = 0;
@@ -25,7 +26,7 @@ public abstract class Algorithm {
     return total;
   }
 
-  static boolean isNextTo(int seatNum, int otherSeatNum, int offset, int tableSize) {
+  private static boolean isNextTo(int seatNum, int otherSeatNum, int offset, int tableSize) {
     boolean isPlusOne = mod((seatNum + 1) - offset, tableSize) + offset == otherSeatNum;
     boolean isMinusOne = mod((seatNum - 1) - offset, tableSize) + offset == otherSeatNum;
     return isPlusOne || isMinusOne;
@@ -33,7 +34,7 @@ public abstract class Algorithm {
 
   // Modulo rather than remainder
   // e.g. -1 mod 10 = 9 (-1 % 10 = -1 in Java)
-  static int mod(int x, int y) {
+  private static int mod(int x, int y) {
     return (x % y + y) % y;
   }
 
