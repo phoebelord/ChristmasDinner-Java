@@ -39,7 +39,7 @@ public class GeneticAlgorithm extends Algorithm {
     List<ArrangementChromosome> currentGeneration = initialisePopulation();
     ArrangementChromosome bestChromosome = currentGeneration.get(0);
     for (int i = 0; i < MAX_ITERATIONS; i++) {
-      List<ArrangementChromosome> selection = getSelection(currentGeneration, SelectionType.TOURNAMENT);
+      List<ArrangementChromosome> selection = getSelection(currentGeneration, SelectionType.ROULETTE);
       List<ArrangementChromosome> nextGeneration = new ArrayList<>();
       nextGeneration.add(Collections.max(selection)); //elitism
       int currentGenerationSize = 1;
