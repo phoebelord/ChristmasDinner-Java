@@ -1,0 +1,1469 @@
+[
+  {
+    "id": 0,
+    "name": "Phoebe",
+    "relationships": [
+      {
+        "personId": 1,
+        "likability": 10
+      },
+      {
+        "personId": 2,
+        "likability": 1
+      },
+      {
+        "personId": 3,
+        "likability": 1
+      },
+      {
+        "personId": 4,
+        "likability": 1
+      },
+      {
+        "personId": 14,
+        "likability": 1
+      },
+      {
+        "personId": 20,
+        "likability": -1
+      },
+      {
+        "personId": 22,
+        "likability": -1
+      },
+      {
+        "personId": 24,
+        "likability": -1
+      },
+      {
+        "personId": 32,
+        "likability": -1
+      },
+      {
+        "personId": 40,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Joe",
+    "relationships": [
+      {
+        "personId": 0,
+        "likability": 10
+      },
+      {
+        "personId": 2,
+        "likability": 1
+      },
+      {
+        "personId": 3,
+        "likability": 1
+      },
+      {
+        "personId": 4,
+        "likability": 1
+      },
+      {
+        "personId": 5,
+        "likability": 1
+      },
+      {
+        "personId": 11,
+        "likability": 1
+      },
+      {
+        "personId": 13,
+        "likability": 1
+      },
+      {
+        "personId": 20,
+        "likability": -1
+      },
+      {
+        "personId": 25,
+        "likability": 1
+      },
+      {
+        "personId": 40,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Tom",
+    "relationships": [
+      {
+        "personId": 3,
+        "likability": 10
+      },
+      {
+        "personId": 0,
+        "likability": 1
+      },
+      {
+        "personId": 1,
+        "likability": 1
+      },
+      {
+        "personId": 7,
+        "likability": 1
+      },
+      {
+        "personId": 14,
+        "likability": 1
+      },
+      {
+        "personId": 18,
+        "likability": 1
+      },
+      {
+        "personId": 20,
+        "likability": -1
+      },
+      {
+        "personId": 38,
+        "likability": -1
+      },
+      {
+        "personId": 44,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Andre",
+    "relationships": [
+      {
+        "personId": 0,
+        "likability": 1
+      },
+      {
+        "personId": 1,
+        "likability": 1
+      },
+      {
+        "personId": 2,
+        "likability": 10
+      },
+      {
+        "personId": 4,
+        "likability": 1
+      },
+      {
+        "personId": 5,
+        "likability": 1
+      },
+      {
+        "personId": 8,
+        "likability": 1
+      },
+      {
+        "personId": 11,
+        "likability": 1
+      },
+      {
+        "personId": 13,
+        "likability": 1
+      },
+      {
+        "personId": 14,
+        "likability": 1
+      },
+      {
+        "personId": 20,
+        "likability": -1
+      },
+      {
+        "personId": 38,
+        "likability": -1
+      },
+      {
+        "personId": 40,
+        "likability": 1
+      },
+      {
+        "personId": 46,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Josh H",
+    "relationships": [
+      {
+        "personId": 0,
+        "likability": 1
+      },
+      {
+        "personId": 1,
+        "likability": 1
+      },
+      {
+        "personId": 2,
+        "likability": 1
+      },
+      {
+        "personId": 3,
+        "likability": 1
+      },
+      {
+        "personId": 5,
+        "likability": 1
+      },
+      {
+        "personId": 7,
+        "likability": 1
+      },
+      {
+        "personId": 11,
+        "likability": 1
+      },
+      {
+        "personId": 14,
+        "likability": 1
+      },
+      {
+        "personId": 20,
+        "likability": -1
+      },
+      {
+        "personId": 38,
+        "likability": -1
+      },
+      {
+        "personId": 40,
+        "likability": 1
+      },
+      {
+        "personId": 46,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Hussy",
+    "relationships": [
+      {
+        "personId": 0,
+        "likability": 1
+      },
+      {
+        "personId": 1,
+        "likability": 1
+      },
+      {
+        "personId": 2,
+        "likability": 1
+      },
+      {
+        "personId": 3,
+        "likability": 1
+      },
+      {
+        "personId": 4,
+        "likability": 1
+      },
+      {
+        "personId": 6,
+        "likability": 10
+      },
+      {
+        "personId": 14,
+        "likability": 1
+      },
+      {
+        "personId": 29,
+        "likability": 1
+      },
+      {
+        "personId": 32,
+        "likability": -1
+      },
+      {
+        "personId": 38,
+        "likability": -1
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Hussy +1",
+    "relationships": [
+      {
+        "personId": 5,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Alex",
+    "relationships": [
+      {
+        "personId": 1,
+        "likability": 1
+      },
+      {
+        "personId": 3,
+        "likability": 1
+      },
+      {
+        "personId": 4,
+        "likability": 1
+      },
+      {
+        "personId": 8,
+        "likability": 10
+      },
+      {
+        "personId": 11,
+        "likability": 1
+      },
+      {
+        "personId": 38,
+        "likability": 1
+      },
+      {
+        "personId": 44,
+        "likability": 1
+      },
+      {
+        "personId": 46,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Mon",
+    "relationships": [
+      {
+        "personId": 7,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Ella",
+    "relationships": [
+      {
+        "personId": 10,
+        "likability": 10
+      },
+      {
+        "personId": 21,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Ella +1",
+    "relationships": [
+      {
+        "personId": 9,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Jordan",
+    "relationships": [
+      {
+        "personId": 1,
+        "likability": 1
+      },
+      {
+        "personId": 3,
+        "likability": 1
+      },
+      {
+        "personId": 4,
+        "likability": 1
+      },
+      {
+        "personId": 5,
+        "likability": -1
+      },
+      {
+        "personId": 12,
+        "likability": 10
+      },
+      {
+        "personId": 20,
+        "likability": 1
+      },
+      {
+        "personId": 25,
+        "likability": 1
+      },
+      {
+        "personId": 40,
+        "likability": 1
+      },
+      {
+        "personId": 42,
+        "likability": 1
+      },
+      {
+        "personId": 46,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "Sophie",
+    "relationships": [
+      {
+        "personId": 11,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "name": "Naeem",
+    "relationships": [
+      {
+        "personId": 1,
+        "likability": 1
+      },
+      {
+        "personId": 3,
+        "likability": 1
+      },
+      {
+        "personId": 4,
+        "likability": 1
+      },
+      {
+        "personId": 7,
+        "likability": 1
+      },
+      {
+        "personId": 11,
+        "likability": 1
+      },
+      {
+        "personId": 21,
+        "likability": 1
+      },
+      {
+        "personId": 25,
+        "likability": 1
+      },
+      {
+        "personId": 31,
+        "likability": 1
+      },
+      {
+        "personId": 46,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "name": "Lance",
+    "relationships": [
+      {
+        "personId": 0,
+        "likability": 1
+      },
+      {
+        "personId": 1,
+        "likability": 1
+      },
+      {
+        "personId": 2,
+        "likability": 1
+      },
+      {
+        "personId": 3,
+        "likability": 1
+      },
+      {
+        "personId": 4,
+        "likability": 1
+      },
+      {
+        "personId": 5,
+        "likability": 1
+      },
+      {
+        "personId": 15,
+        "likability": 10
+      },
+      {
+        "personId": 20,
+        "likability": -1
+      },
+      {
+        "personId": 22,
+        "likability": -1
+      },
+      {
+        "personId": 24,
+        "likability": -1
+      },
+      {
+        "personId": 32,
+        "likability": -1
+      },
+      {
+        "personId": 38,
+        "likability": -1
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "name": "Lance +1",
+    "relationships": [
+      {
+        "personId": 14,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "name": "Tracey",
+    "relationships": [
+      {
+        "personId": 17,
+        "likability": 10
+      },
+      {
+        "personId": 25,
+        "likability": 1
+      },
+      {
+        "personId": 29,
+        "likability": 1
+      },
+      {
+        "personId": 32,
+        "likability": 1
+      },
+      {
+        "personId": 34,
+        "likability": 1
+      },
+      {
+        "personId": 36,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "name": "Bertie",
+    "relationships": [
+      {
+        "personId": 16,
+        "likability": 10
+      },
+      {
+        "personId": 25,
+        "likability": 1
+      },
+      {
+        "personId": 27,
+        "likability": 1
+      },
+      {
+        "personId": 29,
+        "likability": 1
+      },
+      {
+        "personId": 32,
+        "likability": 1
+      },
+      {
+        "personId": 34,
+        "likability": 1
+      },
+      {
+        "personId": 36,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "name": "John",
+    "relationships": [
+      {
+        "personId": 2,
+        "likability": 1
+      },
+      {
+        "personId": 19,
+        "likability": 10
+      },
+      {
+        "personId": 20,
+        "likability": -1
+      },
+      {
+        "personId": 22,
+        "likability": 1
+      },
+      {
+        "personId": 25,
+        "likability": 1
+      },
+      {
+        "personId": 27,
+        "likability": 1
+      },
+      {
+        "personId": 29,
+        "likability": 1
+      },
+      {
+        "personId": 32,
+        "likability": 1
+      },
+      {
+        "personId": 34,
+        "likability": 1
+      },
+      {
+        "personId": 36,
+        "likability": 1
+      },
+      {
+        "personId": 42,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "name": "Lisa",
+    "relationships": [
+      {
+        "personId": 18,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "name": "Josh C",
+    "relationships": [
+      {
+        "personId": 5,
+        "likability": -1
+      },
+      {
+        "personId": 11,
+        "likability": 1
+      },
+      {
+        "personId": 25,
+        "likability": 1
+      },
+      {
+        "personId": 31,
+        "likability": 1
+      },
+      {
+        "personId": 36,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "name": "Dylan",
+    "relationships": [
+      {
+        "personId": 9,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "name": "Malcolm",
+    "relationships": [
+      {
+        "personId": 5,
+        "likability": -1
+      },
+      {
+        "personId": 13,
+        "likability": 1
+      },
+      {
+        "personId": 23,
+        "likability": 10
+      },
+      {
+        "personId": 25,
+        "likability": 1
+      },
+      {
+        "personId": 27,
+        "likability": 1
+      },
+      {
+        "personId": 29,
+        "likability": 1
+      },
+      {
+        "personId": 31,
+        "likability": 1
+      },
+      {
+        "personId": 32,
+        "likability": 1
+      },
+      {
+        "personId": 34,
+        "likability": 1
+      },
+      {
+        "personId": 36,
+        "likability": 1
+      },
+      {
+        "personId": 47,
+        "likability": 1
+      },
+      {
+        "personId": 49,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "name": "Katya",
+    "relationships": [
+      {
+        "personId": 22,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "name": "David",
+    "relationships": []
+  },
+  {
+    "id": 25,
+    "name": "Steve",
+    "relationships": [
+      {
+        "personId": 1,
+        "likability": 1
+      },
+      {
+        "personId": 3,
+        "likability": 1
+      },
+      {
+        "personId": 11,
+        "likability": 1
+      },
+      {
+        "personId": 13,
+        "likability": 1
+      },
+      {
+        "personId": 20,
+        "likability": 1
+      },
+      {
+        "personId": 26,
+        "likability": 10
+      },
+      {
+        "personId": 27,
+        "likability": 1
+      },
+      {
+        "personId": 29,
+        "likability": 1
+      },
+      {
+        "personId": 32,
+        "likability": 1
+      },
+      {
+        "personId": 34,
+        "likability": 1
+      },
+      {
+        "personId": 36,
+        "likability": 1
+      },
+      {
+        "personId": 38,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "name": "Lindsey",
+    "relationships": [
+      {
+        "personId": 25,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "name": "Toby",
+    "relationships": [
+      {
+        "personId": 25,
+        "likability": 1
+      },
+      {
+        "personId": 28,
+        "likability": 10
+      },
+      {
+        "personId": 29,
+        "likability": 1
+      },
+      {
+        "personId": 32,
+        "likability": 1
+      },
+      {
+        "personId": 34,
+        "likability": 1
+      },
+      {
+        "personId": 36,
+        "likability": 1
+      },
+      {
+        "personId": 42,
+        "likability": 1
+      },
+      {
+        "personId": 47,
+        "likability": 1
+      },
+      {
+        "personId": 49,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "name": "Dora",
+    "relationships": [
+      {
+        "personId": 27,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "name": "Ged",
+    "relationships": [
+      {
+        "personId": 17,
+        "likability": 1
+      },
+      {
+        "personId": 25,
+        "likability": 1
+      },
+      {
+        "personId": 27,
+        "likability": 1
+      },
+      {
+        "personId": 30,
+        "likability": 10
+      },
+      {
+        "personId": 31,
+        "likability": 1
+      },
+      {
+        "personId": 32,
+        "likability": 1
+      },
+      {
+        "personId": 34,
+        "likability": 1
+      },
+      {
+        "personId": 36,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "name": "Ged +1",
+    "relationships": [
+      {
+        "personId": 29,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "name": "Ben",
+    "relationships": [
+      {
+        "personId": 0,
+        "likability": 1
+      },
+      {
+        "personId": 1,
+        "likability": 1
+      },
+      {
+        "personId": 2,
+        "likability": 1
+      },
+      {
+        "personId": 3,
+        "likability": 1
+      },
+      {
+        "personId": 7,
+        "likability": 1
+      },
+      {
+        "personId": 9,
+        "likability": 1
+      },
+      {
+        "personId": 17,
+        "likability": 1
+      },
+      {
+        "personId": 22,
+        "likability": 1
+      },
+      {
+        "personId": 29,
+        "likability": 1
+      },
+      {
+        "personId": 32,
+        "likability": 1
+      },
+      {
+        "personId": 34,
+        "likability": 1
+      },
+      {
+        "personId": 36,
+        "likability": 1
+      },
+      {
+        "personId": 40,
+        "likability": 1
+      },
+      {
+        "personId": 42,
+        "likability": 1
+      },
+      {
+        "personId": 44,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "name": "Greg",
+    "relationships": [
+      {
+        "personId": 16,
+        "likability": 1
+      },
+      {
+        "personId": 17,
+        "likability": 1
+      },
+      {
+        "personId": 22,
+        "likability": 1
+      },
+      {
+        "personId": 25,
+        "likability": 1
+      },
+      {
+        "personId": 27,
+        "likability": 1
+      },
+      {
+        "personId": 29,
+        "likability": 1
+      },
+      {
+        "personId": 31,
+        "likability": 1
+      },
+      {
+        "personId": 33,
+        "likability": 10
+      },
+      {
+        "personId": 34,
+        "likability": 1
+      },
+      {
+        "personId": 36,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "name": "Greg +1",
+    "relationships": [
+      {
+        "personId": 32,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "name": "Damio",
+    "relationships": [
+      {
+        "personId": 16,
+        "likability": 1
+      },
+      {
+        "personId": 17,
+        "likability": 1
+      },
+      {
+        "personId": 18,
+        "likability": 1
+      },
+      {
+        "personId": 22,
+        "likability": 1
+      },
+      {
+        "personId": 25,
+        "likability": 1
+      },
+      {
+        "personId": 27,
+        "likability": 1
+      },
+      {
+        "personId": 29,
+        "likability": 1
+      },
+      {
+        "personId": 31,
+        "likability": 1
+      },
+      {
+        "personId": 32,
+        "likability": 1
+      },
+      {
+        "personId": 35,
+        "likability": 10
+      },
+      {
+        "personId": 36,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "name": "Damio +1",
+    "relationships": [
+      {
+        "personId": 34,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "name": "Jake",
+    "relationships": [
+      {
+        "personId": 16,
+        "likability": 1
+      },
+      {
+        "personId": 17,
+        "likability": 1
+      },
+      {
+        "personId": 18,
+        "likability": 1
+      },
+      {
+        "personId": 22,
+        "likability": 1
+      },
+      {
+        "personId": 25,
+        "likability": 1
+      },
+      {
+        "personId": 27,
+        "likability": 1
+      },
+      {
+        "personId": 29,
+        "likability": 1
+      },
+      {
+        "personId": 31,
+        "likability": 1
+      },
+      {
+        "personId": 32,
+        "likability": 1
+      },
+      {
+        "personId": 37,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "name": "Jake +1",
+    "relationships": [
+      {
+        "personId": 36,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "name": "Sean",
+    "relationships": [
+      {
+        "personId": 0,
+        "likability": 1
+      },
+      {
+        "personId": 1,
+        "likability": 1
+      },
+      {
+        "personId": 2,
+        "likability": 1
+      },
+      {
+        "personId": 3,
+        "likability": 1
+      },
+      {
+        "personId": 4,
+        "likability": 1
+      },
+      {
+        "personId": 5,
+        "likability": 1
+      },
+      {
+        "personId": 7,
+        "likability": 1
+      },
+      {
+        "personId": 11,
+        "likability": 1
+      },
+      {
+        "personId": 25,
+        "likability": 1
+      },
+      {
+        "personId": 31,
+        "likability": 1
+      },
+      {
+        "personId": 39,
+        "likability": 10
+      },
+      {
+        "personId": 40,
+        "likability": 1
+      },
+      {
+        "personId": 44,
+        "likability": 1
+      },
+      {
+        "personId": 46,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "name": "Amy",
+    "relationships": [
+      {
+        "personId": 38,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "name": "Dru",
+    "relationships": [
+      {
+        "personId": 0,
+        "likability": 1
+      },
+      {
+        "personId": 1,
+        "likability": 1
+      },
+      {
+        "personId": 2,
+        "likability": 1
+      },
+      {
+        "personId": 3,
+        "likability": 1
+      },
+      {
+        "personId": 4,
+        "likability": 1
+      },
+      {
+        "personId": 5,
+        "likability": 1
+      },
+      {
+        "personId": 7,
+        "likability": 1
+      },
+      {
+        "personId": 11,
+        "likability": 1
+      },
+      {
+        "personId": 25,
+        "likability": 1
+      },
+      {
+        "personId": 41,
+        "likability": 10
+      },
+      {
+        "personId": 44,
+        "likability": 1
+      },
+      {
+        "personId": 46,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "name": "Miggy",
+    "relationships": [
+      {
+        "personId": 40,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "name": "George",
+    "relationships": [
+      {
+        "personId": 2,
+        "likability": 1
+      },
+      {
+        "personId": 11,
+        "likability": 1
+      },
+      {
+        "personId": 18,
+        "likability": 1
+      },
+      {
+        "personId": 43,
+        "likability": 10
+      },
+      {
+        "personId": 47,
+        "likability": 1
+      },
+      {
+        "personId": 49,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "name": "George +1",
+    "relationships": [
+      {
+        "personId": 42,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "name": "Kiran",
+    "relationships": [
+      {
+        "personId": 0,
+        "likability": 1
+      },
+      {
+        "personId": 2,
+        "likability": 1
+      },
+      {
+        "personId": 3,
+        "likability": 1
+      },
+      {
+        "personId": 9,
+        "likability": 1
+      },
+      {
+        "personId": 38,
+        "likability": 1
+      },
+      {
+        "personId": 45,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "name": "Kiran +1",
+    "relationships": [
+      {
+        "personId": 44,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "name": "DikDik",
+    "relationships": [
+      {
+        "personId": 0,
+        "likability": 1
+      },
+      {
+        "personId": 1,
+        "likability": 1
+      },
+      {
+        "personId": 2,
+        "likability": 1
+      },
+      {
+        "personId": 3,
+        "likability": 1
+      },
+      {
+        "personId": 4,
+        "likability": 1
+      },
+      {
+        "personId": 5,
+        "likability": 1
+      },
+      {
+        "personId": 7,
+        "likability": 1
+      },
+      {
+        "personId": 11,
+        "likability": 1
+      },
+      {
+        "personId": 25,
+        "likability": 1
+      },
+      {
+        "personId": 44,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "name": "Sathesh",
+    "relationships": [
+      {
+        "personId": 48,
+        "likability": 10
+      },
+      {
+        "personId": 49,
+        "likability": 1
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "name": "Sathesh +1",
+    "relationships": [
+      {
+        "personId": 47,
+        "likability": 10
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "name": "Ben A",
+    "relationships": [
+      {
+        "personId": 5,
+        "likability": -1
+      },
+      {
+        "personId": 47,
+        "likability": 1
+      }
+    ]
+  }
+]

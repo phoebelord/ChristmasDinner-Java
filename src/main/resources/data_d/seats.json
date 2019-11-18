@@ -1,0 +1,441 @@
+[
+  {
+    "tableNum": 0,
+    "seatNum": 0,
+    "neighbours": [
+      9,
+      1,
+      8
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 1,
+    "neighbours": [
+      0,
+      2,
+      7
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 2,
+    "neighbours": [
+      1,
+      3,
+      6
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 3,
+    "neighbours": [
+      2,
+      4,
+      5
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 4,
+    "neighbours": [
+      3,
+      5
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 5,
+    "neighbours": [
+      4,
+      6,
+      3
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 6,
+    "neighbours": [
+      5,
+      7,
+      2
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 7,
+    "neighbours": [
+      6,
+      8,
+      1
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 8,
+    "neighbours": [
+      7,
+      9,
+      0
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 9,
+    "neighbours": [
+      8,
+      0
+    ]
+  },
+  {
+    "tableNum": 1,
+    "seatNum": 10,
+    "neighbours": [
+      19,
+      11,
+      18
+    ]
+  },
+  {
+    "tableNum": 1,
+    "seatNum": 11,
+    "neighbours": [
+      10,
+      12,
+      17
+    ]
+  },
+  {
+    "tableNum": 1,
+    "seatNum": 12,
+    "neighbours": [
+      11,
+      13,
+      16
+    ]
+  },
+  {
+    "tableNum": 1,
+    "seatNum": 13,
+    "neighbours": [
+      12,
+      14,
+      15
+    ]
+  },
+  {
+    "tableNum": 1,
+    "seatNum": 14,
+    "neighbours": [
+      13,
+      15
+    ]
+  },
+  {
+    "tableNum": 1,
+    "seatNum": 15,
+    "neighbours": [
+      14,
+      16,
+      13
+    ]
+  },
+  {
+    "tableNum": 1,
+    "seatNum": 16,
+    "neighbours": [
+      15,
+      17,
+      12
+    ]
+  },
+  {
+    "tableNum": 1,
+    "seatNum": 17,
+    "neighbours": [
+      16,
+      18,
+      11
+    ]
+  },
+  {
+    "tableNum": 1,
+    "seatNum": 18,
+    "neighbours": [
+      17,
+      19,
+      10
+    ]
+  },
+  {
+    "tableNum": 1,
+    "seatNum": 19,
+    "neighbours": [
+      18,
+      10
+    ]
+  },
+  {
+    "tableNum": 2,
+    "seatNum": 20,
+    "neighbours": [
+      29,
+      21,
+      28
+    ]
+  },
+  {
+    "tableNum": 2,
+    "seatNum": 21,
+    "neighbours": [
+      20,
+      22,
+      27
+    ]
+  },
+  {
+    "tableNum": 2,
+    "seatNum": 22,
+    "neighbours": [
+      21,
+      23,
+      26
+    ]
+  },
+  {
+    "tableNum": 2,
+    "seatNum": 23,
+    "neighbours": [
+      22,
+      24,
+      25
+    ]
+  },
+  {
+    "tableNum": 2,
+    "seatNum": 24,
+    "neighbours": [
+      23,
+      25
+    ]
+  },
+  {
+    "tableNum": 2,
+    "seatNum": 25,
+    "neighbours": [
+      24,
+      26,
+      23
+    ]
+  },
+  {
+    "tableNum": 2,
+    "seatNum": 26,
+    "neighbours": [
+      25,
+      27,
+      22
+    ]
+  },
+  {
+    "tableNum": 2,
+    "seatNum": 27,
+    "neighbours": [
+      26,
+      28,
+      21
+    ]
+  },
+  {
+    "tableNum": 2,
+    "seatNum": 28,
+    "neighbours": [
+      27,
+      29,
+      20
+    ]
+  },
+  {
+    "tableNum": 2,
+    "seatNum": 29,
+    "neighbours": [
+      28,
+      20
+    ]
+  },{
+  "tableNum": 3,
+  "seatNum": 30,
+  "neighbours": [
+    39,
+    31,
+    38
+  ]
+},
+  {
+    "tableNum": 3,
+    "seatNum": 31,
+    "neighbours": [
+      30,
+      32,
+      37
+    ]
+  },
+  {
+    "tableNum": 3,
+    "seatNum": 32,
+    "neighbours": [
+      31,
+      33,
+      36
+    ]
+  },
+  {
+    "tableNum": 3,
+    "seatNum": 33,
+    "neighbours": [
+      32,
+      34,
+      35
+    ]
+  },
+  {
+    "tableNum": 3,
+    "seatNum": 34,
+    "neighbours": [
+      33,
+      35
+    ]
+  },
+  {
+    "tableNum": 3,
+    "seatNum": 35,
+    "neighbours": [
+      34,
+      36,
+      33
+    ]
+  },
+  {
+    "tableNum": 3,
+    "seatNum": 36,
+    "neighbours": [
+      35,
+      37,
+      32
+    ]
+  },
+  {
+    "tableNum": 3,
+    "seatNum": 37,
+    "neighbours": [
+      36,
+      38,
+      31
+    ]
+  },
+  {
+    "tableNum": 3,
+    "seatNum": 38,
+    "neighbours": [
+      37,
+      39,
+      30
+    ]
+  },
+  {
+    "tableNum": 3,
+    "seatNum": 39,
+    "neighbours": [
+      38,
+      30
+    ]
+  },
+  {
+    "tableNum": 4,
+    "seatNum": 40,
+    "neighbours": [
+      49,
+      41,
+      48
+    ]
+  },
+  {
+    "tableNum": 4,
+    "seatNum": 41,
+    "neighbours": [
+      40,
+      42,
+      47
+    ]
+  },
+  {
+    "tableNum": 4,
+    "seatNum": 42,
+    "neighbours": [
+      41,
+      43,
+      46
+    ]
+  },
+  {
+    "tableNum": 4,
+    "seatNum": 43,
+    "neighbours": [
+      42,
+      44,
+      45
+    ]
+  },
+  {
+    "tableNum": 4,
+    "seatNum": 44,
+    "neighbours": [
+      43,
+      45
+    ]
+  },
+  {
+    "tableNum": 4,
+    "seatNum": 45,
+    "neighbours": [
+      44,
+      46,
+      43
+    ]
+  },
+  {
+    "tableNum": 4,
+    "seatNum": 46,
+    "neighbours": [
+      45,
+      47,
+      42
+    ]
+  },
+  {
+    "tableNum": 4,
+    "seatNum": 47,
+    "neighbours": [
+      46,
+      48,
+      41
+    ]
+  },
+  {
+    "tableNum": 4,
+    "seatNum": 48,
+    "neighbours": [
+      47,
+      49,
+      40
+    ]
+  },
+  {
+    "tableNum": 4,
+    "seatNum": 49,
+    "neighbours": [
+      48,
+      40
+    ]
+  }
+]
