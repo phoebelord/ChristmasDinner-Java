@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface Crossover {
 
-  List<List<Integer>> performCrossover(List<Integer> parent1, List<Integer> parent2);
+  abstract List<List<Integer>> performCrossover(List<Integer> parent1, List<Integer> parent2);
 }

@@ -45,7 +45,7 @@ public class GeneticAlgorithm extends Algorithm {
       int currentGenerationSize = 1;
       while (currentGenerationSize < GENERATION_SIZE) {
         List<ArrangementChromosome> parents = GeneticAlgorithmUtils.getRandomElements(selection, 2);
-        List<ArrangementChromosome> children = performCrossover(Objects.requireNonNull(parents), CrossoverType.OnePoint);
+        List<ArrangementChromosome> children = performCrossover(Objects.requireNonNull(parents), CrossoverType.TwoPoint);
         nextGeneration.addAll(children);
         currentGenerationSize += 2;
       }
