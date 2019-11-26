@@ -3,8 +3,8 @@
     "tableNum": 0,
     "seatNum": 0,
     "neighbours": [
-      9,
-      1
+      1,
+      9
     ]
   },
   {
@@ -75,8 +75,8 @@
     "tableNum": 0,
     "seatNum": 9,
     "neighbours": [
-      8,
-      0
+      0,
+      8
     ]
   }
 ]

@@ -31,7 +31,7 @@ public class ChristmasDinner {
       System.out.println("Seats: " + seats);
       System.out.println("\nPeople: " + people);
 
-      Algorithm algorithm = AlgorithmFactory.createAlgorithm(AlgorithmType.Genetic, people, seats, tables);
+      Algorithm algorithm = AlgorithmFactory.createAlgorithm(AlgorithmType.BnB, people, seats, tables);
       Solution solution = algorithm.calculateSolution();
 
       System.out.println("Arrangement: " + solution.getArrangement());

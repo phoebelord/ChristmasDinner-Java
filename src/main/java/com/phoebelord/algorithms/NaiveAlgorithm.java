@@ -20,13 +20,13 @@ public class NaiveAlgorithm extends Algorithm {
   private List<Table> tables;
   private float counter = 0;
   private float lastCount = 0;
-  private long noSolutions;
+  private float noSolutions;
 
   NaiveAlgorithm(List<Person> people, List<Seat> seats, List<Table> tables) {
     this.people = people;
     this.seats = seats;
     this.tables = tables;
-    noSolutions = factorial(seats.size());
+    noSolutions = factoriall(seats.size());
   }
 
   @Override
@@ -84,14 +84,6 @@ public class NaiveAlgorithm extends Algorithm {
     if(solutionHappiness > bestSolution) {
       bestSolution = solutionHappiness;
       solution = new ArrayList<>(elements);
-    }
-  }
-
-  private long factorial(int n) {
-    if(n == 0) {
-      return 1;
-    } else {
-      return n * factorial(n - 1);
     }
   }
 }

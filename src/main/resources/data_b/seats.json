@@ -3,9 +3,9 @@
     "tableNum": 0,
     "seatNum": 0,
     "neighbours": [
-      9,
       1,
-      8
+      8,
+      9
     ]
   },
   {
@@ -47,44 +47,44 @@
     "tableNum": 0,
     "seatNum": 5,
     "neighbours": [
+      3,
       4,
-      6,
-      3
+      6
     ]
   },
   {
     "tableNum": 0,
     "seatNum": 6,
     "neighbours": [
+      2,
       5,
-      7,
-      2
+      7
     ]
   },
   {
     "tableNum": 0,
     "seatNum": 7,
     "neighbours": [
+      1,
       6,
-      8,
-      1
+      8
     ]
   },
   {
     "tableNum": 0,
     "seatNum": 8,
     "neighbours": [
+      0,
       7,
-      9,
-      0
+      9
     ]
   },
   {
     "tableNum": 0,
     "seatNum": 9,
     "neighbours": [
-      8,
-      0
+      0,
+      8
     ]
   }
 ]

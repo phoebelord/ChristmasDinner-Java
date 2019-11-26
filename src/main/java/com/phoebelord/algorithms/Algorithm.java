@@ -5,10 +5,12 @@ import com.phoebelord.model.Seat;
 import com.phoebelord.model.Solution;
 import com.phoebelord.model.Table;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public abstract class Algorithm {
 
+  //doesn't need to be static???
   public static int calculateHappiness(List<Person> people, List<Seat> seats, List<Table> tables) {
     int total = 0;
     for (int i = 0; i < people.size(); i++) {
@@ -26,10 +28,28 @@ public abstract class Algorithm {
     return total;
   }
 
-  private static boolean isNextTo(int seatNum, int otherSeatNum, int offset, int tableSize) {
+
+
+  public static boolean isNextTo(int seatNum, int otherSeatNum, int offset, int tableSize) {
     boolean isPlusOne = mod((seatNum + 1) - offset, tableSize) + offset == otherSeatNum;
     boolean isMinusOne = mod((seatNum - 1) - offset, tableSize) + offset == otherSeatNum;
     return isPlusOne || isMinusOne;
+  }
+
+  BigInteger factorial(int n) {
+    if(n == 0) {
+      return BigInteger.valueOf(1);
+    } else {
+      return BigInteger.valueOf(n) .multiply(factorial(n - 1));
+    }
+  }
+
+  float factoriall(int n) {
+    if(n == 0) {
+      return 1;
+    } else {
+      return n * (factoriall(n - 1));
+    }
   }
 
   // Modulo rather than remainder
