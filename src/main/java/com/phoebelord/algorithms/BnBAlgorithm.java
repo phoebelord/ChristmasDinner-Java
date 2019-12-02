@@ -5,7 +5,9 @@ import com.phoebelord.model.Seat;
 import com.phoebelord.model.Solution;
 import com.phoebelord.model.Table;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +25,10 @@ public class BnBAlgorithm extends Algorithm {
   private int bestSoFar;
   private List<Integer> bestSolution;
 
-  private BigInteger counter = BigInteger.ZERO;
-  private BigInteger pruned = BigInteger.ZERO;
-  private BigInteger lastCount = BigInteger.ZERO;
-  private BigInteger noSolutions;
+  private BigDecimal counter = BigDecimal.ZERO;
+  private BigDecimal pruned = BigDecimal.ZERO;
+  private BigDecimal lastCount = BigDecimal.ZERO;
+  private BigDecimal noSolutions;
 
   BnBAlgorithm(List<Person> people, List<Seat> seats, List<Table> tables) {
     this.PEOPLE = people;
@@ -55,7 +57,7 @@ public class BnBAlgorithm extends Algorithm {
 
   private void bnb(int level, List<Integer> partialSolution) {
     if (level == PEOPLE.size()) {
-      counter = counter.add(BigInteger.ONE);
+      counter = counter.add(BigDecimal.ONE);
       int happiness = calculateHappiness(partialSolution);
       if (happiness < bestSoFar) {
         bestSoFar = happiness;
@@ -71,15 +73,14 @@ public class BnBAlgorithm extends Algorithm {
             bnb(level + 1, newList);
           } else {
             counter = counter.add(factorial(PEOPLE.size() - (level + 1)));
-            pruned = pruned.add(BigInteger.ONE);
+            pruned = pruned.add(BigDecimal.ONE);
           }
         }
       }
     }
 
-    //THIS IS DOING INTEGER DIVISION
-    if ((((counter.divide(noSolutions)).multiply(BigInteger.valueOf(100))).subtract((lastCount.divide(noSolutions)).multiply(BigInteger.valueOf(100)))).compareTo(BigInteger.TEN) != -1 ) {
-      System.out.printf("%s\n", (counter.divide(noSolutions)).multiply(BigInteger.valueOf(100)).toString());
+    if(calculatePercentageOfSolutions(counter).subtract(calculatePercentageOfSolutions(lastCount)).compareTo(BigDecimal.TEN) != -1) {
+      System.out.printf("%s\n", calculatePercentageOfSolutions(counter).toString());
       lastCount = counter;
     }
   }
@@ -91,7 +92,7 @@ public class BnBAlgorithm extends Algorithm {
   }
 
   // TODO this is a mess
-  // does it even work lol
+  // does it even work lolllllllll
   private int calculateHappiness(List<Integer> partialSolution) {
     int total = 0;
     for (int i = 0; i < PEOPLE.size(); i++) {
@@ -153,5 +154,9 @@ public class BnBAlgorithm extends Algorithm {
       default:
         return NEUTRAL;
     }
+  }
+
+  private BigDecimal calculatePercentageOfSolutions(BigDecimal x) {
+    return (x.divide(noSolutions, 3, RoundingMode.HALF_UP)).multiply(BigDecimal.valueOf(100));
   }
 }

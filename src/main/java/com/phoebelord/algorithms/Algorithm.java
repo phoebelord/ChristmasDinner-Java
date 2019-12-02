@@ -5,7 +5,7 @@ import com.phoebelord.model.Seat;
 import com.phoebelord.model.Solution;
 import com.phoebelord.model.Table;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.List;
 
 public abstract class Algorithm {
@@ -36,11 +36,11 @@ public abstract class Algorithm {
     return isPlusOne || isMinusOne;
   }
 
-  BigInteger factorial(int n) {
+  BigDecimal factorial(int n) {
     if(n == 0) {
-      return BigInteger.valueOf(1);
+      return BigDecimal.valueOf(1);
     } else {
-      return BigInteger.valueOf(n) .multiply(factorial(n - 1));
+      return BigDecimal.valueOf(n) .multiply(factorial(n - 1));
     }
   }
 
