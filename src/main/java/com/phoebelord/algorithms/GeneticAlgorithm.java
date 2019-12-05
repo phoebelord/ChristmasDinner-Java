@@ -51,7 +51,7 @@ public class GeneticAlgorithm extends Algorithm {
       }
       nextGeneration = performMutation(nextGeneration);
       bestChromosome = Collections.max(nextGeneration); // TODO stop if no improvement in 10 gens
-      //System.out.println(bestChromosome);
+      System.out.println(bestChromosome);
       currentGeneration = new ArrayList<>(nextGeneration);
     }
     return new Solution(bestChromosome.getPersonList(PEOPLE), bestChromosome.getFitness());
