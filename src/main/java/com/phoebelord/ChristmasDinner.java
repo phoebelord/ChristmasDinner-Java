@@ -1,6 +1,5 @@
 package com.phoebelord;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.phoebelord.algorithms.Algorithm;
 import com.phoebelord.algorithms.AlgorithmFactory;
@@ -20,17 +19,15 @@ import java.util.List;
 @SpringBootApplication
 public class ChristmasDinner {
 
-  private static List<Person> people;
-  private static List<Seat> seats;
-  private static List<Table> tables;
-
   public static void main(String[] args) {
     SpringApplication.run(ChristmasDinner.class, args);
   }
 
   public static Solution getSolution(String filename, AlgorithmType algorithmType) {
     try {
-      initialiseFromFile(filename);
+      List<Person> people = initialiseFromFile(filename + "/people.json", Person.class);
+      List<Seat> seats = initialiseFromFile(filename + "/seats.json", Seat.class);
+      List<Table> tables = initialiseFromFile(filename + "/tables.json", Table.class);
       System.out.println("\nTables: " + tables);
       System.out.println("Seats: " + seats);
       System.out.println("\nPeople: " + people);
@@ -48,12 +45,9 @@ public class ChristmasDinner {
     }
   }
 
-  private static void initialiseFromFile(String dataSet) throws IOException {
+  private static <T> List<T> initialiseFromFile(String filename, Class<T> clazz) throws IOException {
     ObjectMapper mapper = new ObjectMapper();
-    people = mapper.readValue(getResource("data/" + dataSet + "/people.json"), new TypeReference<List<Person>>() {});
-    seats = mapper.readValue(getResource("data/" + dataSet + "/seats.json"), new TypeReference<List<Seat>>() {});
-    tables = mapper.readValue(getResource("data/" + dataSet + "/tables.json"), new TypeReference<List<Table>>() {});
-
+    return mapper.readValue(getResource("data/" + filename), mapper.getTypeFactory(). constructCollectionType(List.class, clazz));
   }
 
   private static URL getResource(String filename) throws FileNotFoundException {
