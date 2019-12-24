@@ -4,17 +4,15 @@ import com.phoebelord.model.Person;
 import com.phoebelord.model.Seat;
 import com.phoebelord.model.Solution;
 import com.phoebelord.model.Table;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class BnBAlgorithm extends Algorithm {
-
-  private final List<Seat> SEATS;
-  private final List<Person> PEOPLE;
-  private final List<Table> TABLES;
 
   private final int PARTNER = 1;
   private final int LIKES = 10;
@@ -29,40 +27,32 @@ public class BnBAlgorithm extends Algorithm {
   private BigDecimal lastCount = BigDecimal.ZERO;
   private BigDecimal noSolutions;
 
-  BnBAlgorithm(List<Person> people, List<Seat> seats, List<Table> tables) {
-    this.PEOPLE = people;
-    this.SEATS = seats;
-    this.TABLES = tables;
-    noSolutions = factorial(seats.size());
-  }
-
-
   @Override
   public Solution calculateSolution() {
     bestSoFar = Integer.MAX_VALUE;
-    for (int i = 0; i < PEOPLE.size(); i++) {
+    for (int i = 0; i < people.size(); i++) {
       List<Integer> partialSolution = new ArrayList<>();
       partialSolution.add(i);
       bnb(1, partialSolution, 0);
     }
     List<Person> personList = new ArrayList<>();
     for (int personIndex : bestSolution) {
-      personList.add(PEOPLE.get(personIndex));
+      personList.add(people.get(personIndex));
     }
     System.out.println("Pruned: " + pruned);
     System.out.println("Counter: " + counter);
-    return new Solution(personList, Algorithm.calculateHappiness(personList, SEATS, TABLES));
+    return new Solution(personList, Algorithm.calculateHappiness(personList, seats, tables));
   }
 
   private void bnb(int level, List<Integer> partialSolution, int currentHappiness) {
-    if (level == PEOPLE.size()) {
+    if (level == people.size()) {
       counter = counter.add(BigDecimal.ONE);
       if (currentHappiness < bestSoFar) {
         bestSoFar = currentHappiness;
         bestSolution = new ArrayList<>(partialSolution);
       }
     } else {
-      for (int i = 0; i < PEOPLE.size(); i++) {
+      for (int i = 0; i < people.size(); i++) {
         if (!partialSolution.contains(i)) {
           List<Integer> newList = new ArrayList<>(partialSolution);
           newList.add(i);
@@ -71,7 +61,7 @@ public class BnBAlgorithm extends Algorithm {
           if (lowerBound < bestSoFar) {
             bnb(level + 1, newList, newHappiness);
           } else {
-            counter = counter.add(factorial(PEOPLE.size() - (level + 1)));
+            counter = counter.add(factorial(people.size() - (level + 1)));
             pruned = pruned.add(BigDecimal.ONE);
           }
         }
@@ -86,13 +76,13 @@ public class BnBAlgorithm extends Algorithm {
 
   private int recalculateHappiness(List<Integer> partialSolution, int currentHappiness) {
     int currentPersonIndex = partialSolution.get(partialSolution.size() - 1);
-    Person currentPerson = PEOPLE.get(currentPersonIndex);
-    Seat seat = SEATS.get(partialSolution.size() - 1);
+    Person currentPerson = people.get(currentPersonIndex);
+    Seat seat = seats.get(partialSolution.size() - 1);
     List<Integer> neighbouringSeats = seat.getNeighbours();
-    Table table = TABLES.get(seat.getTableNum());
+    Table table = tables.get(seat.getTableNum());
     for(int neighbouringSeat : neighbouringSeats) {
       if(neighbouringSeat < partialSolution.size()) {
-        Person neighbour = PEOPLE.get(partialSolution.get(neighbouringSeat));
+        Person neighbour = people.get(partialSolution.get(neighbouringSeat));
         boolean isNextTo = isNextTo(seat.getSeatNum(), neighbouringSeat, table.getOffset(), table.getSize());
         int multiplier = (isNextTo) ? 2 : 1;
         currentHappiness += multiplier * getMinimisingRelationship(currentPerson.getRelationshipWith(neighbour));
@@ -106,19 +96,19 @@ public class BnBAlgorithm extends Algorithm {
   // does it even work lolllllllll
   private int estimateHappiness(List<Integer> partialSolution, int currentHappiness) {
     int estimate = 0;
-    for (int i = 0; i < PEOPLE.size(); i++) {
-      List<Integer> neighbouringSeats = SEATS.get(i).getNeighbours();
-      Table table = TABLES.get(SEATS.get(i).getTableNum());
+    for (int i = 0; i < people.size(); i++) {
+      List<Integer> neighbouringSeats = seats.get(i).getNeighbours();
+      Table table = tables.get(seats.get(i).getTableNum());
       boolean hasPartner = false;
       if (i < partialSolution.size()) {
         if(neighbouringSeats.stream().allMatch(s -> s < partialSolution.size())) {
           continue;
         }
         int personIndex = partialSolution.get(i);
-        Person currentPerson = PEOPLE.get(personIndex);
+        Person currentPerson = people.get(personIndex);
         for (int neighbouringSeat : neighbouringSeats) {
           if (neighbouringSeat < partialSolution.size() && !hasPartner) {
-            Person neighbour = PEOPLE.get(partialSolution.get(neighbouringSeat));
+            Person neighbour = people.get(partialSolution.get(neighbouringSeat));
             if (getMinimisingRelationship(currentPerson.getRelationshipWith(neighbour)) == PARTNER) {
               hasPartner = true;
             }
@@ -129,7 +119,7 @@ public class BnBAlgorithm extends Algorithm {
             if (!hasPartner && isNextTo) {
               guess = PARTNER;
               hasPartner = true;
-            } else if(!hasPartner && i == PEOPLE.size() - 1) {
+            } else if(!hasPartner && i == people.size() - 1) {
               guess = PARTNER;
               hasPartner = true;
             } else {
@@ -168,5 +158,11 @@ public class BnBAlgorithm extends Algorithm {
 
   private BigDecimal calculatePercentageOfSolutions(BigDecimal x) {
     return (x.divide(noSolutions, 3, RoundingMode.HALF_UP)).multiply(BigDecimal.valueOf(100));
+  }
+
+  @Override
+  public void setSeats(List<Seat> seats) {
+    this.seats = seats;
+    this.noSolutions = factorial(seats.size());
   }
 }

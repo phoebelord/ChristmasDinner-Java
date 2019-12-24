@@ -1,12 +1,15 @@
 package com.phoebelord.algorithms.genetic.selection;
 
 import com.phoebelord.algorithms.genetic.ArrangementChromosome;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+@Component
 public class RouletteWheelSelection implements Selection {
 
-  private Random random = new Random();
+  private Random random;
 
   @Override
   public List<ArrangementChromosome> getSelection(List<ArrangementChromosome> population, int selectionSize) {
@@ -44,6 +47,7 @@ public class RouletteWheelSelection implements Selection {
     return cumulativeHappiness;
   }
 
+  @Autowired
   public void setRandom(Random random) {
     this.random = random;
   }

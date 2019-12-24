@@ -10,6 +10,11 @@ import java.util.List;
 
 public abstract class Algorithm {
 
+  List<Seat> seats;
+  List<Person> people;
+  List<Table> tables;
+
+
   //doesn't need to be static???
   public static int calculateHappiness(List<Person> people, List<Seat> seats, List<Table> tables) {
     int total = 0;
@@ -59,4 +64,16 @@ public abstract class Algorithm {
   }
 
   public abstract Solution calculateSolution();
+
+  public void setSeats(List<Seat> seats) {
+    this.seats = seats;
+  }
+
+  public void setPeople(List<Person> people) {
+    this.people = people;
+  }
+
+  public void setTables(List<Table> tables) {
+    this.tables = tables;
+  }
 }

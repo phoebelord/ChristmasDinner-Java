@@ -3,7 +3,7 @@ package com.phoebelord.algorithms;
 import com.phoebelord.model.Person;
 import com.phoebelord.model.Seat;
 import com.phoebelord.model.Solution;
-import com.phoebelord.model.Table;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,23 +11,14 @@ import java.util.List;
 
 // https://www.baeldung.com/java-array-permutations
 
+@Component
 public class NaiveAlgorithm extends Algorithm {
 
   private int bestSolution = 0;
   private List<Person> solution;
-  private List<Person> people;
-  private List<Seat> seats;
-  private List<Table> tables;
   private float counter = 0;
   private float lastCount = 0;
   private float noSolutions;
-
-  NaiveAlgorithm(List<Person> people, List<Seat> seats, List<Table> tables) {
-    this.people = people;
-    this.seats = seats;
-    this.tables = tables;
-    noSolutions = factoriall(seats.size());
-  }
 
   @Override
   public Solution calculateSolution() {
@@ -85,5 +76,11 @@ public class NaiveAlgorithm extends Algorithm {
       bestSolution = solutionHappiness;
       solution = new ArrayList<>(elements);
     }
+  }
+
+  @Override
+  public void setSeats(List<Seat> seats) {
+    this.seats = seats;
+    this.noSolutions = factoriall(seats.size());
   }
 }

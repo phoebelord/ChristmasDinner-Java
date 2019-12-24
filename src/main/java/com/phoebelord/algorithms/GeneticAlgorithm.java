@@ -9,30 +9,23 @@ import com.phoebelord.algorithms.genetic.crossover.CrossoverType;
 import com.phoebelord.algorithms.genetic.selection.Selection;
 import com.phoebelord.algorithms.genetic.selection.SelectionFactory;
 import com.phoebelord.algorithms.genetic.selection.SelectionType;
-import com.phoebelord.model.Person;
 import com.phoebelord.model.Seat;
-import com.phoebelord.model.Table;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Component
 public class GeneticAlgorithm extends Algorithm {
 
   private final int GENERATION_SIZE = 100;
   private final int SELECTION_SIZE = 50;
   private final int MAX_ITERATIONS = 1000;
   private final float RATE_OF_MUTATION = 0.1f;
-  private final int CHROMOSOME_SIZE;
-  private final List<Seat> SEATS;
-  private final List<Person> PEOPLE;
-  private final List<Table> TABLES;
+  private int chromosomeSize;
 
-  GeneticAlgorithm(List<Person> people, List<Seat> seats, List<Table> tables) {
-    this.PEOPLE = people;
-    this.SEATS = seats;
-    this.TABLES = tables;
-    this.CHROMOSOME_SIZE = seats.size();
-  }
+  private Random random;
 
   @Override
   public Solution calculateSolution() {
@@ -51,16 +44,16 @@ public class GeneticAlgorithm extends Algorithm {
       }
       nextGeneration = performMutation(nextGeneration);
       bestChromosome = Collections.max(nextGeneration); // TODO stop if no improvement in 10 gens
-      System.out.println(bestChromosome);
+      //System.out.println(bestChromosome);
       currentGeneration = new ArrayList<>(nextGeneration);
     }
-    return new Solution(bestChromosome.getPersonList(PEOPLE), bestChromosome.getFitness());
+    return new Solution(bestChromosome.getPersonList(people), bestChromosome.getFitness());
   }
 
   private List<ArrangementChromosome> initialisePopulation() {
     List<ArrangementChromosome> population = new ArrayList<>();
     for (int i = 0; i < GENERATION_SIZE; i++) {
-      population.add(new ArrangementChromosome(PEOPLE, SEATS, TABLES));
+      population.add(new ArrangementChromosome(people, seats, tables));
     }
     return population;
   }
@@ -80,17 +73,27 @@ public class GeneticAlgorithm extends Algorithm {
     return chromosomes.stream().map(this::mutate).collect(Collectors.toList());
   }
   private ArrangementChromosome mutate(ArrangementChromosome arrangement) {
-    Random random = new Random();
     float mutate = random.nextFloat();
     if (mutate < RATE_OF_MUTATION) {
       List<Integer> chromosome = arrangement.getChromosome();
-      Collections.swap(chromosome, random.nextInt(CHROMOSOME_SIZE), random.nextInt(CHROMOSOME_SIZE));
+      Collections.swap(chromosome, random.nextInt(chromosomeSize), random.nextInt(chromosomeSize));
       return createChromosome(chromosome);
     }
     return arrangement;
   }
 
   private ArrangementChromosome createChromosome(List<Integer> arrangement) {
-    return new ArrangementChromosome(arrangement, PEOPLE, SEATS, TABLES);
+    return new ArrangementChromosome(arrangement, people, seats, tables);
+  }
+
+  @Override
+  public void setSeats(List<Seat> seats) {
+    this.seats = seats;
+    this.chromosomeSize = seats.size();
+  }
+
+  @Autowired
+  public void setRandom(Random random) {
+    this.random = random;
   }
 }

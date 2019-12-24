@@ -1,14 +1,19 @@
 package com.phoebelord.algorithms.genetic.crossover;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@Component
 public class OnePointCrossover implements Crossover {
+
+  private Random random;
 
   @Override
   public List<List<Integer>> performCrossover(List<Integer> parent1, List<Integer> parent2) {
-    Random random = new Random();
     int chromosomeSize = parent1.size();
     int crossoverPoint = random.nextInt(chromosomeSize);
 
@@ -34,5 +39,10 @@ public class OnePointCrossover implements Crossover {
     children.add(child2);
 
     return children;
+  }
+
+  @Autowired
+  public void setRandom(Random random) {
+    this.random = random;
   }
 }
