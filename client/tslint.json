@@ -1,4 +1,5 @@
 {
+  "plugins": ["react-hooks"],
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "linterOptions": {
     "exclude": [
@@ -14,6 +15,8 @@
     "member-access": [true, "no-public"],
     "ordered-imports": false,
     "object-literal-sort-keys": false,
-    "no-console": false
+    "no-console": false,
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }
