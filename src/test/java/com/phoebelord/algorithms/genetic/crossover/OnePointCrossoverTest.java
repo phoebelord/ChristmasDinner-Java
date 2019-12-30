@@ -35,6 +35,15 @@ public class OnePointCrossoverTest {
   }
 
   @Test
+  public void givenCrossoverPointOf3ThenParentsAreUnchanged() {
+    when(random.nextInt(parent1.size())).thenReturn(3);
+    List<List<Integer>> children = onePointCrossover.performCrossover(parent1, parent2);
+
+    assertEquals(children.get(0), parent1);
+    assertEquals(children.get(1), parent2);
+  }
+
+  @Test
   public void givenCrossoverPointOf2ThenChildrenCross() {
     when(random.nextInt(parent1.size())).thenReturn(2);
     List<List<Integer>> children = onePointCrossover.performCrossover(parent1, parent2);
