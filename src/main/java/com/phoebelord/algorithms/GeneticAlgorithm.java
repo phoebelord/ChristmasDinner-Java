@@ -47,7 +47,7 @@ public class GeneticAlgorithm extends Algorithm {
       //System.out.println(bestChromosome);
       currentGeneration = new ArrayList<>(nextGeneration);
     }
-    return new Solution(bestChromosome.getPersonList(people), bestChromosome.getFitness());
+    return new Solution(tables, bestChromosome.getPersonList(people), bestChromosome.getFitness());
   }
 
   private List<ArrangementChromosome> initialisePopulation() {

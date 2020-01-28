@@ -35,7 +35,7 @@ public class ChristmasDinner {
       Algorithm algorithm = AlgorithmFactory.createAlgorithm(algorithmType, people, seats, tables);
       Solution solution = algorithm.calculateSolution();
 
-      System.out.println("Arrangement: " + solution.getArrangement());
+      System.out.println("Arrangement: " + solution.getArrangements());
       System.out.println("Score: " + solution.getHappinessScore());
 
       return solution;

@@ -14,17 +14,18 @@ import java.util.List;
 @Component
 public class NaiveAlgorithm extends Algorithm {
 
-  private int bestSolution = 0;
+  private int bestSolution;
   private List<Person> solution;
-  private float counter = 0;
-  private float lastCount = 0;
+  private float counter;
+  private float lastCount;
   private float noSolutions;
 
   @Override
   public Solution calculateSolution() {
+    initialiseCounters();
     //calculateAllSolutions(people.size(), people);
     calculateAllSolutions(people);
-    return new Solution(solution, bestSolution);
+    return new Solution(tables, solution, bestSolution);
   }
 
   private void calculateAllSolutions(int n, List<Person> elements) {
@@ -82,5 +83,11 @@ public class NaiveAlgorithm extends Algorithm {
   public void setSeats(List<Seat> seats) {
     this.seats = seats;
     this.noSolutions = factoriall(seats.size());
+  }
+
+  private void initialiseCounters() {
+    counter = 0;
+    lastCount = 0;
+    bestSolution = 0;
   }
 }

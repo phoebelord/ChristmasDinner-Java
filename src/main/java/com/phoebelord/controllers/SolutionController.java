@@ -12,7 +12,7 @@ public class SolutionController {
   @RequestMapping(value = "/", method = RequestMethod.GET)
   @CrossOrigin(origins = "http://localhost:3000")
   @ResponseBody
-  public Solution[] getSolution(@RequestParam String dataSet) {
-     return new Solution[]{ChristmasDinner.getSolution(dataSet, AlgorithmType.Genetic)};
+  public Solution[] getSolution(@RequestParam String dataSet, @RequestParam String algorithmType) {
+     return new Solution[]{ChristmasDinner.getSolution(dataSet, AlgorithmType.valueOf(algorithmType))};
   }
 }

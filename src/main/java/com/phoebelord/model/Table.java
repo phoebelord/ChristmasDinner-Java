@@ -2,17 +2,23 @@ package com.phoebelord.model;
 
 public class Table {
 
+  private String shape;
   private int tableNum;
   private int offset;
   private int size;
 
-  public Table(int tableNum, int offset, int size) {
+  public Table(String shape, int tableNum, int offset, int size) {
+    this.shape = shape;
     this.tableNum = tableNum;
     this.offset = offset;
     this.size = size;
   }
 
   public Table() {
+  }
+
+  public String getShape() {
+    return shape;
   }
 
   public int getTableNum() {

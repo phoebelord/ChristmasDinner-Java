@@ -1,10 +1,12 @@
 [
   {
+    "shape": "Rectangle",
     "tableNum": 0,
     "offset": 0,
     "size": 10
   },
   {
+    "shape": "Circle",
     "tableNum": 1,
     "offset": 10,
     "size": 11

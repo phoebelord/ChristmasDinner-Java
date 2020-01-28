@@ -22,14 +22,15 @@ public class BnBAlgorithm extends Algorithm {
   private int bestSoFar;
   private List<Integer> bestSolution;
 
-  private BigDecimal counter = BigDecimal.ZERO;
-  private BigDecimal pruned = BigDecimal.ZERO;
-  private BigDecimal lastCount = BigDecimal.ZERO;
+  private BigDecimal counter;
+  private BigDecimal pruned;
+  private BigDecimal lastCount;
   private BigDecimal noSolutions;
 
   @Override
   public Solution calculateSolution() {
     bestSoFar = Integer.MAX_VALUE;
+    initialiseCounters();
     for (int i = 0; i < people.size(); i++) {
       List<Integer> partialSolution = new ArrayList<>();
       partialSolution.add(i);
@@ -41,7 +42,7 @@ public class BnBAlgorithm extends Algorithm {
     }
     System.out.println("Pruned: " + pruned);
     System.out.println("Counter: " + counter);
-    return new Solution(personList, Algorithm.calculateHappiness(personList, seats, tables));
+    return new Solution(tables, personList, Algorithm.calculateHappiness(personList, seats, tables));
   }
 
   private void bnb(int level, List<Integer> partialSolution, int currentHappiness) {
@@ -164,5 +165,11 @@ public class BnBAlgorithm extends Algorithm {
   public void setSeats(List<Seat> seats) {
     this.seats = seats;
     this.noSolutions = factorial(seats.size());
+  }
+
+  private void initialiseCounters() {
+    counter = BigDecimal.ZERO;
+    pruned = BigDecimal.ZERO;
+    lastCount = BigDecimal.ZERO;
   }
 }
