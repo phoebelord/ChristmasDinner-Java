@@ -1,23 +1,24 @@
 import * as React from 'react';
 import {ChangeEvent, useEffect, useState} from 'react';
 import {Container, Form} from "react-bootstrap";
+import {Tables} from "./Tables";
 
-interface Solution {
+export interface Solution {
     arrangements: Array<Arrangement>
     happinessScore: number
 }
 
-interface Arrangement {
+export interface Arrangement {
     shape: string
     names: Array<string>
 }
 
-interface Props {
+interface SolutionProps {
     data: string
     type: string
 }
 
-function Solution(props: Props) {
+function Solution(props: SolutionProps) {
     const [solutions, setSolutions] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -31,77 +32,9 @@ function Solution(props: Props) {
             });
     }, [props.data, props.type]);
 
-    function getStyleString(length: number, index: number, shape: String) {
-        if(shape == "Circle"){
-            let offsetAngle = 360 /length;
-            let rotateAngle = offsetAngle * index;
-            return "rotate(" + rotateAngle + "deg) translate(0, -200px) rotate(-" + rotateAngle + "deg) translate(-50%, -50%)"
-        } else if(shape == "Rectangle") {
-
-            let sideLength = (length - 2) / 2;
-            let sideSpaceing = 600 / sideLength;
-
-            let xTranslation;
-            let yTranslation = 0;
-            if(index < sideLength) {
-                //top row
-                yTranslation = -100;
-                xTranslation = (sideSpaceing / 2) + (sideSpaceing * index);
-            } else if(index > sideLength && index < length - 1) {
-                //bottom row
-                xTranslation = (sideSpaceing / 2) + (sideSpaceing * (-index + (2 * sideLength)));
-                yTranslation = 100;
-            } else {
-                //ends
-                if(index == sideLength) {
-                    xTranslation = 300;
-                } else {
-                    xTranslation = -300;
-                }
-            }
-
-            if(xTranslation < 300 && xTranslation != -300) {
-                xTranslation = -(300 - xTranslation);
-            } else if(xTranslation > 300){
-                xTranslation = xTranslation - 300;
-            }
-
-            return "translate(" + xTranslation + "px, " + yTranslation + "px) translate(-50%, -50%)"
-        }
-        return "translate(-50%, -50%)"
-    }
-
-    if (isLoading) {
-        return <p>Loading ...</p>;
-    }
 
     return (
-        <Container className="solution text-center" fluid={true}>
-            <h2>Solution:</h2>
-            {console.log(solutions)}
-            {solutions.map((solution: Solution, solIndex) =>
-                <div key={solIndex} className="solution">
-                    {solution.arrangements.map((arrangement: Arrangement, arrIndex) =>
-                        <div key={arrIndex} className={"mt-5 mb-5 peopleList " + arrangement.shape}>
-                            {arrangement.names.map((name: String, nameIndex) => {
-                                return (
-                                    <div key={nameIndex} className="person"
-                                         style={{transform: getStyleString(arrangement.names.length, nameIndex, arrangement.shape)}}>
-                                        Seat {nameIndex}: {name}
-                                    </div>
-                                )
-                            })}
-                            <div className="answer">
-                                Shape: {arrangement.shape}
-                            </div>
-                        </div>
-                    )}
-                    <div className="answer">
-                        Score: {solution.happinessScore}
-                    </div>
-                </div>
-            )}
-        </Container>
+        <Tables solutions={solutions} isLoading={isLoading}/>
     )
 }
 
