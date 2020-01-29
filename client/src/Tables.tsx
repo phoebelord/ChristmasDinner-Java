@@ -20,15 +20,15 @@ export function Tables(props: TablesProps) {
     });
 
     function updateLayout() {
-        const lists = document.getElementsByClassName("peopleList");
+        const lists = document.getElementsByClassName("guestList");
         Array.from(lists).forEach((currentList) => {
             const shape = currentList.classList.contains("Circle") ? "Circle" : "Rectangle";
-            const people = currentList.getElementsByClassName("person");
+            const guests = currentList.getElementsByClassName("guest");
             const height = (currentList as HTMLElement).offsetHeight;
             const width = (currentList as HTMLElement).offsetWidth;
-            for (let j = 0; j < people.length; j++) {
-                const person = people[j] as HTMLElement;
-                person.style.transform = getStyleString(people.length, j, shape, width, height);
+            for (let j = 0; j < guests.length; j++) {
+                const guest = guests[j] as HTMLElement;
+                guest.style.transform = getStyleString(guests.length, j, shape, width, height);
             }
         });
     }
@@ -82,10 +82,10 @@ export function Tables(props: TablesProps) {
             {props.solutions.map((solution: Solution, solIndex) =>
                 <div key={solIndex} className="solution">
                     {solution.arrangements.map((arrangement: Arrangement, arrIndex) =>
-                        <div key={arrIndex} className={"mt-5 mb-5 peopleList " + arrangement.shape}>
+                        <div key={arrIndex} className={"mt-5 mb-5 guestList " + arrangement.shape}>
                             {arrangement.names.map((name: string, nameIndex) => {
                                 return (
-                                    <div key={nameIndex} className="person">
+                                    <div key={nameIndex} className="guest">
                                         Seat {nameIndex}: {name}
                                     </div>
                                 )

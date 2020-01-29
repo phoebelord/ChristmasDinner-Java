@@ -1,6 +1,6 @@
 package com.phoebelord.algorithms;
 
-import com.phoebelord.model.Person;
+import com.phoebelord.model.Guest;
 import com.phoebelord.model.Seat;
 import com.phoebelord.model.Solution;
 import com.phoebelord.model.Table;
@@ -11,24 +11,24 @@ import java.util.List;
 public abstract class Algorithm {
 
   List<Seat> seats;
-  List<Person> people;
+  List<Guest> guests;
   List<Table> tables;
 
 
   //doesn't need to be static???
-  public static int calculateHappiness(List<Person> people, List<Seat> seats, List<Table> tables) {
+  public static int calculateHappiness(List<Guest> guests, List<Seat> seats, List<Table> tables) {
     int total = 0;
-    for (int i = 0; i < people.size(); i++) {
-      int personHappiness = 0;
-      Person currentPerson = people.get(i);
+    for (int i = 0; i < guests.size(); i++) {
+      int guestHappiness = 0;
+      Guest currentGuest = guests.get(i);
       List<Integer> neighbouringSeats = seats.get(i).getNeighbours();
       Table table = tables.get(seats.get(i).getTableNum());
       for (int neighbouringSeat : neighbouringSeats) {
-        Person neighbour = people.get(neighbouringSeat);
-        int relationship =  currentPerson.getRelationshipWith(neighbour);
-        personHappiness += (isNextTo(i, neighbouringSeat, table.getOffset(), table.getSize()) ? 2 * relationship : relationship);
+        Guest neighbour = guests.get(neighbouringSeat);
+        int relationship =  currentGuest.getRelationshipWith(neighbour);
+        guestHappiness += (isNextTo(i, neighbouringSeat, table.getOffset(), table.getSize()) ? 2 * relationship : relationship);
       }
-      total += personHappiness;
+      total += guestHappiness;
     }
     return total;
   }
@@ -69,8 +69,8 @@ public abstract class Algorithm {
     this.seats = seats;
   }
 
-  public void setPeople(List<Person> people) {
-    this.people = people;
+  public void setGuests(List<Guest> guests) {
+    this.guests = guests;
   }
 
   public void setTables(List<Table> tables) {

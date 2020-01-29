@@ -47,13 +47,13 @@ public class GeneticAlgorithm extends Algorithm {
       //System.out.println(bestChromosome);
       currentGeneration = new ArrayList<>(nextGeneration);
     }
-    return new Solution(tables, bestChromosome.getPersonList(people), bestChromosome.getFitness());
+    return new Solution(tables, bestChromosome.getGuestList(guests), bestChromosome.getFitness());
   }
 
   private List<ArrangementChromosome> initialisePopulation() {
     List<ArrangementChromosome> population = new ArrayList<>();
     for (int i = 0; i < GENERATION_SIZE; i++) {
-      population.add(new ArrangementChromosome(people, seats, tables));
+      population.add(new ArrangementChromosome(guests, seats, tables));
     }
     return population;
   }
@@ -83,7 +83,7 @@ public class GeneticAlgorithm extends Algorithm {
   }
 
   private ArrangementChromosome createChromosome(List<Integer> arrangement) {
-    return new ArrangementChromosome(arrangement, people, seats, tables);
+    return new ArrangementChromosome(arrangement, guests, seats, tables);
   }
 
   @Override

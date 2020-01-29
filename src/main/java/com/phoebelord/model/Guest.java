@@ -3,18 +3,18 @@ package com.phoebelord.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class Person implements Serializable {
+public class Guest implements Serializable {
 
   private int id;
   private String name;
   private List<Relationship> relationships;
 
-  public Person(String name, int id) {
+  public Guest(String name, int id) {
     this.id = id;
     this.name = name;
   }
 
-  public Person() {
+  public Guest() {
   }
 
   public int getId() {
@@ -41,10 +41,10 @@ public class Person implements Serializable {
     this.relationships = relationships;
   }
 
-  public int getRelationshipWith(Person person) {
+  public int getRelationshipWith(Guest guest) {
     int value = 0;
     for (Relationship relationship : relationships) {
-      if (relationship.getPersonId() == person.getId()) {
+      if (relationship.getGuestId() == guest.getId()) {
         value = relationship.getLikability();
         break;
       }

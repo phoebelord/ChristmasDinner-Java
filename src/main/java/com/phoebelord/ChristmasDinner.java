@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.phoebelord.algorithms.Algorithm;
 import com.phoebelord.algorithms.AlgorithmFactory;
 import com.phoebelord.algorithms.AlgorithmType;
-import com.phoebelord.model.Person;
+import com.phoebelord.model.Guest;
 import com.phoebelord.model.Seat;
 import com.phoebelord.model.Solution;
 import com.phoebelord.model.Table;
@@ -25,14 +25,14 @@ public class ChristmasDinner {
 
   public static Solution getSolution(String filename, AlgorithmType algorithmType) {
     try {
-      List<Person> people = initialiseFromFile(filename + "/people.json", Person.class);
+      List<Guest> guests = initialiseFromFile(filename + "/guests.json", Guest.class);
       List<Seat> seats = initialiseFromFile(filename + "/seats.json", Seat.class);
       List<Table> tables = initialiseFromFile(filename + "/tables.json", Table.class);
       System.out.println("\nTables: " + tables);
       System.out.println("Seats: " + seats);
-      System.out.println("\nPeople: " + people);
+      System.out.println("\nGuests: " + guests);
 
-      Algorithm algorithm = AlgorithmFactory.createAlgorithm(algorithmType, people, seats, tables);
+      Algorithm algorithm = AlgorithmFactory.createAlgorithm(algorithmType, guests, seats, tables);
       Solution solution = algorithm.calculateSolution();
 
       System.out.println("Arrangement: " + solution.getArrangements());

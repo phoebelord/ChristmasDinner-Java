@@ -1,6 +1,6 @@
 package com.phoebelord.algorithms;
 
-import com.phoebelord.model.Person;
+import com.phoebelord.model.Guest;
 import com.phoebelord.model.Seat;
 import com.phoebelord.model.Solution;
 import com.phoebelord.model.Table;
@@ -31,29 +31,29 @@ public class BnBAlgorithm extends Algorithm {
   public Solution calculateSolution() {
     bestSoFar = Integer.MAX_VALUE;
     initialiseCounters();
-    for (int i = 0; i < people.size(); i++) {
+    for (int i = 0; i < guests.size(); i++) {
       List<Integer> partialSolution = new ArrayList<>();
       partialSolution.add(i);
       bnb(1, partialSolution, 0);
     }
-    List<Person> personList = new ArrayList<>();
-    for (int personIndex : bestSolution) {
-      personList.add(people.get(personIndex));
+    List<Guest> guestList = new ArrayList<>();
+    for (int guestIndex : bestSolution) {
+      guestList.add(guests.get(guestIndex));
     }
     System.out.println("Pruned: " + pruned);
     System.out.println("Counter: " + counter);
-    return new Solution(tables, personList, Algorithm.calculateHappiness(personList, seats, tables));
+    return new Solution(tables, guestList, Algorithm.calculateHappiness(guestList, seats, tables));
   }
 
   private void bnb(int level, List<Integer> partialSolution, int currentHappiness) {
-    if (level == people.size()) {
+    if (level == guests.size()) {
       counter = counter.add(BigDecimal.ONE);
       if (currentHappiness < bestSoFar) {
         bestSoFar = currentHappiness;
         bestSolution = new ArrayList<>(partialSolution);
       }
     } else {
-      for (int i = 0; i < people.size(); i++) {
+      for (int i = 0; i < guests.size(); i++) {
         if (!partialSolution.contains(i)) {
           List<Integer> newList = new ArrayList<>(partialSolution);
           newList.add(i);
@@ -62,7 +62,7 @@ public class BnBAlgorithm extends Algorithm {
           if (lowerBound < bestSoFar) {
             bnb(level + 1, newList, newHappiness);
           } else {
-            counter = counter.add(factorial(people.size() - (level + 1)));
+            counter = counter.add(factorial(guests.size() - (level + 1)));
             pruned = pruned.add(BigDecimal.ONE);
           }
         }
@@ -76,18 +76,18 @@ public class BnBAlgorithm extends Algorithm {
   }
 
   private int recalculateHappiness(List<Integer> partialSolution, int currentHappiness) {
-    int currentPersonIndex = partialSolution.get(partialSolution.size() - 1);
-    Person currentPerson = people.get(currentPersonIndex);
+    int currentGuestIndex = partialSolution.get(partialSolution.size() - 1);
+    Guest currentGuest = guests.get(currentGuestIndex);
     Seat seat = seats.get(partialSolution.size() - 1);
     List<Integer> neighbouringSeats = seat.getNeighbours();
     Table table = tables.get(seat.getTableNum());
     for(int neighbouringSeat : neighbouringSeats) {
       if(neighbouringSeat < partialSolution.size()) {
-        Person neighbour = people.get(partialSolution.get(neighbouringSeat));
+        Guest neighbour = guests.get(partialSolution.get(neighbouringSeat));
         boolean isNextTo = isNextTo(seat.getSeatNum(), neighbouringSeat, table.getOffset(), table.getSize());
         int multiplier = (isNextTo) ? 2 : 1;
-        currentHappiness += multiplier * getMinimisingRelationship(currentPerson.getRelationshipWith(neighbour));
-        currentHappiness += multiplier * getMinimisingRelationship(neighbour.getRelationshipWith(currentPerson));
+        currentHappiness += multiplier * getMinimisingRelationship(currentGuest.getRelationshipWith(neighbour));
+        currentHappiness += multiplier * getMinimisingRelationship(neighbour.getRelationshipWith(currentGuest));
       }
     }
     return currentHappiness;
@@ -97,7 +97,7 @@ public class BnBAlgorithm extends Algorithm {
   // does it even work lolllllllll
   private int estimateHappiness(List<Integer> partialSolution, int currentHappiness) {
     int estimate = 0;
-    for (int i = 0; i < people.size(); i++) {
+    for (int i = 0; i < guests.size(); i++) {
       List<Integer> neighbouringSeats = seats.get(i).getNeighbours();
       Table table = tables.get(seats.get(i).getTableNum());
       boolean hasPartner = false;
@@ -105,12 +105,12 @@ public class BnBAlgorithm extends Algorithm {
         if(neighbouringSeats.stream().allMatch(s -> s < partialSolution.size())) {
           continue;
         }
-        int personIndex = partialSolution.get(i);
-        Person currentPerson = people.get(personIndex);
+        int guestIndex = partialSolution.get(i);
+        Guest currentGuest = guests.get(guestIndex);
         for (int neighbouringSeat : neighbouringSeats) {
           if (neighbouringSeat < partialSolution.size() && !hasPartner) {
-            Person neighbour = people.get(partialSolution.get(neighbouringSeat));
-            if (getMinimisingRelationship(currentPerson.getRelationshipWith(neighbour)) == PARTNER) {
+            Guest neighbour = guests.get(partialSolution.get(neighbouringSeat));
+            if (getMinimisingRelationship(currentGuest.getRelationshipWith(neighbour)) == PARTNER) {
               hasPartner = true;
             }
           } else if(neighbouringSeat >= partialSolution.size()) {
@@ -120,7 +120,7 @@ public class BnBAlgorithm extends Algorithm {
             if (!hasPartner && isNextTo) {
               guess = PARTNER;
               hasPartner = true;
-            } else if(!hasPartner && i == people.size() - 1) {
+            } else if(!hasPartner && i == guests.size() - 1) {
               guess = PARTNER;
               hasPartner = true;
             } else {
@@ -130,7 +130,7 @@ public class BnBAlgorithm extends Algorithm {
           }
         }
       } else {
-        // at best a person will be sat next to their +1 and people they like ....
+        // at best a guest will be sat next to their +1 and guests they like ....
         int finalI = i;
         int countOfNextTo = (int) neighbouringSeats.stream().filter(neighbouringSeat -> isNextTo(finalI, neighbouringSeat, table.getOffset(), table.getSize())).count();
         if (countOfNextTo >= 1) {

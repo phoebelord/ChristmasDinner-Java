@@ -4,31 +4,31 @@
     "name": "Alice",
     "relationships": [
       {
-        "personId": 1,
+        "guestId": 1,
         "likability": 10
       },
       {
-        "personId": 2,
+        "guestId": 2,
         "likability": 1
       },
       {
-        "personId": 3,
+        "guestId": 3,
         "likability": 1
       },
       {
-        "personId": 5,
+        "guestId": 5,
         "likability": -1
       },
       {
-        "personId": 6,
+        "guestId": 6,
         "likability": 1
       },
       {
-        "personId": 7,
+        "guestId": 7,
         "likability": -1
       },
       {
-        "personId": 8,
+        "guestId": 8,
         "likability": -1
       }
     ]
@@ -38,31 +38,31 @@
     "name": "Bob",
     "relationships": [
       {
-        "personId": 0,
+        "guestId": 0,
         "likability": 10
       },
       {
-        "personId": 2,
+        "guestId": 2,
         "likability": 1
       },
       {
-        "personId": 3,
+        "guestId": 3,
         "likability": 1
       },
       {
-        "personId": 5,
+        "guestId": 5,
         "likability": -1
       },
       {
-        "personId": 6,
+        "guestId": 6,
         "likability": 1
       },
       {
-        "personId": 7,
+        "guestId": 7,
         "likability": 1
       },
       {
-        "personId": 8,
+        "guestId": 8,
         "likability": -1
       }
     ]
@@ -72,31 +72,31 @@
     "name": "Carl",
     "relationships": [
       {
-        "personId": 0,
+        "guestId": 0,
         "likability": 1
       },
       {
-        "personId": 1,
+        "guestId": 1,
         "likability": 1
       },
       {
-        "personId": 3,
+        "guestId": 3,
         "likability": 10
       },
       {
-        "personId": 4,
+        "guestId": 4,
         "likability": -1
       },
       {
-        "personId": 6,
+        "guestId": 6,
         "likability": 1
       },
       {
-        "personId": 8,
+        "guestId": 8,
         "likability": -1
       },
       {
-        "personId": 9,
+        "guestId": 9,
         "likability": 1
       }
     ]
@@ -106,31 +106,31 @@
     "name": "David",
     "relationships": [
       {
-        "personId": 1,
+        "guestId": 1,
         "likability": 1
       },
       {
-        "personId": 2,
+        "guestId": 2,
         "likability": 10
       },
       {
-        "personId": 4,
+        "guestId": 4,
         "likability": -1
       },
       {
-        "personId": 5,
+        "guestId": 5,
         "likability": -1
       },
       {
-        "personId": 6,
+        "guestId": 6,
         "likability": 1
       },
       {
-        "personId": 7,
+        "guestId": 7,
         "likability": 1
       },
       {
-        "personId": 8,
+        "guestId": 8,
         "likability": -1
       }
     ]
@@ -140,31 +140,31 @@
     "name": "Eddie",
     "relationships": [
       {
-        "personId": 0,
+        "guestId": 0,
         "likability": 1
       },
       {
-        "personId": 1,
+        "guestId": 1,
         "likability": 1
       },
       {
-        "personId": 3,
+        "guestId": 3,
         "likability": 1
       },
       {
-        "personId": 5,
+        "guestId": 5,
         "likability": -1
       },
       {
-        "personId": 7,
+        "guestId": 7,
         "likability": -1
       },
       {
-        "personId": 8,
+        "guestId": 8,
         "likability": -1
       },
       {
-        "personId": 9,
+        "guestId": 9,
         "likability": -1
       }
     ]
@@ -174,35 +174,35 @@
     "name": "Felix",
     "relationships": [
       {
-        "personId": 0,
+        "guestId": 0,
         "likability": -1
       },
       {
-        "personId": 1,
+        "guestId": 1,
         "likability": -1
       },
       {
-        "personId": 2,
+        "guestId": 2,
         "likability": 1
       },
       {
-        "personId": 3,
+        "guestId": 3,
         "likability": 1
       },
       {
-        "personId": 4,
+        "guestId": 4,
         "likability": -1
       },
       {
-        "personId": 6,
+        "guestId": 6,
         "likability": 1
       },
       {
-        "personId": 7,
+        "guestId": 7,
         "likability": 1
       },
       {
-        "personId": 8,
+        "guestId": 8,
         "likability": 1
       }
     ]
@@ -212,23 +212,23 @@
     "name": "Gareth",
     "relationships": [
       {
-        "personId": 1,
+        "guestId": 1,
         "likability": 1
       },
       {
-        "personId": 2,
+        "guestId": 2,
         "likability": 1
       },
       {
-        "personId": 3,
+        "guestId": 3,
         "likability": 1
       },
       {
-        "personId": 4,
+        "guestId": 4,
         "likability": -1
       },
       {
-        "personId": 8,
+        "guestId": 8,
         "likability": -1
       }
     ]
@@ -238,27 +238,27 @@
     "name": "Hannah",
     "relationships": [
       {
-        "personId": 1,
+        "guestId": 1,
         "likability": 1
       },
       {
-        "personId": 3,
+        "guestId": 3,
         "likability": 1
       },
       {
-        "personId": 5,
+        "guestId": 5,
         "likability": 1
       },
       {
-        "personId": 6,
+        "guestId": 6,
         "likability": 1
       },
       {
-        "personId": 8,
+        "guestId": 8,
         "likability": 1
       },
       {
-        "personId": 9,
+        "guestId": 9,
         "likability": 1
       }
     ]
@@ -268,35 +268,35 @@
     "name": "Imogen",
     "relationships": [
       {
-        "personId": 0,
+        "guestId": 0,
         "likability": -1
       },
       {
-        "personId": 1,
+        "guestId": 1,
         "likability": -1
       },
       {
-        "personId": 2,
+        "guestId": 2,
         "likability": 1
       },
       {
-        "personId": 4,
+        "guestId": 4,
         "likability": -1
       },
       {
-        "personId": 5,
+        "guestId": 5,
         "likability": 1
       },
       {
-        "personId": 6,
+        "guestId": 6,
         "likability": -1
       },
       {
-        "personId": 7,
+        "guestId": 7,
         "likability": 1
       },
       {
-        "personId": 9,
+        "guestId": 9,
         "likability": 1
       }
     ]
@@ -306,15 +306,15 @@
     "name": "Jamie",
     "relationships": [
       {
-        "personId": 2,
+        "guestId": 2,
         "likability": 1
       },
       {
-        "personId": 3,
+        "guestId": 3,
         "likability": 1
       },
       {
-        "personId": 6,
+        "guestId": 6,
         "likability": 1
       }
     ]

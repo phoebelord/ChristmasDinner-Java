@@ -1,6 +1,6 @@
 package com.phoebelord.algorithms;
 
-import com.phoebelord.model.Person;
+import com.phoebelord.model.Guest;
 import com.phoebelord.model.Seat;
 import com.phoebelord.model.Solution;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ import java.util.List;
 public class NaiveAlgorithm extends Algorithm {
 
   private int bestSolution;
-  private List<Person> solution;
+  private List<Guest> solution;
   private float counter;
   private float lastCount;
   private float noSolutions;
@@ -23,12 +23,11 @@ public class NaiveAlgorithm extends Algorithm {
   @Override
   public Solution calculateSolution() {
     initialiseCounters();
-    //calculateAllSolutions(people.size(), people);
-    calculateAllSolutions(people);
+    calculateAllSolutions(guests);
     return new Solution(tables, solution, bestSolution);
   }
 
-  private void calculateAllSolutions(int n, List<Person> elements) {
+  private void calculateAllSolutions(int n, List<Guest> elements) {
     if(n == 1) {
       calculateHappiness(elements);
     } else {
@@ -44,7 +43,7 @@ public class NaiveAlgorithm extends Algorithm {
     }
   }
 
-  private void calculateAllSolutions(List<Person> elements) {
+  private void calculateAllSolutions(List<Guest> elements) {
     int[] indexes = new int[elements.size()];
     for (int i = 0; i < elements.size(); i++) {
       indexes[i] = 0;
@@ -65,7 +64,7 @@ public class NaiveAlgorithm extends Algorithm {
     }
   }
 
-  private void calculateHappiness(List<Person> elements) {
+  private void calculateHappiness(List<Guest> elements) {
     counter++;
     if(((counter / noSolutions)*100) - ((lastCount / noSolutions)*100) >= 10)
     {
