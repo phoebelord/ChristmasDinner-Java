@@ -1,12 +1,24 @@
 package com.phoebelord.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.List;
 
+@Entity
 public class Guest implements Serializable {
 
+  @Id
+  @GeneratedValue
   private int id;
+
+  @NotEmpty
   private String name;
+
+  @OneToMany
   private List<Relationship> relationships;
 
   public Guest(String name, int id) {

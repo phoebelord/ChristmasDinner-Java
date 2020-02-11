@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {ChangeEvent, useEffect, useState} from 'react';
-import {Container, Form} from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import {Tables} from "./Tables";
 
 export interface Solution {
@@ -23,13 +23,15 @@ function Solution(props: SolutionProps) {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        setIsLoading(true);
-        fetch("http://localhost:8080?dataSet=" + props.data + "&algorithmType=" + props.type)
-            .then(response => response.json())
-            .then(data => {
-                setSolutions(data);
-                setIsLoading(false);
-            });
+        if(props.data) {
+            setIsLoading(true);
+            fetch("http://localhost:8080/solution?dataSet=" + props.data + "&algorithmType=" + props.type)
+                .then(response => response.json())
+                .then(data => {
+                    setSolutions(data);
+                    setIsLoading(false);
+                });
+        }
     }, [props.data, props.type]);
 
 
@@ -52,7 +54,7 @@ function DataSetForm() {
     }
 
     return (
-        <Container fluid={true} className="pt-5 text-center">
+        <div>
             <Form>
                 <Form.Group controlId="dataSet">
                     <Form.Label>Dataset:</Form.Label>
@@ -75,7 +77,7 @@ function DataSetForm() {
                 </Form.Group>
             </Form>
             <Solution data={dataSet} type={algorithmType}/>
-        </Container>
+        </div>
     );
 }
 

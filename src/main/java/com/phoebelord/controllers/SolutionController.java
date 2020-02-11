@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class SolutionController {
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @RequestMapping(value = "/solution", method = RequestMethod.GET)
   @CrossOrigin(origins = "http://localhost:3000")
   @ResponseBody
   public Solution[] getSolution(@RequestParam String dataSet, @RequestParam String algorithmType) {

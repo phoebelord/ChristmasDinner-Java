@@ -14,18 +14,30 @@
         <frontend-maven-plugin.version>1.9.0</frontend-maven-plugin.version>
         <node.version>v13.7.0</node.version>
         <yarn.version>v1.12.1</yarn.version>
+        <jdbc.url>jdbc:mysql://localhost:3306/christmas_dinner</jdbc.url>
+        <jdbc.username>root</jdbc.username>
+        <jdbc.password>password</jdbc.password>
+        <jdbc.dialect>org.hibernate.dialect.MySQL5Dialect</jdbc.dialect>
     </properties>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.2.RELEASE</version>
+        <version>2.2.4.RELEASE</version>
     </parent>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -48,6 +60,16 @@
             <artifactId>junit</artifactId>
             <version>4.13-rc-2</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.19</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
         </dependency>
     </dependencies>
 
@@ -75,10 +97,10 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target/classes/static</outputDirectory>
+                            <outputDirectory>${basedir}/target/classes/</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>client/build</directory>
+                                    <directory>src/main/webapp/WEB-INF/view/client/build</directory>
                                 </resource>
                             </resources>
                         </configuration>
@@ -90,7 +112,7 @@
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>${frontend-maven-plugin.version}</version>
                 <configuration>
-                    <workingDirectory>client</workingDirectory>
+                    <workingDirectory>src/main/webapp/WEB-INF/view/client</workingDirectory>
                 </configuration>
                 <executions>
                     <execution>

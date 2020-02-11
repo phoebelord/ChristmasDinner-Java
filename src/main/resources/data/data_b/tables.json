@@ -3,6 +3,6 @@
     "shape": "Rectangle",
     "tableNum": 0,
     "offset": 0,
-    "size": 10
+    "capacity": 10
   }
 ]

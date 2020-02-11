@@ -1,24 +1,52 @@
 package com.phoebelord.model;
 
+import org.hibernate.validator.constraints.Range;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@javax.persistence.Table(name = "guestTable")
 public class Table {
 
+  @Id
+  private int id;
+
+  @NotEmpty
   private String shape;
   private int tableNum;
   private int offset;
-  private int size;
 
-  public Table(String shape, int tableNum, int offset, int size) {
+  @NotNull
+  @Range(min = 2, max = 20)
+  private int capacity;
+
+  public Table(String shape, int tableNum, int offset, int capacity) {
     this.shape = shape;
     this.tableNum = tableNum;
     this.offset = offset;
-    this.size = size;
+    this.capacity = capacity;
   }
 
   public Table() {
   }
 
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
   public String getShape() {
     return shape;
+  }
+
+  public void setShape(String shape) {
+    this.shape = shape;
   }
 
   public int getTableNum() {
@@ -37,16 +65,16 @@ public class Table {
     this.offset = offset;
   }
 
-  public int getSize() {
-    return size;
+  public int getCapacity() {
+    return capacity;
   }
 
-  public void setSize(int size) {
-    this.size = size;
+  public void setCapacity(int capacity) {
+    this.capacity = capacity;
   }
 
   @Override
   public String toString() {
-    return "[table: " + tableNum + ", offset: " + offset + ", size: " + size + "]";
+    return "[table: " + tableNum + ", offset: " + offset + ", size: " + capacity + "]";
   }
 }

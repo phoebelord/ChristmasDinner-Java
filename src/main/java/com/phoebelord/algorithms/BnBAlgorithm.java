@@ -84,7 +84,7 @@ public class BnBAlgorithm extends Algorithm {
     for(int neighbouringSeat : neighbouringSeats) {
       if(neighbouringSeat < partialSolution.size()) {
         Guest neighbour = guests.get(partialSolution.get(neighbouringSeat));
-        boolean isNextTo = isNextTo(seat.getSeatNum(), neighbouringSeat, table.getOffset(), table.getSize());
+        boolean isNextTo = isNextTo(seat.getSeatNum(), neighbouringSeat, table.getOffset(), table.getCapacity());
         int multiplier = (isNextTo) ? 2 : 1;
         currentHappiness += multiplier * getMinimisingRelationship(currentGuest.getRelationshipWith(neighbour));
         currentHappiness += multiplier * getMinimisingRelationship(neighbour.getRelationshipWith(currentGuest));
@@ -116,7 +116,7 @@ public class BnBAlgorithm extends Algorithm {
           } else if(neighbouringSeat >= partialSolution.size()) {
             // get best possible approximation - can have at most one partner
             int guess;
-            boolean isNextTo = isNextTo(i, neighbouringSeat, table.getOffset(), table.getSize());
+            boolean isNextTo = isNextTo(i, neighbouringSeat, table.getOffset(), table.getCapacity());
             if (!hasPartner && isNextTo) {
               guess = PARTNER;
               hasPartner = true;
@@ -132,7 +132,7 @@ public class BnBAlgorithm extends Algorithm {
       } else {
         // at best a guest will be sat next to their +1 and guests they like ....
         int finalI = i;
-        int countOfNextTo = (int) neighbouringSeats.stream().filter(neighbouringSeat -> isNextTo(finalI, neighbouringSeat, table.getOffset(), table.getSize())).count();
+        int countOfNextTo = (int) neighbouringSeats.stream().filter(neighbouringSeat -> isNextTo(finalI, neighbouringSeat, table.getOffset(), table.getCapacity())).count();
         if (countOfNextTo >= 1) {
           estimate += (2 * PARTNER) + (2 * LIKES * (countOfNextTo - 1)) + (LIKES * (neighbouringSeats.size() - countOfNextTo));
         } else {

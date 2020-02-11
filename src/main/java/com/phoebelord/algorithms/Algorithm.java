@@ -26,7 +26,7 @@ public abstract class Algorithm {
       for (int neighbouringSeat : neighbouringSeats) {
         Guest neighbour = guests.get(neighbouringSeat);
         int relationship =  currentGuest.getRelationshipWith(neighbour);
-        guestHappiness += (isNextTo(i, neighbouringSeat, table.getOffset(), table.getSize()) ? 2 * relationship : relationship);
+        guestHappiness += (isNextTo(i, neighbouringSeat, table.getOffset(), table.getCapacity()) ? 2 * relationship : relationship);
       }
       total += guestHappiness;
     }

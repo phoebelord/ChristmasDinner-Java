@@ -80,7 +80,7 @@ export function Tables(props: TablesProps) {
         <Container className="solution text-center" fluid={true}>
             <h2>Solution:</h2>
             {props.solutions.map((solution: Solution, solIndex) =>
-                <div key={solIndex} className="solution">
+                <div key={solIndex} className="table">
                     {solution.arrangements.map((arrangement: Arrangement, arrIndex) =>
                         <div key={arrIndex} className={"mt-5 mb-5 guestList " + arrangement.shape}>
                             {arrangement.names.map((name: string, nameIndex) => {

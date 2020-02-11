@@ -1,0 +1,9 @@
+package com.phoebelord.dao;
+
+import com.phoebelord.model.User;
+import org.springframework.data.repository.CrudRepository;
+
+public interface UserRepository extends CrudRepository<User, Integer> {
+
+  User findByEmail(String email);
+}
