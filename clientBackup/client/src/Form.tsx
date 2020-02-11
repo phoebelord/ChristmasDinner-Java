@@ -39,22 +39,6 @@ function Form(props: FormProps) {
         }
     };
 
-    // const handleError = (field: string, errmsg: string) => {
-    //     if(!field) {
-    //         return
-    //     }
-    //
-    //     if(errmsg) {
-    //         setFailure("");
-    //         setErrCount(errCount + 1);
-    //         setErrmsgs({...errmsgs, [field]: errmsg})
-    //     } else {
-    //         setFailure("");
-    //         setErrCount(errCount === 1 ? 0 : errCount - 1);
-    //         setErrmsgs({...errmsgs, [field]: ''})
-    //     }
-    // };
-
     const renderError = () => {
         if(errCount || failure) {
             const errmsg = failure || Object.values(errmsgs).find(v=>v);

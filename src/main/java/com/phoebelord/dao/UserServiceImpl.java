@@ -1,6 +1,8 @@
 package com.phoebelord.dao;
 
+import com.phoebelord.exception.NotFoundException;
 import com.phoebelord.model.User;
+import com.phoebelord.security.UserPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,20 +39,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
   @Override
   @Transactional
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    User user = userRepository.findByEmail(email);
+    User user = userRepository.findByEmail(email)
+        .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
-    if(user == null) {
-      throw new UsernameNotFoundException("User not found");
-    }
-
-    log.info("Logging in user: " + user.getEmail());
-    List<GrantedAuthority> authorities = new ArrayList<>();
-    authorities.add(new SimpleGrantedAuthority(user.getRole()));
-    return buildUserForAuthentication(user, authorities);
+    return UserPrincipal.create(user);
   }
 
-  private UserDetails buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
-    return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true, true, true, true, authorities);
-
+  @Transactional
+  public UserDetails loadUserById(int id) {
+    User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User", "id", id));
+    return UserPrincipal.create(user);
   }
+
+
 }
