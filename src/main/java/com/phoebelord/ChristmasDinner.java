@@ -10,6 +10,8 @@ import com.phoebelord.model.Solution;
 import com.phoebelord.model.Table;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,6 +19,10 @@ import java.net.URL;
 import java.util.List;
 
 @SpringBootApplication
+@EntityScan(basePackageClasses = {
+  ChristmasDinner.class,
+  Jsr310JpaConverters.class
+})
 public class ChristmasDinner {
 
   public static void main(String[] args) {

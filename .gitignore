@@ -3,3 +3,4 @@ ChristmasDinner.iml
 target/
 output.txt
 clientBackup/client/node/
+*.icloud

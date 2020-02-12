@@ -11,6 +11,8 @@ import com.phoebelord.payload.JwtAuthenticationResponse;
 import com.phoebelord.payload.LoginRequest;
 import com.phoebelord.payload.SignUpRequest;
 import com.phoebelord.security.JwtTokenProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,8 @@ import java.util.Collections;
 @RequestMapping("/api/auth")
 public class AuthenticationController {
 
+  private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
+
   @Autowired
   AuthenticationManager authenticationManager;
 
@@ -45,7 +49,7 @@ public class AuthenticationController {
   @Autowired
   JwtTokenProvider jwtTokenProvider;
 
-  @PostMapping("/singin")
+  @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
     Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
     SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -71,7 +75,6 @@ public class AuthenticationController {
     URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/{email}").buildAndExpand(result.getEmail()).toUri();
 
     return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
-
   }
 
 }
