@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.phoebelord.algorithms.Algorithm;
 import com.phoebelord.algorithms.AlgorithmFactory;
 import com.phoebelord.algorithms.AlgorithmType;
-import com.phoebelord.model.Guest;
-import com.phoebelord.model.Seat;
-import com.phoebelord.model.Solution;
-import com.phoebelord.model.Table;
+import com.phoebelord.model.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -39,6 +36,28 @@ public class ChristmasDinner {
       System.out.println("\nGuests: " + guests);
 
       Algorithm algorithm = AlgorithmFactory.createAlgorithm(algorithmType, guests, seats, tables);
+      Solution solution = algorithm.calculateSolution();
+
+      System.out.println("Arrangement: " + solution.getArrangements());
+      System.out.println("Score: " + solution.getHappinessScore());
+
+      return solution;
+    } catch (IOException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  public static Solution getSolution(Config config) {
+    try {
+      List<Guest> guests = config.getGuests();
+      List<Seat> seats = initialiseFromFile("data_a/seats.json", Seat.class);
+      List<Table> tables = config.getTables();
+      System.out.println("\nTables: " + tables);
+      System.out.println("Seats: " + seats);
+      System.out.println("\nGuests: " + guests);
+
+      Algorithm algorithm = AlgorithmFactory.createAlgorithm(AlgorithmType.Genetic, guests, seats, tables);
       Solution solution = algorithm.calculateSolution();
 
       System.out.println("Arrangement: " + solution.getArrangements());

@@ -1,6 +1,6 @@
 package com.phoebelord.security;
 
-import com.phoebelord.dao.UserServiceImpl;
+import com.phoebelord.service.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   }
 
   private String getJwtFromRequest(HttpServletRequest request) {
-    String token = request.getHeader("Authorisation");
+    String token = request.getHeader("Authorization");
     if(StringUtils.hasText(token) && token.startsWith("Bearer ")) {
       return token.substring(7, token.length());
     }

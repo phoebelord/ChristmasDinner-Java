@@ -1,10 +1,6 @@
 package com.phoebelord.model;
 
-import org.hibernate.validator.constraints.Range;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -18,8 +14,6 @@ public class Relationship implements Serializable {
   @NotNull
   private int guestId;
 
-  @NotNull
-  @Range(min = -1, max = 10)
   private int likability;
 
   public Relationship(int target, int likability) {

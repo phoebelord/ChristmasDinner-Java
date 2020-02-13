@@ -1,25 +1,21 @@
-package com.phoebelord.dao;
+package com.phoebelord.service;
 
+import com.phoebelord.dao.UserRepository;
 import com.phoebelord.exception.NotFoundException;
 import com.phoebelord.model.User;
 import com.phoebelord.security.UserPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service("userService")
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserDetailsService {
 
   private final static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -30,11 +26,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     this.userRepository = userRepository;
   }
 
-  @Override
   public boolean isUniqueEmail(String email) {
     return userRepository.findByEmail(email) == null;
   }
-
 
   @Override
   @Transactional

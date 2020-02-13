@@ -1,0 +1,16 @@
+[
+  {
+    "tableNum": 0,
+    "seatNum": 0,
+    "neighbours": [
+      1
+    ]
+  },
+  {
+    "tableNum": 0,
+    "seatNum": 1,
+    "neighbours": [
+      0
+    ]
+  }
+]

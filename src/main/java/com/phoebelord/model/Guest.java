@@ -1,14 +1,16 @@
 package com.phoebelord.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import com.phoebelord.payload.GuestRequest;
+
+import javax.persistence.*;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "config_id"})})
 public class Guest implements Serializable {
 
   @Id
@@ -21,12 +23,21 @@ public class Guest implements Serializable {
   @OneToMany
   private List<Relationship> relationships;
 
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name="config_id", nullable = false)
+  private Config config;
+
   public Guest(String name, int id) {
     this.id = id;
     this.name = name;
   }
 
   public Guest() {
+  }
+
+  public Guest(GuestRequest guestRequest) {
+    this.name = guestRequest.getName();
+    this.relationships = new ArrayList<>();
   }
 
   public int getId() {
@@ -51,6 +62,18 @@ public class Guest implements Serializable {
 
   public void setRelationships(List<Relationship> relationships) {
     this.relationships = relationships;
+  }
+
+  public void addRelationship(Relationship relationship) {
+    relationships.add(relationship);
+  }
+
+  public Config getConfig() {
+    return config;
+  }
+
+  public void setConfig(Config config) {
+    this.config = config;
   }
 
   public int getRelationshipWith(Guest guest) {
