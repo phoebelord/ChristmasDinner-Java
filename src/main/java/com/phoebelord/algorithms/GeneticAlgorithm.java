@@ -9,14 +9,16 @@ import com.phoebelord.algorithms.genetic.crossover.CrossoverType;
 import com.phoebelord.algorithms.genetic.selection.Selection;
 import com.phoebelord.algorithms.genetic.selection.SelectionFactory;
 import com.phoebelord.algorithms.genetic.selection.SelectionType;
-import com.phoebelord.model.Seat;
+import com.phoebelord.model.Table;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
+@Scope("prototype")
 public class GeneticAlgorithm extends Algorithm {
 
   private final int GENERATION_SIZE = 100;
@@ -87,8 +89,8 @@ public class GeneticAlgorithm extends Algorithm {
   }
 
   @Override
-  public void setSeats(List<Seat> seats) {
-    this.seats = seats;
+  public void setTablesAndSeats(List<Table> tables) {
+    super.setTablesAndSeats(tables);
     this.chromosomeSize = seats.size();
   }
 

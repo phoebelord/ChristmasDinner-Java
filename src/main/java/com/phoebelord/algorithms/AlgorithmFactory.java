@@ -1,7 +1,6 @@
 package com.phoebelord.algorithms;
 
 import com.phoebelord.model.Guest;
-import com.phoebelord.model.Seat;
 import com.phoebelord.model.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,7 +16,7 @@ public class AlgorithmFactory {
 
   private static BnBAlgorithm bnBAlgorithm;
 
-  public static Algorithm createAlgorithm(AlgorithmType type, List<Guest> guests, List<Seat> seats, List<Table> tables) {
+  public static Algorithm createAlgorithm(AlgorithmType type, List<Guest> guests, List<Table> tables) {
     Algorithm algorithm;
     switch (type) {
       case Naive:
@@ -33,8 +32,7 @@ public class AlgorithmFactory {
     }
 
     algorithm.setGuests(guests);
-    algorithm.setSeats(seats);
-    algorithm.setTables(tables);
+    algorithm.setTablesAndSeats(tables);
     return algorithm;
   }
 

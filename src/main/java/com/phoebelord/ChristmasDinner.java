@@ -29,13 +29,11 @@ public class ChristmasDinner {
   public static Solution getSolution(String filename, AlgorithmType algorithmType) {
     try {
       List<Guest> guests = initialiseFromFile(filename + "/guests.json", Guest.class);
-      List<Seat> seats = initialiseFromFile(filename + "/seats.json", Seat.class);
       List<Table> tables = initialiseFromFile(filename + "/tables.json", Table.class);
       System.out.println("\nTables: " + tables);
-      System.out.println("Seats: " + seats);
       System.out.println("\nGuests: " + guests);
 
-      Algorithm algorithm = AlgorithmFactory.createAlgorithm(algorithmType, guests, seats, tables);
+      Algorithm algorithm = AlgorithmFactory.createAlgorithm(algorithmType, guests, tables);
       Solution solution = algorithm.calculateSolution();
 
       System.out.println("Arrangement: " + solution.getArrangements());
@@ -49,25 +47,18 @@ public class ChristmasDinner {
   }
 
   public static Solution getSolution(Config config) {
-    try {
       List<Guest> guests = config.getGuests();
-      List<Seat> seats = initialiseFromFile("data_a/seats.json", Seat.class);
       List<Table> tables = config.getTables();
       System.out.println("\nTables: " + tables);
-      System.out.println("Seats: " + seats);
       System.out.println("\nGuests: " + guests);
 
-      Algorithm algorithm = AlgorithmFactory.createAlgorithm(AlgorithmType.Genetic, guests, seats, tables);
+      Algorithm algorithm = AlgorithmFactory.createAlgorithm(AlgorithmType.Genetic, guests, tables);
       Solution solution = algorithm.calculateSolution();
 
       System.out.println("Arrangement: " + solution.getArrangements());
       System.out.println("Score: " + solution.getHappinessScore());
 
       return solution;
-    } catch (IOException e) {
-      e.printStackTrace();
-      return null;
-    }
   }
 
   private static <T> List<T> initialiseFromFile(String filename, Class<T> clazz) throws IOException {

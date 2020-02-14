@@ -1,8 +1,9 @@
 package com.phoebelord.algorithms;
 
 import com.phoebelord.model.Guest;
-import com.phoebelord.model.Seat;
 import com.phoebelord.model.Solution;
+import com.phoebelord.model.Table;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 // https://www.baeldung.com/java-array-permutations
 
 @Component
+@Scope("prototype")
 public class NaiveAlgorithm extends Algorithm {
 
   private int bestSolution;
@@ -79,8 +81,8 @@ public class NaiveAlgorithm extends Algorithm {
   }
 
   @Override
-  public void setSeats(List<Seat> seats) {
-    this.seats = seats;
+  public void setTablesAndSeats(List<Table> tables) {
+    super.setTablesAndSeats(tables);
     this.noSolutions = factoriall(seats.size());
   }
 

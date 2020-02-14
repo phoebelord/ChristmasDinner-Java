@@ -4,6 +4,7 @@ import com.phoebelord.model.Guest;
 import com.phoebelord.model.Seat;
 import com.phoebelord.model.Solution;
 import com.phoebelord.model.Table;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Scope("prototype")
 public class BnBAlgorithm extends Algorithm {
 
   private final int PARTNER = 1;
@@ -162,8 +164,8 @@ public class BnBAlgorithm extends Algorithm {
   }
 
   @Override
-  public void setSeats(List<Seat> seats) {
-    this.seats = seats;
+  public void setTablesAndSeats(List<Table> tables) {
+    super.setTablesAndSeats(tables);
     this.noSolutions = factorial(seats.size());
   }
 

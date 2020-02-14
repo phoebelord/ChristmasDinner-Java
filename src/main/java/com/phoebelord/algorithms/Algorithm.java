@@ -6,6 +6,7 @@ import com.phoebelord.model.Solution;
 import com.phoebelord.model.Table;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Algorithm {
@@ -32,8 +33,6 @@ public abstract class Algorithm {
     }
     return total;
   }
-
-
 
   public static boolean isNextTo(int seatNum, int otherSeatNum, int offset, int tableSize) {
     boolean isPlusOne = mod((seatNum + 1) - offset, tableSize) + offset == otherSeatNum;
@@ -65,15 +64,42 @@ public abstract class Algorithm {
 
   public abstract Solution calculateSolution();
 
-  public void setSeats(List<Seat> seats) {
-    this.seats = seats;
-  }
-
   public void setGuests(List<Guest> guests) {
     this.guests = guests;
   }
 
-  public void setTables(List<Table> tables) {
+  public void setTablesAndSeats(List<Table> tables) {
     this.tables = tables;
+    this.seats = deriveSeats();
+  }
+
+  public List<Seat> deriveSeats() {
+    seats = new ArrayList<>();
+    for(Table table : tables) {
+      for(int i = 0; i < table.getCapacity(); i++) {
+        Seat currentSeat = new Seat();
+        currentSeat.setTableNum(table.getTableNum());
+        currentSeat.setSeatNum(i + table.getOffset());
+        currentSeat.setNeighbours(getNeighbouringSeats(table, i));
+        seats.add(currentSeat);
+      }
+    }
+    return seats;
+  }
+
+  private List<Integer> getNeighbouringSeats(Table table, int i) {
+    List<Integer> neighbours = new ArrayList<>();
+    // each seat is next to the 2 either side
+    neighbours.add(mod((i + 1), table.getCapacity()) + table.getOffset());
+    neighbours.add(mod((i - 1), table.getCapacity()) + table.getOffset());
+    if(table.getShape().equals("Rectangle")) {
+      //also across from someone
+      int peoplePerSide = (table.getCapacity() - 2) / 2;
+      if((i != table.getCapacity() - 1) && (i != peoplePerSide + 1)) {
+        int neighbour = (-i + 2 * (peoplePerSide));
+        neighbours.add(neighbour + table.getOffset());
+      }
+    }
+    return neighbours;
   }
 }
