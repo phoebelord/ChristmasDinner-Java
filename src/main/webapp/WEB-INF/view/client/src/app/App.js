@@ -8,6 +8,8 @@ import LoadingIndicator from "../common/LoadingIndicator";
 import AppHeader from "../common/AppHeader";
 import Login from "../user/login/Login";
 import Signup from "../user/signup/Signup";
+import NewConfig from "../config/NewConfig";
+import PrivateRoute from "../common/PrivateRoute";
 
 function App(props) {
   const history = useHistory();
@@ -30,7 +32,7 @@ function App(props) {
           setIsLoading(false);
         }).catch(error => {
           setIsLoading(false);
-    })
+    });
   };
 
   useEffect(() => {
@@ -52,7 +54,7 @@ function App(props) {
 
   const handleLogin = () => {
     loadCurrentUser();
-    history.push("/");
+    history.push("/config/create");
 
     notification.success({
       message: "Christmas Dinner",
@@ -73,6 +75,7 @@ function App(props) {
             <Route exact path="/" />
             <Route path="/login" render={(props) => <Login onLogin={handleLogin} {...props} />}/>
             <Route path="/signup" component={Signup}/>
+            <PrivateRoute authenticated={isAuthenticated} path="/config/create" component={NewConfig} handleLogout={handleLogout}/>
           </Switch>
         </div>
       </Layout>

@@ -5,6 +5,7 @@ import "./AppHeader.css";
 
 function AppHeader(props) {
     const handleMenuCLick = (key) => {
+        console.log(key);
         if(key === "logout"){
             props.onLogout();
         }
@@ -19,7 +20,7 @@ function AppHeader(props) {
                 </Link>
             </Menu.Item>,
             <Menu.Item key="/profile" className="profile-menu">
-                <ProfileDropdownMenu currentUser={props.currentUser} handleMenuClick={handleMenuCLick} />
+                <ProfileDropdownMenu currentUser={props.currentUser} handleMenuClick={handleMenuCLick()} />
             </Menu.Item>
         ];
     } else {

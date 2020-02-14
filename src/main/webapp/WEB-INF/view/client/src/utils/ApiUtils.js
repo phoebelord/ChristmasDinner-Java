@@ -6,7 +6,7 @@ const request = (options) => {
     });
 
     if (localStorage.getItem(ACCESS_TOKEN)) {
-        headers.append('Authorisation', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN));
+        headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN));
     }
 
     const defaults = {headers: headers};
@@ -50,7 +50,16 @@ export function getCurrentUser() {
     }
 
     return request({
-        url: API_BASE_URL + "/users/me",
+        url: API_BASE_URL + "/user/me",
         method: 'GET'
     })
+}
+
+export function createConfig(configData) {
+    console.log(JSON.stringify(configData));
+    return request({
+        url: API_BASE_URL + "/config/create",
+        method: 'POST',
+        body: JSON.stringify(configData)
+    });
 }
