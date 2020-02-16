@@ -2,5 +2,5 @@
 ChristmasDinner.iml
 target/
 output.txt
-clientBackup/client/node/
+clientBackup/
 *.icloud

@@ -1,14 +1,8 @@
 import * as React from 'react';
 import {useEffect} from 'react';
-import {Container} from "react-bootstrap";
-import {Solution, Arrangement} from "./Solution"
+import "./Tables.css"
 
-interface TablesProps {
-    solutions: Array<Solution>
-    isLoading: boolean
-}
-
-export function Tables(props: TablesProps) {
+export function Tables(props) {
 
     useEffect(() => {
         updateLayout();
@@ -24,16 +18,16 @@ export function Tables(props: TablesProps) {
         Array.from(lists).forEach((currentList) => {
             const shape = currentList.classList.contains("Circle") ? "Circle" : "Rectangle";
             const guests = currentList.getElementsByClassName("guest");
-            const height = (currentList as HTMLElement).offsetHeight;
-            const width = (currentList as HTMLElement).offsetWidth;
+            const height = (currentList).offsetHeight;
+            const width = (currentList).offsetWidth;
             for (let j = 0; j < guests.length; j++) {
-                const guest = guests[j] as HTMLElement;
+                const guest = guests[j];
                 guest.style.transform = getStyleString(guests.length, j, shape, width, height);
             }
         });
     }
 
-    function getStyleString(length: number, index: number, shape: string, width: number, height: number) {
+    function getStyleString(length, index, shape, width, height) {
         if (shape === "Circle") {
             const offsetAngle = 360 / length;
             const rotateAngle = offsetAngle * index;
@@ -72,35 +66,37 @@ export function Tables(props: TablesProps) {
         return "translate(-50%, -50%)"
     }
 
-    if (props.isLoading) {
-        return <p>Loading ...</p>
+    if(props.solutions){
+        return (
+            <div className="solution-container">
+                <h2>Solution:</h2>
+                {props.solutions.map((solution, solIndex) =>
+                    <div key={solIndex} className="table">
+                        {solution.arrangements.map((arrangement, arrIndex) =>
+                            <div key={arrIndex} className={"mt-5 mb-5 guestList " + arrangement.shape}>
+                                {arrangement.names.map((name, nameIndex) => {
+                                    return (
+                                        <div key={nameIndex} className="guest">
+                                            Seat {nameIndex}: {name}
+                                        </div>
+                                    )
+                                })}
+                                <div className="shape">
+                                    Shape: {arrangement.shape}
+                                </div>
+                            </div>
+                        )}
+                        <br/>
+                        <div className="answer">
+                            Score: {solution.happinessScore}
+                        </div>
+                    </div>
+                )}
+            </div>
+        )
+    } else {
+        return null;
     }
 
-    return (
-        <Container className="solution text-center" fluid={true}>
-            <h2>Solution:</h2>
-            {props.solutions.map((solution: Solution, solIndex) =>
-                <div key={solIndex} className="table">
-                    {solution.arrangements.map((arrangement: Arrangement, arrIndex) =>
-                        <div key={arrIndex} className={"mt-5 mb-5 guestList " + arrangement.shape}>
-                            {arrangement.names.map((name: string, nameIndex) => {
-                                return (
-                                    <div key={nameIndex} className="guest">
-                                        Seat {nameIndex}: {name}
-                                    </div>
-                                )
-                            })}
-                            <div className="shape">
-                                Shape: {arrangement.shape}
-                            </div>
-                        </div>
-                    )}
-                    <br/>
-                    <div className="answer">
-                        Score: {solution.happinessScore}
-                    </div>
-                </div>
-            )}
-        </Container>
-    )
+
 }

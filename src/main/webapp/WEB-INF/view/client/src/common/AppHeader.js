@@ -25,6 +25,11 @@ function AppHeader(props) {
                     <Icon type="plus" className="nav-icon" />
                 </Link>
             </Menu.Item>,
+            <Menu.Item key="/solution">
+                <Link to="/solution">
+                    <Icon type="book" className="nav-icon" />
+                </Link>
+            </Menu.Item>,
             <Menu.Item key="/profile" className="profile-menu">
                 <ProfileDropdownMenu currentUser={props.currentUser} handleMenuClick={handleMenuCLick} />
             </Menu.Item>

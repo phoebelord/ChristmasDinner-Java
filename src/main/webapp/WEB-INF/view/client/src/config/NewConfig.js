@@ -28,19 +28,13 @@ function NewConfig(props) {
 
     const addRelationship = (guestNumber) => {
         const guestss = guests.slice();
-        console.log(guestss);
         const guestRelationships = guests[guestNumber].relationships.slice();
-        console.log(guestRelationships);
         guestRelationships.push({
             guestName: "",
             likability: null
         });
-        console.log(guestRelationships);
         guestss[guestNumber].relationships = guestRelationships;
-        console.log(guestRelationships);
         setGuests(guestss);
-        console.log(guestss);
-        console.log("!!!!!!!!");
     };
 
     const removeRelationship = (guestNumber, relationshipNumber) => {

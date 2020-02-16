@@ -63,3 +63,10 @@ export function createConfig(configData) {
         body: JSON.stringify(configData)
     });
 }
+
+export function getSolution(configId) {
+    return request({
+        url: API_BASE_URL + "/solution/" + configId,
+        method: 'GET'
+    })
+}
