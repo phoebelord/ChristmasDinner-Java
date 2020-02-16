@@ -11,6 +11,8 @@ import Signup from "../user/signup/Signup";
 import NewConfig from "../config/NewConfig";
 import PrivateRoute from "../common/PrivateRoute";
 
+const { Content } = Layout;
+
 function App(props) {
   const history = useHistory();
   const [currentUser, setCurrentUser] = useState(null);
@@ -69,7 +71,7 @@ function App(props) {
   return (
     <Layout className="app-container">
       <AppHeader isAuthenticated={isAuthenticated} currentUser={currentUser} onLogout={handleLogout}/>
-      <Layout className="app-content">
+      <Content className="app-content">
         <div className="container">
           <Switch>
             <Route exact path="/" />
@@ -78,7 +80,7 @@ function App(props) {
             <PrivateRoute authenticated={isAuthenticated} path="/config/create" component={NewConfig} handleLogout={handleLogout}/>
           </Switch>
         </div>
-      </Layout>
+      </Content>
     </Layout>
   );
 }

@@ -4,7 +4,8 @@ import {Link, withRouter} from "react-router-dom";
 import "./AppHeader.css";
 
 function AppHeader(props) {
-    const handleMenuCLick = (key) => {
+
+    const handleMenuCLick = ({key}) => {
         console.log(key);
         if(key === "logout"){
             props.onLogout();
@@ -19,8 +20,13 @@ function AppHeader(props) {
                     <Icon type="home" className="nav-icon" />
                 </Link>
             </Menu.Item>,
+            <Menu.Item key="/config/create">
+                <Link to="/config/create">
+                    <Icon type="plus" className="nav-icon" />
+                </Link>
+            </Menu.Item>,
             <Menu.Item key="/profile" className="profile-menu">
-                <ProfileDropdownMenu currentUser={props.currentUser} handleMenuClick={handleMenuCLick()} />
+                <ProfileDropdownMenu currentUser={props.currentUser} handleMenuClick={handleMenuCLick} />
             </Menu.Item>
         ];
     } else {

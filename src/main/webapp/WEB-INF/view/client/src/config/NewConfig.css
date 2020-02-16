@@ -1,0 +1,52 @@
+.new-config-container {
+    max-width: 520px;
+    margin: 40px auto 0;
+}
+
+.create-config-form-button {
+    width: 100%;
+}
+
+.create-config-form-button[disabled], .create-config-form-button[disabled]:hover, .create-config-form-button[disabled]:focus {
+    opacity: 0.6;
+    color: #fff;
+    background-color: #1890ff;
+    border-color: #1890ff;
+}
+
+
+.dynamic-delete-button {
+    cursor: pointer;
+    position: relative;
+    top: 4px;
+    font-size: 24px;
+    color: #999;
+    transition: all .3s;
+}
+
+.optional-guest .optional-table {
+    width: calc(100% - 35px);
+    margin-right: 8px;
+}
+
+.dynamic-delete-button:hover {
+    color: #777;
+}
+
+.dynamic-delete-button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.config-form-row {
+    margin-bottom: 20px;
+}
+
+.config-form-row input, .config-form-row textarea {
+    margin-bottom: 4px;
+}
+
+.indent {
+    width: 90%;
+    margin-left: 10%;
+}
