@@ -56,11 +56,28 @@ export function getCurrentUser() {
 }
 
 export function createConfig(configData) {
-    console.log(JSON.stringify(configData));
     return request({
         url: API_BASE_URL + "/config/create",
         method: 'POST',
         body: JSON.stringify(configData)
+    });
+}
+
+export function getConfig(configId) {
+    return request({
+        url: API_BASE_URL + '/config/' + configId,
+        method: 'GET'
+    });
+}
+
+export function getMyConfigs() {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + "/config/all",
+        method: 'GET'
     });
 }
 

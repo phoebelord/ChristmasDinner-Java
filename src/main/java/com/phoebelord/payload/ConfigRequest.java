@@ -1,7 +1,5 @@
 package com.phoebelord.payload;
 
-import com.phoebelord.model.Table;
-
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
