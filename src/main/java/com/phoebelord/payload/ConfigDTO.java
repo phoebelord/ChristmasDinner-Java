@@ -7,7 +7,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConfigResponse {
+public class ConfigDTO {
 
   private int id;
 
@@ -23,7 +23,7 @@ public class ConfigResponse {
 
   private String lastModified;
 
-  public ConfigResponse(Config config) {
+  public ConfigDTO(Config config) {
     this.id = config.getId();
     this.name = config.getName();
     this.guests = new ArrayList<>();
@@ -33,7 +33,7 @@ public class ConfigResponse {
     this.lastModified = LocalDateTime.ofInstant(config.getUpdatedAt(), ZoneId.systemDefault()).toString();
   }
 
-  public ConfigResponse() {
+  public ConfigDTO() {
   }
 
   public int getId() {

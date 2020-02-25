@@ -32,16 +32,16 @@ public class ConfigService {
   @Autowired
   TableRepository tableRepository;
 
-  public Config createConfig(ConfigRequest configRequest) {
-    Config config = new Config(configRequest);
+  public Config createConfig(NewConfigRequest newConfigRequest) {
+    Config config = new Config(newConfigRequest);
     configRepository.save(config);
-    configRequest.getGuests().forEach(guestRequest -> {
+    newConfigRequest.getGuests().forEach(guestRequest -> {
       config.addGuest(createGuest(guestRequest, config));
     });
 
-    addRelationships(configRequest.getGuests(), config);
+    addRelationships(newConfigRequest.getGuests(), config);
 
-    List<TableRequest> tableRequests = configRequest.getTables();
+    List<TableRequest> tableRequests = newConfigRequest.getTables();
     int offset = 0;
     for (int i = 0; i < tableRequests.size(); i++) {
       TableRequest currentTableRequest = tableRequests.get(i);
@@ -91,8 +91,8 @@ public class ConfigService {
     }
   }
 
-  public ConfigResponse createConfigResponse(Config config) {
-    ConfigResponse configResponse = new ConfigResponse(config);
+  public ConfigDTO createConfigDTO(Config config) {
+    ConfigDTO configDTO = new ConfigDTO(config);
 
     List<GuestRequest> guestRequests = new ArrayList<>();
     for(Guest guest: config.getGuests()) {
@@ -101,7 +101,7 @@ public class ConfigService {
       guestRequest.setRelationships(createRelationshipRequests(guest));
       guestRequests.add(guestRequest);
     }
-    configResponse.setGuests(guestRequests);
+    configDTO.setGuests(guestRequests);
 
     List<TableRequest> tableRequests = new ArrayList<>();
     for(Table table: config.getTables()) {
@@ -110,9 +110,9 @@ public class ConfigService {
       tableRequest.setShape(table.getShape());
       tableRequests.add(tableRequest);
     }
-    configResponse.setTables(tableRequests);
+    configDTO.setTables(tableRequests);
 
-    return configResponse;
+    return configDTO;
   }
 
   private List<RelationshipRequest> createRelationshipRequests(Guest guest) {

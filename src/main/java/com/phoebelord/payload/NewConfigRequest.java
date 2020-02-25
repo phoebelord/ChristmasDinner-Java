@@ -3,7 +3,7 @@ package com.phoebelord.payload;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
-public class ConfigRequest {
+public class NewConfigRequest {
 
   @NotBlank
   private String name;

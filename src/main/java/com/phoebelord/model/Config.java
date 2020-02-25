@@ -1,7 +1,7 @@
 package com.phoebelord.model;
 
 import com.phoebelord.model.audit.UserDateAudit;
-import com.phoebelord.payload.ConfigRequest;
+import com.phoebelord.payload.NewConfigRequest;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -27,8 +27,8 @@ public class Config extends UserDateAudit {
   public Config() {
   }
 
-  public Config(ConfigRequest configRequest) {
-    this.name = configRequest.getName();
+  public Config(NewConfigRequest newConfigRequest) {
+    this.name = newConfigRequest.getName();
     this.guests = new ArrayList<>();
     this.tables = new ArrayList<>();
   }

@@ -1,10 +1,7 @@
 package com.phoebelord.payload;
 
-import com.phoebelord.model.Guest;
-
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GuestRequest {

@@ -7,8 +7,8 @@ import com.phoebelord.exception.NotFoundException;
 import com.phoebelord.model.Config;
 import com.phoebelord.model.User;
 import com.phoebelord.payload.ApiResponse;
-import com.phoebelord.payload.ConfigRequest;
-import com.phoebelord.payload.ConfigResponse;
+import com.phoebelord.payload.NewConfigRequest;
+import com.phoebelord.payload.ConfigDTO;
 import com.phoebelord.security.CurrentUser;
 import com.phoebelord.security.UserPrincipal;
 import com.phoebelord.service.ConfigService;
@@ -38,8 +38,8 @@ public class ConfigController {
 
   @PostMapping("/create")
   @PreAuthorize("hasRole('USER')")
-  public ResponseEntity<?> createConfig(@Valid @RequestBody ConfigRequest configRequest) {
-    Config config = configService.createConfig(configRequest);
+  public ResponseEntity<?> createConfig(@Valid @RequestBody NewConfigRequest newConfigRequest) {
+    Config config = configService.createConfig(newConfigRequest);
     configRepository.save(config);
 
     URI location = ServletUriComponentsBuilder
@@ -51,23 +51,23 @@ public class ConfigController {
 
   @GetMapping("/{configId}")
   @PreAuthorize("hasRole('USER')")
-  public ConfigResponse getConfigById(@CurrentUser UserPrincipal currentUser,
-                           @PathVariable Integer configId) {
+  public ConfigDTO getConfigById(@CurrentUser UserPrincipal currentUser,
+                                 @PathVariable Integer configId) {
 
     Config config = configRepository.findById(configId).orElseThrow(() -> new NotFoundException("Config", "id", configId));
     if(currentUser.getId() != config.getCreatedBy()) {
       throw new ForbiddenException("You do not have access to this config");
     }
-    return configService.createConfigResponse(config);
+    return configService.createConfigDTO(config);
   }
 
   @GetMapping("/all")
   @PreAuthorize("hasRole('USER')")
-  public List<ConfigResponse> getCurrentUserConfigs(@CurrentUser UserPrincipal currentUser) {
+  public List<ConfigDTO> getCurrentUserConfigs(@CurrentUser UserPrincipal currentUser) {
     User user = userRepository.findById(currentUser.getId()).orElseThrow(() -> new NotFoundException("User", "id", currentUser.getId()));
     List<Config> configs = configRepository.findAllByCreatedBy(user.getId());
-    List<ConfigResponse> configResponses = new ArrayList<>();
-    configs.forEach(config -> configResponses.add(new ConfigResponse(config)));
+    List<ConfigDTO> configResponses = new ArrayList<>();
+    configs.forEach(config -> configResponses.add(new ConfigDTO(config)));
     return configResponses;
   }
 }
