@@ -4,6 +4,8 @@ import com.phoebelord.model.Config;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConfigResponse {
 
@@ -11,7 +13,11 @@ public class ConfigResponse {
 
   private String name;
 
+  private List<GuestRequest> guests;
+
   private int numGuests;
+
+  private List<TableRequest> tables;
 
   private int numTables;
 
@@ -20,9 +26,14 @@ public class ConfigResponse {
   public ConfigResponse(Config config) {
     this.id = config.getId();
     this.name = config.getName();
+    this.guests = new ArrayList<>();
     this.numGuests = config.getGuests().size();
+    this.tables = new ArrayList<>();
     this.numTables = config.getTables().size();
     this.lastModified = LocalDateTime.ofInstant(config.getUpdatedAt(), ZoneId.systemDefault()).toString();
+  }
+
+  public ConfigResponse() {
   }
 
   public int getId() {
@@ -41,12 +52,28 @@ public class ConfigResponse {
     this.name = name;
   }
 
+  public List<GuestRequest> getGuests() {
+    return guests;
+  }
+
+  public void setGuests(List<GuestRequest> guests) {
+    this.guests = guests;
+  }
+
   public int getNumGuests() {
     return numGuests;
   }
 
   public void setNumGuests(int numGuests) {
     this.numGuests = numGuests;
+  }
+
+  public List<TableRequest> getTables() {
+    return tables;
+  }
+
+  public void setTables(List<TableRequest> tables) {
+    this.tables = tables;
   }
 
   public int getNumTables() {

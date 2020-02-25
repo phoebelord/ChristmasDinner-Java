@@ -4,28 +4,26 @@ import LoadingIndicator from "../../common/LoadingIndicator";
 import {Table} from "antd";
 import {useHistory} from "react-router";
 
-export function UserHome() {
+export function UserHome(props) {
     const [configs, setConfigs] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const history = useHistory();
 
     useEffect(() => {
-        setIsLoading(true);
-        getMyConfigs()
-            .then(response => {
-                setConfigs(response);
-                setIsLoading(false);
-            })
-            .catch(error => {
-                setIsLoading(false);
-            })
-    }, []);
-
-    if(isLoading) {
-        return <LoadingIndicator/>
-    }
-
-    console.log(configs);
+        if(props.authenticated) {
+            setIsLoading(true);
+            getMyConfigs()
+                .then(response => {
+                    setConfigs(response);
+                    setIsLoading(false);
+                })
+                .catch(error => {
+                    setIsLoading(false);
+                })
+        } else {
+            setConfigs([])
+        }
+    }, [props.authenticated]);
 
     const columns = [
         {
@@ -62,10 +60,18 @@ export function UserHome() {
     };
 
     return (
-        <Table dataSource={configs} columns={columns} rowKey='id' onRow={(record, index) => {
-            return {
-                onClick: () => {handleRowClick(record)}
-            }
-        }}/>
+        <div>
+            <Table
+                dataSource={configs}
+                columns={columns}
+                rowKey='id'
+                onRow={(record, index) => {
+                    return {
+                        onClick: () => {handleRowClick(record)}
+                    }
+                }}
+                loading={isLoading}/>
+        </div>
+
     )
 }

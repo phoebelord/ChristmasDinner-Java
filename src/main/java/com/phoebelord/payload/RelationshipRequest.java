@@ -15,7 +15,15 @@ public class RelationshipRequest {
     return guestName;
   }
 
+  public void setGuestName(String guestName) {
+    this.guestName = guestName;
+  }
+
   public int getLikability() {
     return likability;
+  }
+
+  public void setLikability(int likability) {
+    this.likability = likability;
   }
 }

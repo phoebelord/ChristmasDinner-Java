@@ -18,7 +18,15 @@ public class TableRequest {
     return shape;
   }
 
+  public void setShape(String shape) {
+    this.shape = shape;
+  }
+
   public int getCapacity() {
     return capacity;
+  }
+
+  public void setCapacity(int capacity) {
+    this.capacity = capacity;
   }
 }

@@ -58,7 +58,7 @@ public class ConfigController {
     if(currentUser.getId() != config.getCreatedBy()) {
       throw new ForbiddenException("You do not have access to this config");
     }
-    return new ConfigResponse(config);
+    return configService.createConfigResponse(config);
   }
 
   @GetMapping("/all")

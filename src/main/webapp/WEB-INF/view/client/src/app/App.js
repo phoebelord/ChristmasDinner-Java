@@ -77,9 +77,9 @@ function App(props) {
       <Content className="app-content">
         <div className="container">
           <Switch>
+            <Route exact path="/" render={() => <UserHome authenticated={isAuthenticated}/>} handleLogout={handleLogout}/>
             <Route path="/login" render={(props) => <Login onLogin={handleLogin} {...props} />}/>
             <Route path="/signup" component={Signup}/>
-            <PrivateRoute authenticated={isAuthenticated} exact path="/" component={UserHome} handleLogout={handleLogout}/>
             <PrivateRoute authenticated={isAuthenticated} exact path="/config" component={Config} handleLogout={handleLogout}/>
             <PrivateRoute authenticated={isAuthenticated} path="/config/create" component={NewConfig} handleLogout={handleLogout}/>
             <PrivateRoute authenticated={isAuthenticated} path="/solution" component={Solution} handleLogout={handleLogout}/>
