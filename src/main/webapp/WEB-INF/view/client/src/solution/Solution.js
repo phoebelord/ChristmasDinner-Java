@@ -2,41 +2,39 @@ import * as React from 'react';
 import {useState} from 'react';
 import {Tables} from "./Tables";
 import {Button, Form, Input} from "antd";
-import FormItem from "antd/es/form/FormItem";
 import {getSolution} from "../utils/ApiUtils";
+import {useLocation} from "react-router";
+import {useEffect} from "react";
+import LoadingIndicator from "../common/LoadingIndicator";
 
 function Solution() {
-    const [configId, setConfigId] = useState(null);
+    const location = useLocation();
+    const [config, setConfig] = useState(location.state.config);
     const [solutions, setSolutions] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        getSolution(configId)
+    useEffect(() => {
+        fetchSolution();
+    }, []);
+
+    const fetchSolution = () => {
+        setIsLoading(true);
+        getSolution(config.id)
             .then(response => {
-                setSolutions(response)
+                setSolutions(response);
+                setIsLoading(false)
             })
     };
 
-    const handleIdChange = (e) => {
-        setConfigId(e.target.value)
-    };
+    if(isLoading) {
+        return <LoadingIndicator/>
+    }
+
 
     return (
         <div>
-            <Form onSubmit={handleSubmit}>
-                <FormItem label="configId">
-                    <Input
-                        placeholder="1"
-                        size="large"
-                    onChange={handleIdChange}/>
-                </FormItem>
-                <FormItem>
-                    <Button type="primary"
-                            htmlType="submit"
-                            size="large">Submit</Button>
-                </FormItem>
-            </Form>
             <Tables solutions={solutions}/>
+            <Button type="dashed" onClick={fetchSolution}>Try again</Button>
         </div>
     );
 }

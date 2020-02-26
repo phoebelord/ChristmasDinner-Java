@@ -7,9 +7,16 @@ export function Config() {
     const location = useLocation();
     const [config, setConfig] = useState(location.state.config);
 
-    const handleClick = () => {
+    const handleEditClick = () => {
         history.push({
             pathname: '/config/edit',
+            state: {config: config}
+        })
+    };
+
+    const handleSolutionClick = () => {
+        history.push({
+            pathname: '/solution',
             state: {config: config}
         })
     };
@@ -47,7 +54,8 @@ export function Config() {
                 )}
             </div>
             <p>Last Modified: {config.lastModified}</p>
-            <Button type="dashed" onClick={handleClick}>Edit</Button>
+            <Button type="dashed" onClick={handleEditClick}>Edit</Button>
+            <Button type="dashed" onClick={handleSolutionClick}>Get solution</Button>
         </div>
     )
 }
