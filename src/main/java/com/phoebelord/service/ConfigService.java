@@ -53,6 +53,70 @@ public class ConfigService {
     return config;
   }
 
+  public Config editConfig(NewConfigRequest newConfigRequest) {
+    Config config = configRepository.findById(newConfigRequest.getId()).orElseThrow(() -> new NotFoundException("Config", "id", newConfigRequest.getId()));
+    config.setName(newConfigRequest.getName());
+    List<Guest> guests = config.getGuests();
+
+    //sort guests
+    List<GuestRequest> newGuests = newConfigRequest.getGuests();
+    for(int i = 0; i < newGuests.size(); i++) {
+      if(i >= guests.size()) {
+        config.addGuest(createGuest(newGuests.get(i), config));
+      } else {
+        Guest currentGuest = guests.get(i);
+        GuestRequest currentGuestRequest = newGuests.get(i);
+        currentGuest.setName(currentGuestRequest.getName());
+        guestRepository.save(currentGuest);
+      }
+    }
+
+    //sort relationships
+    for(GuestRequest guestRequest: newGuests) {
+      Guest guest = guestRepository.findByNameAndConfig(guestRequest.getName(), config).orElseThrow(() -> new AppException("Guest doesn't exist: " + guestRequest.getName()));
+      List<RelationshipRequest> relationshipRequests = guestRequest.getRelationships();
+      List<Relationship> relationships = guest.getRelationships();
+      for(int i = 0; i < relationshipRequests.size(); i++) {
+        RelationshipRequest relationshipRequest = relationshipRequests.get(i);
+        if(i >= relationships.size()) {
+          guest.addRelationship(createRelationship(relationshipRequest, config));
+        } else {
+          Relationship relationship = relationships.get(i);
+          relationship.setLikability(relationshipRequest.getLikability());
+          Guest otherGuest = guestRepository.findByNameAndConfig(relationshipRequest.getGuestName(), config).orElseThrow(() -> new AppException("Guest doesn't exist: " + relationshipRequest.getGuestName()));
+          relationship.setGuestId(otherGuest.getId());
+          relationshipRepository.save(relationship);
+        }
+      }
+    }
+
+    config.setGuests(guests);
+
+    //sort tables
+    List<TableRequest> tableRequests = newConfigRequest.getTables();
+    List<Table> tables = config.getTables();
+    int offset = 0;
+    for(int i = 0; i < tableRequests.size(); i++) {
+      TableRequest tableRequest = tableRequests.get(i);
+      Table table;
+      if(i >= tables.size()) {
+        table = createTable(tableRequest, config, i, offset);
+        config.addTable(table);
+      } else {
+        table = tables.get(i);
+        table.setTableNum(i);
+        table.setCapacity(tableRequest.getCapacity());
+        table.setOffset(offset);
+        table.setShape(tableRequest.getShape());
+        tableRepository.save(table);
+      }
+
+      offset += table.getCapacity();
+    }
+    configRepository.save(config);
+    return config;
+  }
+
   private Guest createGuest(GuestRequest guestRequest, Config config) {
     Guest guest = new Guest(guestRequest);
     guest.setConfig(config);

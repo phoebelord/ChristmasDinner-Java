@@ -63,6 +63,14 @@ export function createConfig(configData) {
     });
 }
 
+export function editConfig(configData) {
+    return request({
+        url: API_BASE_URL + "/config/edit",
+        method: 'POST',
+        body: JSON.stringify(configData)
+    });
+}
+
 export function getConfig(configId) {
     return request({
         url: API_BASE_URL + '/config/' + configId,

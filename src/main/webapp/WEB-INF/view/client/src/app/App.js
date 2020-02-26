@@ -82,6 +82,7 @@ function App(props) {
             <Route path="/signup" component={Signup}/>
             <PrivateRoute authenticated={isAuthenticated} exact path="/config" component={Config} handleLogout={handleLogout}/>
             <PrivateRoute authenticated={isAuthenticated} path="/config/create" component={NewConfig} handleLogout={handleLogout}/>
+            <PrivateRoute authenticated={isAuthenticated} path="/config/edit" component={NewConfig}  handleLogout={handleLogout}/>
             <PrivateRoute authenticated={isAuthenticated} path="/solution" component={Solution} handleLogout={handleLogout}/>
           </Switch>
         </div>

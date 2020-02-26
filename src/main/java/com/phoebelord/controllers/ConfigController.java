@@ -49,6 +49,19 @@ public class ConfigController {
     return ResponseEntity.created(location).body(new ApiResponse(true, "Config Created Successfully"));
   }
 
+  @PostMapping("/edit")
+  @PreAuthorize("hasRole('USER')")
+  public ResponseEntity<?> editConfig(@Valid @RequestBody NewConfigRequest newConfigRequest) {
+    Config config = configService.editConfig(newConfigRequest);
+    configRepository.save(config);
+
+    URI location = ServletUriComponentsBuilder
+      .fromCurrentRequest().path("/{configId}")
+      .buildAndExpand(config.getId()).toUri();
+
+    return ResponseEntity.created(location).body(new ApiResponse(true, "Config edited Successfully"));
+  }
+
   @GetMapping("/{configId}")
   @PreAuthorize("hasRole('USER')")
   public ConfigDTO getConfigById(@CurrentUser UserPrincipal currentUser,

@@ -1,10 +1,18 @@
-import {useLocation} from "react-router";
+import {useHistory, useLocation} from "react-router";
 import React, {useState} from "react";
-import {Divider} from "antd";
+import {Button, Divider} from "antd";
 
 export function Config() {
+    const history = useHistory();
     const location = useLocation();
     const [config, setConfig] = useState(location.state.config);
+
+    const handleClick = () => {
+        history.push({
+            pathname: '/config/edit',
+            state: {config: config}
+        })
+    };
 
     return (
         <div>
@@ -39,6 +47,7 @@ export function Config() {
                 )}
             </div>
             <p>Last Modified: {config.lastModified}</p>
+            <Button type="dashed" onClick={handleClick}>Edit</Button>
         </div>
     )
 }

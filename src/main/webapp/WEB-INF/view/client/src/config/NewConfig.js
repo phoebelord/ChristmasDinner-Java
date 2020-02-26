@@ -1,17 +1,17 @@
 import React, {useState} from "react";
 import {useHistory} from 'react-router-dom';
 import {Button, Divider, Form, Icon, Input, notification} from "antd";
-import {createConfig} from "../utils/ApiUtils";
+import {createConfig, editConfig} from "../utils/ApiUtils";
 import FormItem from "antd/es/form/FormItem";
 import "./NewConfig.css"
+import {useLocation} from "react-router";
 
 function NewConfig(props) {
     const history = useHistory();
-    const [name, setName] = useState({
-        text: ''
-    });
-    const [guests, setGuests] = useState([]);
-    const [tables, setTables] = useState([]);
+    const location = useLocation();
+    const [name, setName] = useState(location.state ? {text: location.state.config.name} : {text: ''});
+    const [guests, setGuests] = useState(location.state ? location.state.config.guests : []);
+    const [tables, setTables] = useState(location.state ? location.state.config.tables : []);
 
     const addGuest = () => {
         const guestss = guests.slice();
@@ -61,6 +61,7 @@ function NewConfig(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         const configData = {
+            id: location.state ? location.state.config.id : '',
             name: name.text,
             guests: guests.map(guest => {
                 return {
@@ -80,14 +81,15 @@ function NewConfig(props) {
                 }
             })
         };
-        createConfig(configData)
-            .then(response => {
-                history.push("/");
-                notification.success({
-                    message: "Christmas Dinner",
-                    description: "Config successfully created."
-                });
-            }).catch(error => {
+        if(location.state) {
+            editConfig(configData)
+                .then(response => {
+                    history.push("/");
+                    notification.success({
+                        message: "Christmas Dinner",
+                        description: "Config successfully edited."
+                    });
+                }).catch(error => {
                 if (error.status === 401) {
                     props.handleLogout('/signin', 'error', 'You have been logged out. Sign in to create a config');
                 } else {
@@ -97,6 +99,26 @@ function NewConfig(props) {
                     })
                 }
             })
+        } else {
+            createConfig(configData)
+                .then(response => {
+                    history.push("/");
+                    notification.success({
+                        message: "Christmas Dinner",
+                        description: "Config successfully created."
+                    });
+                }).catch(error => {
+                if (error.status === 401) {
+                    props.handleLogout('/signin', 'error', 'You have been logged out. Sign in to create a config');
+                } else {
+                    notification.error({
+                        message: "Christmas Dinner",
+                        description: error.message || "Oops, something went wrong. Please try again!"
+                    })
+                }
+            })
+        }
+
     };
 
     const validateName = (nameText) => {
@@ -161,11 +183,9 @@ function NewConfig(props) {
     const handleGuestChange = (event, index) => {
         const guestss = guests.slice();
         const value = event.target.value;
-        guestss[index] = {
-            name: value,
-            relationships: [],
-            ...validateGuest(value)
-        };
+        let guest = guestss[index];
+        guest.name = value;
+        guestss[index] = {...guest, ...validateGuest(value)};
         setGuests(guestss);
     };
 
@@ -279,7 +299,8 @@ function NewConfig(props) {
                         <Input
                             placeholder='Your config name'
                             size="large"
-                            onChange={handleNameChange} />
+                            onChange={handleNameChange}
+                            value={name.text}/>
                     </FormItem>
                     <Divider />
                     {guestViews}
@@ -295,7 +316,7 @@ function NewConfig(props) {
                                 htmlType="submit"
                                 size="large"
                                 disabled={isFormInvalid}
-                                className="create-config-form-button">Create Config</Button>
+                                className="create-config-form-button">Save Config</Button>
                     </FormItem>
                 </Form>
             </div>
@@ -323,7 +344,8 @@ function Guest(props) {
                 placeholder={'Guest ' + (props.guestNumber + 1)}
                 size="large"
                 className="optional-guest"
-                onChange={(event) => props.handleGuestChange(event, props.guestNumber)} />
+                onChange={(event) => props.handleGuestChange(event, props.guestNumber)}
+                value={props.guest.name}/>
              {relationshipViews}
             <FormItem className="config-form-fow">
                 <Button type="dashed" onClick={() => props.addRelationship(props.guestNumber)}>Add Relationship</Button>
@@ -345,14 +367,16 @@ function Table(props) {
                     placeholder="Circle"
                     size="large"
                     className="optional-table"
-                    onChange={(event) => props.handleTableShapeChange(event, props.tableNumber)} />
+                    onChange={(event) => props.handleTableShapeChange(event, props.tableNumber)}
+                    value={props.table.shape}/>
             </FormItem>
             <FormItem label="Table Capacity" validateStatus={props.table.validateStatus} help={props.table.errorMsg} className="config-form-row indent">
                 <Input
                     placeholder="10"
                     size="large"
                     className="optional-table"
-                    onChange={(event) => props.handleTableCapacityChange(event, props.tableNumber)} />
+                    onChange={(event) => props.handleTableCapacityChange(event, props.tableNumber)}
+                    value={props.table.capacity}/>
             </FormItem>
             <Icon className="dynamic-delete-button"
                   type="close"
@@ -371,14 +395,16 @@ function Relationship(props) {
                     placeholder="Guest Name"
                     size="large"
                     className="optional-relationship"
-                    onChange={(event) => props.handleRelationshipGuestChange(event, props.relationshipNumber, props.guestNumber)} />
+                    onChange={(event) => props.handleRelationshipGuestChange(event, props.relationshipNumber, props.guestNumber)}
+                    value={props.relationship.guestName}/>
             </FormItem>
             <FormItem label="value" validateStatus={props.relationship.validateStatus} help={props.relationship.errorMsg} className="config-form-row">
                 <Input
                     placeholder="10"
                     size="large"
                     className="optional-relationship"
-                    onChange={(event) => props.handleRelationshipValueChange(event, props.relationshipNumber, props.guestNumber)} />
+                    onChange={(event) => props.handleRelationshipValueChange(event, props.relationshipNumber, props.guestNumber)}
+                    value={props.relationship.likability}/>
             </FormItem>
             <Icon className="dynamic-delete-button"
                   type="close"
