@@ -23,8 +23,8 @@ public class SolutionController {
 
   @GetMapping(value = "/api/solution/{configId}")
   @ResponseBody
-  public Solution[] getASolution(@PathVariable int configId) {
+  public Solution getASolution(@PathVariable int configId) {
     Config config = configRepository.findById(configId).orElseThrow(() -> new NotFoundException("Config", "id", configId));
-    return new Solution[]{ChristmasDinner.getSolution(config)};
+    return ChristmasDinner.getSolution(config);
   }
 }

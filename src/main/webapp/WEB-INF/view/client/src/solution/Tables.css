@@ -34,3 +34,14 @@
     width: 75%;
     height: 400px;
 }
+
+.titleBar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.table {
+    display: flex;
+    justify-content: center;
+    margin: 40px auto 0;
+}

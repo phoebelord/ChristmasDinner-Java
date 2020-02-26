@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {useEffect} from 'react';
 import "./Tables.css"
+import {Button} from "antd";
 
 export function Tables(props) {
 
@@ -66,32 +67,32 @@ export function Tables(props) {
         return "translate(-50%, -50%)"
     }
 
-    if(props.solutions){
+    if (props.solution) {
         return (
-            <div className="solution-container">
-                <h2>Solution:</h2>
-                {props.solutions.map((solution, solIndex) =>
-                    <div key={solIndex} className="table">
-                        {solution.arrangements.map((arrangement, arrIndex) =>
-                            <div key={arrIndex} className={"mt-5 mb-5 guestList " + arrangement.shape}>
-                                {arrangement.names.map((name, nameIndex) => {
-                                    return (
-                                        <div key={nameIndex} className="guest">
-                                            Seat {nameIndex}: {name}
-                                        </div>
-                                    )
-                                })}
-                                <div className="shape">
-                                    Shape: {arrangement.shape}
-                                </div>
+            <div className="tables-container">
+                <div className="titleBar">
+                    <h2>Solution:</h2>
+                    <p>Score: {props.solution.happinessScore}</p>
+                    <Button type="dashed" onClick={props.fetchSolution}>Try again</Button>
+                </div>
+                <div className="table">
+                    {props.solution.arrangements.map((arrangement, arrIndex) =>
+                        <div key={arrIndex} className={"mt-5 mb-5 guestList " + arrangement.shape}>
+                            {arrangement.names.map((name, nameIndex) => {
+                                return (
+                                    <div key={nameIndex} className="guest">
+                                        Seat {nameIndex}: {name}
+                                    </div>
+                                )
+                            })}
+                            <div className="shape">
+                                Shape: {arrangement.shape}
                             </div>
-                        )}
-                        <br/>
-                        <div className="answer">
-                            Score: {solution.happinessScore}
                         </div>
-                    </div>
-                )}
+                    )}
+                    <br/>
+                </div>
+
             </div>
         )
     } else {

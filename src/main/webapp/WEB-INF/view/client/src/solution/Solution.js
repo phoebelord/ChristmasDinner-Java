@@ -1,16 +1,16 @@
 import * as React from 'react';
 import {useState} from 'react';
 import {Tables} from "./Tables";
-import {Button, Form, Input} from "antd";
 import {getSolution} from "../utils/ApiUtils";
 import {useLocation} from "react-router";
 import {useEffect} from "react";
 import LoadingIndicator from "../common/LoadingIndicator";
+import "./Solution.css";
 
 function Solution() {
     const location = useLocation();
     const [config, setConfig] = useState(location.state.config);
-    const [solutions, setSolutions] = useState(null);
+    const [solution, setSolution] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -21,7 +21,7 @@ function Solution() {
         setIsLoading(true);
         getSolution(config.id)
             .then(response => {
-                setSolutions(response);
+                setSolution(response);
                 setIsLoading(false)
             })
     };
@@ -32,9 +32,8 @@ function Solution() {
 
 
     return (
-        <div>
-            <Tables solutions={solutions}/>
-            <Button type="dashed" onClick={fetchSolution}>Try again</Button>
+        <div className="solution-container">
+            <Tables solution={solution} fetchSolution={fetchSolution}/>
         </div>
     );
 }

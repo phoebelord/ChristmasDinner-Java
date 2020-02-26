@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {getConfig, getMyConfigs} from "../../utils/ApiUtils";
-import LoadingIndicator from "../../common/LoadingIndicator";
 import {Table} from "antd";
 import {useHistory} from "react-router";
+import "./UserHome.css";
 
 export function UserHome(props) {
     const [configs, setConfigs] = useState([]);
@@ -60,7 +60,8 @@ export function UserHome(props) {
     };
 
     return (
-        <div>
+        <div className="home-container">
+            <h1>Your Configs:</h1>
             <Table
                 dataSource={configs}
                 columns={columns}
