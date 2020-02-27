@@ -1,9 +1,6 @@
 package com.phoebelord.algorithms;
 
-import com.phoebelord.model.Guest;
-import com.phoebelord.model.Seat;
-import com.phoebelord.model.Solution;
-import com.phoebelord.model.Table;
+import com.phoebelord.model.*;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -44,7 +41,7 @@ public class BnBAlgorithm extends Algorithm {
     }
     System.out.println("Pruned: " + pruned);
     System.out.println("Counter: " + counter);
-    return new Solution(tables, guestList, Algorithm.calculateHappiness(guestList, seats, tables));
+    return new Solution(tables, guestList, Algorithm.calculateHappiness(guestList, seats, tables, MaximisationType.HAPPINESS));
   }
 
   private void bnb(int level, List<Integer> partialSolution, int currentHappiness) {

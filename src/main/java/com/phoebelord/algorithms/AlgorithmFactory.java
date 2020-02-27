@@ -1,6 +1,7 @@
 package com.phoebelord.algorithms;
 
 import com.phoebelord.model.Guest;
+import com.phoebelord.model.MaximisationType;
 import com.phoebelord.model.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ public class AlgorithmFactory {
 
   private static BnBAlgorithm bnBAlgorithm;
 
-  public static Algorithm createAlgorithm(AlgorithmType type, List<Guest> guests, List<Table> tables) {
+  public static Algorithm createAlgorithm(AlgorithmType type, List<Guest> guests, List<Table> tables, MaximisationType maximisationType) {
     Algorithm algorithm;
     switch (type) {
       case Naive:
@@ -33,6 +34,7 @@ public class AlgorithmFactory {
 
     algorithm.setGuests(guests);
     algorithm.setTablesAndSeats(tables);
+    algorithm.setMaximisationType(maximisationType);
     return algorithm;
   }
 

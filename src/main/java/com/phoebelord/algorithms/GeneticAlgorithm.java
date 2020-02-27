@@ -55,7 +55,7 @@ public class GeneticAlgorithm extends Algorithm {
   private List<ArrangementChromosome> initialisePopulation() {
     List<ArrangementChromosome> population = new ArrayList<>();
     for (int i = 0; i < GENERATION_SIZE; i++) {
-      population.add(new ArrangementChromosome(guests, seats, tables));
+      population.add(new ArrangementChromosome(guests, seats, tables, maximisationType));
     }
     return population;
   }
@@ -85,7 +85,7 @@ public class GeneticAlgorithm extends Algorithm {
   }
 
   private ArrangementChromosome createChromosome(List<Integer> arrangement) {
-    return new ArrangementChromosome(arrangement, guests, seats, tables);
+    return new ArrangementChromosome(arrangement, guests, seats, tables, maximisationType);
   }
 
   @Override

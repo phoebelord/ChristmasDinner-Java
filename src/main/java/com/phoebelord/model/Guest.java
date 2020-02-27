@@ -87,6 +87,17 @@ public class Guest implements Serializable {
     return value;
   }
 
+  public int getRelationshipWith(Guest guest, MaximisationType maximisationType) {
+    int value = 0;
+    for (Relationship relationship : relationships) {
+      if (relationship.getGuestId() == guest.getId()) {
+        value = (maximisationType == MaximisationType.HAPPINESS) ? relationship.getLikability() : relationship.getBribe();
+        break;
+      }
+    }
+    return value;
+  }
+
   @Override
   public String toString() {
     return "[id:" + id + ", name: " + name + "]";

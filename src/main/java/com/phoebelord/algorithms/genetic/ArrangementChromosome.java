@@ -2,6 +2,7 @@ package com.phoebelord.algorithms.genetic;
 
 import com.phoebelord.algorithms.Algorithm;
 import com.phoebelord.model.Guest;
+import com.phoebelord.model.MaximisationType;
 import com.phoebelord.model.Seat;
 import com.phoebelord.model.Table;
 
@@ -14,14 +15,14 @@ public class ArrangementChromosome implements Comparable {
   private final List<Integer> chromosome;
   private final int fitness;
 
-  public ArrangementChromosome(List<Integer> chromosome, List<Guest> guests, List<Seat> seats, List<Table> tables) {
+  public ArrangementChromosome(List<Integer> chromosome, List<Guest> guests, List<Seat> seats, List<Table> tables, MaximisationType maximisationType) {
     this.chromosome = chromosome;
-    this.fitness = this.calculateFitness(guests, seats, tables);
+    this.fitness = this.calculateFitness(guests, seats, tables, maximisationType);
   }
 
-  public ArrangementChromosome(List<Guest> guests, List<Seat> seats, List<Table> tables) {
+  public ArrangementChromosome(List<Guest> guests, List<Seat> seats, List<Table> tables, MaximisationType maximisationType) {
     this.chromosome = randomChromosome(guests);
-    this.fitness = this.calculateFitness(guests, seats, tables);
+    this.fitness = this.calculateFitness(guests, seats, tables, maximisationType);
 
   }
 
@@ -38,8 +39,8 @@ public class ArrangementChromosome implements Comparable {
     return chromosome;
   }
 
-  private int calculateFitness(List<Guest> guests, List<Seat> seats, List<Table> tables) {
-    return Algorithm.calculateHappiness(getGuestList(guests), seats, tables);
+  private int calculateFitness(List<Guest> guests, List<Seat> seats, List<Table> tables, MaximisationType maximisationType) {
+    return Algorithm.calculateHappiness(getGuestList(guests), seats, tables, maximisationType);
   }
 
   public int getFitness() {

@@ -11,6 +11,9 @@ public class RelationshipRequest {
   @NotNull
   int likability;
 
+  @NotNull
+  int bribe;
+
   public String getGuestName() {
     return guestName;
   }
@@ -25,5 +28,13 @@ public class RelationshipRequest {
 
   public void setLikability(int likability) {
     this.likability = likability;
+  }
+
+  public int getBribe() {
+    return bribe;
+  }
+
+  public void setBribe(int bribe) {
+    this.bribe = bribe;
   }
 }

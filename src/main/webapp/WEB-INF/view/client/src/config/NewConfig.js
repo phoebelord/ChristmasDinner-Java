@@ -31,7 +31,8 @@ function NewConfig(props) {
         const guestRelationships = guests[guestNumber].relationships.slice();
         guestRelationships.push({
             guestName: "",
-            likability: null
+            likability: 0,
+            bribe: 0
         });
         guestss[guestNumber].relationships = guestRelationships;
         setGuests(guestss);
@@ -69,7 +70,8 @@ function NewConfig(props) {
                     relationships: guest.relationships.map(relationship => {
                         return {
                             guestName: relationship.guestName,
-                            likability: relationship.likability
+                            likability: relationship.likability,
+                            bribe: relationship.bribe
                         }
                     })
                 }
@@ -81,6 +83,8 @@ function NewConfig(props) {
                 }
             })
         };
+
+        console.log(configData);
         if(location.state) {
             editConfig(configData)
                 .then(response => {
@@ -267,6 +271,30 @@ function NewConfig(props) {
         }
     };
 
+    const handleRelationshipBribeChange = (event, relIndex, guestIndex) => {
+        const guestss = guests.slice();
+        const value = event.target.value;
+        const relationship = guestss[guestIndex].relationships[relIndex];
+        relationship.bribe = value;
+        guestss[guestIndex].relationships[relIndex] = {...relationship, ...validateBribe(value)};
+        setGuests(guestss);
+        console.log(guests);
+    };
+
+    const validateBribe = (value) => {
+        if(value >= 0) {
+            return {
+                validateStatus: 'success',
+                errorMsg: null
+            }
+        } else {
+            return {
+                validateStatus: 'error',
+                errorMsg: "Not a valid bribe"
+            }
+        }
+    };
+
     const isFormInvalid = () => {
         return name.validateStatus !== 'success';
     };
@@ -282,6 +310,7 @@ function NewConfig(props) {
             removeRelationship={removeRelationship}
             handleRelationshipGuestChange={handleRelationshipGuestChange}
             handleRelationshipValueChange={handleRelationshipValueChange}
+            handleRelationshipBribeChange={handleRelationshipBribeChange}
         />)
     });
 
@@ -335,6 +364,7 @@ function Guest(props) {
             removeRelationship={props.removeRelationship}
             handleRelationshipGuestChange={props.handleRelationshipGuestChange}
             handleRelationshipValueChange={props.handleRelationshipValueChange}
+            handleRelationshipBribeChange={props.handleRelationshipBribeChange}
             addRelationship={props.addRelationship}/>)
     });
 
@@ -405,6 +435,14 @@ function Relationship(props) {
                     className="optional-relationship"
                     onChange={(event) => props.handleRelationshipValueChange(event, props.relationshipNumber, props.guestNumber)}
                     value={props.relationship.likability}/>
+            </FormItem>
+            <FormItem label="bribe" validateStatus={props.relationship.validateStatus} help={props.relationship.errorMsg} className="config-form-row">
+                <Input
+                    placeholder="10"
+                    size="large"
+                    className="optional-relationship"
+                    onChange={(event) => props.handleRelationshipBribeChange(event, props.relationshipNumber, props.guestNumber)}
+                    value={props.relationship.bribe}/>
             </FormItem>
             <Icon className="dynamic-delete-button"
                   type="close"

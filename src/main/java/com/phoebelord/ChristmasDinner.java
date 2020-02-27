@@ -33,7 +33,7 @@ public class ChristmasDinner {
       System.out.println("\nTables: " + tables);
       System.out.println("\nGuests: " + guests);
 
-      Algorithm algorithm = AlgorithmFactory.createAlgorithm(algorithmType, guests, tables);
+      Algorithm algorithm = AlgorithmFactory.createAlgorithm(algorithmType, guests, tables, MaximisationType.HAPPINESS);
       Solution solution = algorithm.calculateSolution();
 
       System.out.println("Arrangement: " + solution.getArrangements());
@@ -52,7 +52,7 @@ public class ChristmasDinner {
       System.out.println("\nTables: " + tables);
       System.out.println("\nGuests: " + guests);
 
-      Algorithm algorithm = AlgorithmFactory.createAlgorithm(AlgorithmType.Genetic, guests, tables);
+      Algorithm algorithm = AlgorithmFactory.createAlgorithm(AlgorithmType.Genetic, guests, tables, MaximisationType.HAPPINESS);
       Solution solution = algorithm.calculateSolution();
 
       System.out.println("Arrangement: " + solution.getArrangements());

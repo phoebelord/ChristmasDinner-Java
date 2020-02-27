@@ -16,6 +16,8 @@ public class Relationship implements Serializable {
 
   private int likability;
 
+  private int bribe;
+
   public Relationship(int target, int likability) {
     this.guestId = target;
     this.likability = likability;
@@ -46,5 +48,13 @@ public class Relationship implements Serializable {
 
   public void setLikability(int likability) {
     this.likability = likability;
+  }
+
+  public int getBribe() {
+    return bribe;
+  }
+
+  public void setBribe(int bribe) {
+    this.bribe = bribe;
   }
 }

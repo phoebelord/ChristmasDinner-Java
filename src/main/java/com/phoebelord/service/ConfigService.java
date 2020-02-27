@@ -85,6 +85,7 @@ public class ConfigService {
           relationship.setLikability(relationshipRequest.getLikability());
           Guest otherGuest = guestRepository.findByNameAndConfig(relationshipRequest.getGuestName(), config).orElseThrow(() -> new AppException("Guest doesn't exist: " + relationshipRequest.getGuestName()));
           relationship.setGuestId(otherGuest.getId());
+          relationship.setBribe(relationshipRequest.getBribe());
           relationshipRepository.save(relationship);
         }
       }
@@ -130,6 +131,7 @@ public class ConfigService {
     Guest otherGuest = guestRepository.findByNameAndConfig(guestName, config).orElseThrow(() -> new AppException("Guest doesn't exist: " + guestName));
     relationship.setGuestId(otherGuest.getId());
     relationship.setLikability(relationshipRequest.getLikability());
+    relationship.setBribe(relationshipRequest.getBribe());
     relationshipRepository.save(relationship);
 
     return relationship;
@@ -186,6 +188,7 @@ public class ConfigService {
       Guest otherGuest = guestRepository.findById(relationship.getGuestId()).orElseThrow(() -> new NotFoundException("User", "Id", relationship.getGuestId()));
       relationshipRequest.setGuestName(otherGuest.getName());
       relationshipRequest.setLikability(relationship.getLikability());
+      relationshipRequest.setBribe(relationship.getBribe());
       relationshipRequests.add(relationshipRequest);
     }
     return relationshipRequests;

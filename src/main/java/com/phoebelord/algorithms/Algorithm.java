@@ -1,9 +1,6 @@
 package com.phoebelord.algorithms;
 
-import com.phoebelord.model.Guest;
-import com.phoebelord.model.Seat;
-import com.phoebelord.model.Solution;
-import com.phoebelord.model.Table;
+import com.phoebelord.model.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,10 +11,11 @@ public abstract class Algorithm {
   List<Seat> seats;
   List<Guest> guests;
   List<Table> tables;
+  MaximisationType maximisationType;
 
 
   //doesn't need to be static???
-  public static int calculateHappiness(List<Guest> guests, List<Seat> seats, List<Table> tables) {
+  public static int calculateHappiness(List<Guest> guests, List<Seat> seats, List<Table> tables, MaximisationType maximisationType) {
     int total = 0;
     for (int i = 0; i < guests.size(); i++) {
       int guestHappiness = 0;
@@ -26,7 +24,7 @@ public abstract class Algorithm {
       Table table = tables.get(seats.get(i).getTableNum());
       for (int neighbouringSeat : neighbouringSeats) {
         Guest neighbour = guests.get(neighbouringSeat);
-        int relationship =  currentGuest.getRelationshipWith(neighbour);
+        int relationship =  currentGuest.getRelationshipWith(neighbour, maximisationType);
         guestHappiness += (isNextTo(i, neighbouringSeat, table.getOffset(), table.getCapacity()) ? 2 * relationship : relationship);
       }
       total += guestHappiness;
@@ -71,6 +69,10 @@ public abstract class Algorithm {
   public void setTablesAndSeats(List<Table> tables) {
     this.tables = tables;
     this.seats = deriveSeats();
+  }
+
+  public void setMaximisationType(MaximisationType maximisationType) {
+    this.maximisationType = maximisationType;
   }
 
   public List<Seat> deriveSeats() {

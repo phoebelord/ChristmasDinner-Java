@@ -1,6 +1,7 @@
 package com.phoebelord.algorithms;
 
 import com.phoebelord.model.Guest;
+import com.phoebelord.model.MaximisationType;
 import com.phoebelord.model.Solution;
 import com.phoebelord.model.Table;
 import org.springframework.context.annotation.Scope;
@@ -73,7 +74,7 @@ public class NaiveAlgorithm extends Algorithm {
       System.out.printf("%2.2f\n",(counter / noSolutions)*100);
       lastCount = counter;
     }
-    int solutionHappiness = calculateHappiness(elements, seats, tables);
+    int solutionHappiness = calculateHappiness(elements, seats, tables, MaximisationType.HAPPINESS);
     if(solutionHappiness > bestSolution) {
       bestSolution = solutionHappiness;
       solution = new ArrayList<>(elements);

@@ -44,6 +44,7 @@ export function Config() {
                                     <div key={index}>
                                         <p>Guest Name: {relationship.guestName}</p>
                                         <p>Likability: {relationship.likability}</p>
+                                        <p>Bribe: {relationship.bribe}</p>
                                         <Divider/>
                                     </div>
                                 )}
