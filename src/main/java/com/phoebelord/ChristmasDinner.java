@@ -34,7 +34,10 @@ public class ChristmasDinner {
       System.out.println("\nGuests: " + guests);
 
       Algorithm algorithm = AlgorithmFactory.createAlgorithm(algorithmType, guests, tables, MaximisationType.HAPPINESS);
+      long startTime = System.currentTimeMillis();
       Solution solution = algorithm.calculateSolution();
+      long endTime = System.currentTimeMillis();
+      System.out.println("Time taken (ms): " + (endTime - startTime));
 
       System.out.println("Arrangement: " + solution.getArrangements());
       System.out.println("Score: " + solution.getHappinessScore());

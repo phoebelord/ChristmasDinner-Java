@@ -1,0 +1,282 @@
+[
+  {
+    "id": 0,
+    "name": "Phoebe",
+    "relationships": [
+      {
+        "guestId": 1,
+        "likability": 10,
+        "bribe": 0
+      },
+      {
+        "guestId": 2,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 8,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 9,
+        "likability": 1,
+        "bribe": 0
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Joe",
+    "relationships": [
+      {
+        "guestId": 0,
+        "likability": 10,
+        "bribe": 0
+      },
+      {
+        "guestId": 3,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 4,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 5,
+        "likability": 1,
+        "bribe": 0
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Tom",
+    "relationships": [
+      {
+        "guestId": 0,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 3,
+        "likability": 10,
+        "bribe": 0
+      },
+      {
+        "guestId": 7,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 9,
+        "likability": 1,
+        "bribe": 0
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Andre",
+    "relationships": [
+      {
+        "guestId": 1,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 2,
+        "likability": 10,
+        "bribe": 0
+      },
+      {
+        "guestId": 4,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 7,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 8,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 9,
+        "likability": 1,
+        "bribe": 0
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Josh H",
+    "relationships": [
+      {
+        "guestId": 1,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 3,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 7,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 8,
+        "likability": 1,
+        "bribe": 0
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Jordan",
+    "relationships": [
+      {
+        "guestId": 1,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 3,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 6,
+        "likability": -1,
+        "bribe": 0
+      },
+      {
+        "guestId": 7,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 8,
+        "likability": -1,
+        "bribe": 0
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Hussy",
+    "relationships": [
+      {
+        "guestId": 1,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 3,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 5,
+        "likability": -1,
+        "bribe": 0
+      },
+      {
+        "guestId": 9,
+        "likability": 1,
+        "bribe": 0
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Alex",
+    "relationships": [
+      {
+        "guestId": 1,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 3,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 4,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 5,
+        "likability": 1,
+        "bribe": 0
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Ella",
+    "relationships": [
+      {
+        "guestId": 1,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 3,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 4,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 5,
+        "likability": -1,
+        "bribe": 0
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Lance",
+    "relationships": [
+      {
+        "guestId": 0,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 2,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 3,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 4,
+        "likability": 1,
+        "bribe": 0
+      },
+      {
+        "guestId": 6,
+        "likability": -1,
+        "bribe": 0
+      }
+    ]
+  }
+]

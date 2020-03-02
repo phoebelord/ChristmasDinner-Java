@@ -1,22 +1,57 @@
 import React, {useState} from "react";
 import {useHistory} from 'react-router-dom';
-import {Button, Divider, Form, Icon, Input, notification} from "antd";
+import {Button, Divider, Form, Icon, Input, notification, Select} from "antd";
 import {createConfig, editConfig} from "../utils/ApiUtils";
 import FormItem from "antd/es/form/FormItem";
 import "./NewConfig.css"
 import {useLocation} from "react-router";
 
+const {Option} = Select;
+
 function NewConfig(props) {
     const history = useHistory();
     const location = useLocation();
+
     const [name, setName] = useState(location.state ? {text: location.state.config.name} : {text: ''});
-    const [guests, setGuests] = useState(location.state ? location.state.config.guests : []);
-    const [tables, setTables] = useState(location.state ? location.state.config.tables : []);
+
+    const [guests, setGuests] = useState(location.state ? location.state.config.guests.map(guest => {
+        return {
+            name: {
+                text: guest.name
+            },
+            relationships: guest.relationships.map(relationship => {
+                return {
+                    guestName: {
+                        text: relationship.guestName
+                    },
+                    likability: {
+                        text: relationship.likability
+                    },
+                    bribe: {
+                        text: relationship.bribe
+                    }
+                }
+            })
+        }
+    }) : []);
+
+    const [tables, setTables] = useState(location.state ? location.state.config.tables.map(table => {
+        return {
+            shape: {
+                text: table.shape
+            },
+            capacity: {
+                text: table.capacity
+            }
+        }
+    }) : []);
 
     const addGuest = () => {
         const guestss = guests.slice();
         setGuests(guestss.concat([{
-            name: '',
+            name: {
+                text: ''
+            },
             relationships: []
         }]));
     };
@@ -30,9 +65,15 @@ function NewConfig(props) {
         const guestss = guests.slice();
         const guestRelationships = guests[guestNumber].relationships.slice();
         guestRelationships.push({
-            guestName: "",
-            likability: 0,
-            bribe: 0
+            guestName: {
+                text: ""
+            },
+            likability: {
+                text: null
+            },
+            bribe: {
+                text: null
+            }
         });
         guestss[guestNumber].relationships = guestRelationships;
         setGuests(guestss);
@@ -49,8 +90,12 @@ function NewConfig(props) {
     const addTable = () => {
         const tabless = tables.slice();
         setTables(tabless.concat([{
-            shape: '',
-            capacity: null
+            shape: {
+                text: ''
+            },
+            capacity: {
+                text: null
+            }
         }]));
     };
 
@@ -66,26 +111,26 @@ function NewConfig(props) {
             name: name.text,
             guests: guests.map(guest => {
                 return {
-                    name: guest.name,
+                    name: guest.name.text,
                     relationships: guest.relationships.map(relationship => {
                         return {
-                            guestName: relationship.guestName,
-                            likability: relationship.likability,
-                            bribe: relationship.bribe
+                            guestName: relationship.guestName.text,
+                            likability: relationship.likability.text,
+                            bribe: relationship.bribe.text
                         }
                     })
                 }
             }),
             tables: tables.map(table => {
                 return {
-                    shape: table.shape,
-                    capacity: table.capacity
+                    shape: table.shape.text,
+                    capacity: table.capacity.text
                 }
             })
         };
 
         console.log(configData);
-        if(location.state) {
+        if (location.state) {
             editConfig(configData)
                 .then(response => {
                     history.push("/");
@@ -142,7 +187,7 @@ function NewConfig(props) {
         })
     };
 
-    const validateGuest = (guestName) => {
+    const validateGuestName = (guestName) => {
         if (guestName.length === 0) {
             return {
                 validateStatus: 'error',
@@ -157,7 +202,7 @@ function NewConfig(props) {
     };
 
     const validateTableShape = (shape) => {
-        if(shape === 'Circle' || shape === 'Rectangle') {
+        if (shape === 'Circle' || shape === 'Rectangle') {
             return {
                 validateStatus: 'success',
                 errorMsg: null
@@ -171,7 +216,7 @@ function NewConfig(props) {
     };
 
     const validateTableCapacity = (capacity) => {
-        if(capacity > 1 && capacity < 20) {
+        if (capacity > 1 && capacity < 20) {
             return {
                 validateStatus: 'success',
                 errorMsg: null
@@ -184,21 +229,26 @@ function NewConfig(props) {
         }
     };
 
-    const handleGuestChange = (event, index) => {
+    const handleGuestNameChange = (event, index) => {
         const guestss = guests.slice();
         const value = event.target.value;
         let guest = guestss[index];
-        guest.name = value;
-        guestss[index] = {...guest, ...validateGuest(value)};
+        guest.name = {
+            text: value,
+            ...validateGuestName(value)
+        };
+        guestss[index] = {...guest};
         setGuests(guestss);
     };
 
-    const handleTableShapeChange = (event, index) => {
+    const handleTableShapeChange = (value, index) => {
         const tabless = tables.slice();
-        const value = event.target.value;
         let table = tabless[index];
-        table.shape = value;
-        tabless[index] = {...table, ...validateTableShape(value)};
+        table.shape = {
+            text: value,
+            ...validateTableShape(value)
+        };
+        tabless[index] = {...table};
         setTables(tabless);
     };
 
@@ -206,22 +256,27 @@ function NewConfig(props) {
         const tabless = tables.slice();
         const value = event.target.value;
         let table = tabless[index];
-        table.capacity = value;
-        tabless[index] = {...table, ...validateTableCapacity(value)};
+        table.capacity = {
+            text: value,
+            ...validateTableCapacity(value)
+        };
+        tabless[index] = {...table};
         setTables(tabless);
     };
 
-    const handleRelationshipGuestChange = (event, relIndex, guestIndex) => {
+    const handleRelationshipGuestChange = (value, relIndex, guestIndex) => {
         const guestss = guests.slice();
-        const value = event.target.value;
         const relationship = guestss[guestIndex].relationships[relIndex];
-        relationship.guestName = value;
-        guestss[guestIndex].relationships[relIndex] = {...relationship, ...validateRelationshipGuest(value)};
+        relationship.guestName = {
+            text: value,
+            ...validateRelationshipGuest(value)
+        };
+        guestss[guestIndex].relationships[relIndex] = {...relationship};
         setGuests(guestss);
     };
 
     const validateRelationshipGuest = (name) => {
-        if(name.length === 0) {
+        if (name.length === 0) {
             return {
                 validateStatus: 'error',
                 errorMsg: "Please enter a guest name"
@@ -230,12 +285,12 @@ function NewConfig(props) {
 
         let containsName = false;
         guests.forEach(guest => {
-            if(guest.name === name) {
+            if (guest.name.text === name) {
                 containsName = true;
             }
         });
 
-        if(!containsName) {
+        if (!containsName) {
             return {
                 validateStatus: 'error',
                 errorMsg: "Not a valid guest name"
@@ -248,17 +303,19 @@ function NewConfig(props) {
         }
     };
 
-    const handleRelationshipValueChange = (event, relIndex, guestIndex) => {
+    const handleRelationshipValueChange = (value, relIndex, guestIndex) => {
         const guestss = guests.slice();
-        const value = event.target.value;
         const relationship = guestss[guestIndex].relationships[relIndex];
-        relationship.likability = value;
-        guestss[guestIndex].relationships[relIndex] = {...relationship, ...validateRelationshipValue(value)};
+        relationship.likability = {
+            text: value,
+            ...validateRelationshipValue(value)
+        };
+        guestss[guestIndex].relationships[relIndex] = {...relationship};
         setGuests(guestss);
     };
 
     const validateRelationshipValue = (value) => {
-        if(value == -1 || value == 1 || value == 10) {
+        if (value == -1 || value == 1 || value == 10) {
             return {
                 validateStatus: 'success',
                 errorMsg: null
@@ -275,14 +332,17 @@ function NewConfig(props) {
         const guestss = guests.slice();
         const value = event.target.value;
         const relationship = guestss[guestIndex].relationships[relIndex];
-        relationship.bribe = value;
-        guestss[guestIndex].relationships[relIndex] = {...relationship, ...validateBribe(value)};
+        relationship.bribe = {
+            text: value,
+            ...validateBribe(value)
+        };
+        guestss[guestIndex].relationships[relIndex] = {...relationship};
         setGuests(guestss);
         console.log(guests);
     };
 
     const validateBribe = (value) => {
-        if(value >= 0) {
+        if (value >= 0) {
             return {
                 validateStatus: 'success',
                 errorMsg: null
@@ -305,18 +365,21 @@ function NewConfig(props) {
             key={index} guest={guest}
             guestNumber={index}
             removeGuest={removeGuest}
-            handleGuestChange={handleGuestChange}
+            handleGuestChange={handleGuestNameChange}
             addRelationship={addRelationship}
             removeRelationship={removeRelationship}
             handleRelationshipGuestChange={handleRelationshipGuestChange}
             handleRelationshipValueChange={handleRelationshipValueChange}
             handleRelationshipBribeChange={handleRelationshipBribeChange}
+            guests={guests}
         />)
     });
 
     const tableViews = [];
     tables.forEach((table, index) => {
-        tableViews.push(<Table key={index} table={table} tableNumber={index} removeTable={removeTable} handleTableShapeChange={handleTableShapeChange} handleTableCapacityChange={handleTableCapacityChange}/>)
+        tableViews.push(<Table key={index} table={table} tableNumber={index} removeTable={removeTable}
+                               handleTableShapeChange={handleTableShapeChange}
+                               handleTableCapacityChange={handleTableCapacityChange}/>)
     });
 
     return (
@@ -324,14 +387,15 @@ function NewConfig(props) {
             <h1 className="page-title">Create Config</h1>
             <div className="new-config-content">
                 <Form onSubmit={handleSubmit} className="create-config-form">
-                    <FormItem label="Config name" validateStatus={name.validateStatus} help={name.errorMsg} className="config-form-row">
+                    <FormItem label="Config name" validateStatus={name.validateStatus} help={name.errorMsg}
+                              className="config-form-row">
                         <Input
                             placeholder='Your config name'
                             size="large"
                             onChange={handleNameChange}
                             value={name.text}/>
                     </FormItem>
-                    <Divider />
+                    <Divider/>
                     {guestViews}
                     <FormItem className="config-form-fow">
                         <Button type="dashed" onClick={addGuest}>Add Guest</Button>
@@ -365,26 +429,31 @@ function Guest(props) {
             handleRelationshipGuestChange={props.handleRelationshipGuestChange}
             handleRelationshipValueChange={props.handleRelationshipValueChange}
             handleRelationshipBribeChange={props.handleRelationshipBribeChange}
-            addRelationship={props.addRelationship}/>)
+            addRelationship={props.addRelationship}
+            guests={props.guests}/>)
     });
 
     return (
-        <FormItem label="Guest Name" validateStatus={props.guest.validateStatus} help={props.guest.errorMsg} className="config-form-row">
-            <Input
-                placeholder={'Guest ' + (props.guestNumber + 1)}
-                size="large"
-                className="optional-guest"
-                onChange={(event) => props.handleGuestChange(event, props.guestNumber)}
-                value={props.guest.name}/>
-             {relationshipViews}
+        <div>
+            <FormItem label="Guest Name" validateStatus={props.guest.name.validateStatus} help={props.guest.name.errorMsg}
+                      className="config-form-row">
+                <Input
+                    placeholder={'Guest ' + (props.guestNumber + 1)}
+                    size="large"
+                    className="optional-guest"
+                    onChange={(event) => props.handleGuestChange(event, props.guestNumber)}
+                    value={props.guest.name.text}/>
+            </FormItem>
+            {relationshipViews}
             <FormItem className="config-form-fow">
                 <Button type="dashed" onClick={() => props.addRelationship(props.guestNumber)}>Add Relationship</Button>
             </FormItem>
             <Icon className="dynamic-delete-button"
                   type="close"
-                  onClick={() => props.removeGuest(props.guestNumber)} />
-            <Divider />
-        </FormItem>
+                  onClick={() => props.removeGuest(props.guestNumber)}/>
+            <Divider/>
+        </div>
+
     )
 }
 
@@ -392,26 +461,27 @@ function Table(props) {
     return (
         <div>
             <h1>Table:</h1>
-            <FormItem label="Table Shape" validateStatus={props.table.validateStatus} help={props.table.errorMsg} className="config-form-row indent">
-                <Input
-                    placeholder="Circle"
-                    size="large"
-                    className="optional-table"
-                    onChange={(event) => props.handleTableShapeChange(event, props.tableNumber)}
-                    value={props.table.shape}/>
+            <FormItem label="Table Shape" validateStatus={props.table.shape.validateStatus} help={props.table.shape.errorMsg}
+                      className="config-form-row indent">
+                <Select onChange={(event) => props.handleTableShapeChange(event, props.tableNumber)}
+                        value={props.table.shape.text}>
+                    <Option value="Circle">Circle</Option>
+                    <Option value="Rectangle">Rectangle</Option>
+                </Select>
             </FormItem>
-            <FormItem label="Table Capacity" validateStatus={props.table.validateStatus} help={props.table.errorMsg} className="config-form-row indent">
+            <FormItem label="Table Capacity" validateStatus={props.table.capacity.validateStatus} help={props.table.capacity.errorMsg}
+                      className="config-form-row indent">
                 <Input
                     placeholder="10"
                     size="large"
                     className="optional-table"
                     onChange={(event) => props.handleTableCapacityChange(event, props.tableNumber)}
-                    value={props.table.capacity}/>
+                    value={props.table.capacity.text}/>
             </FormItem>
             <Icon className="dynamic-delete-button"
                   type="close"
-                  onClick={() => props.removeTable(props.tableNumber)} />
-            <Divider />
+                  onClick={() => props.removeTable(props.tableNumber)}/>
+            <Divider/>
         </div>
     )
 }
@@ -420,34 +490,39 @@ function Relationship(props) {
     return (
         <div className="indent">
             <p>Relationship:</p>
-            <FormItem label="Guest Name" validateStatus={props.relationship.validateStatus} help={props.relationship.errorMsg} className="config-form-row">
-                <Input
-                    placeholder="Guest Name"
-                    size="large"
-                    className="optional-relationship"
-                    onChange={(event) => props.handleRelationshipGuestChange(event, props.relationshipNumber, props.guestNumber)}
-                    value={props.relationship.guestName}/>
+            <FormItem label="Guest Name" validateStatus={props.relationship.guestName.validateStatus}
+                      help={props.relationship.guestName.errorMsg} className="config-form-row">
+                <Select className="optional-relationship"
+                        onChange={(event) => props.handleRelationshipGuestChange(event, props.relationshipNumber, props.guestNumber)}>
+                    {props.guests.filter((guest, index) => {
+                        return index !== props.guestNumber;
+                    }).map((guest, index) =>
+                        <Option key={index} value={guest.name.text}>{guest.name.text}</Option>
+                    )}
+                </Select>
             </FormItem>
-            <FormItem label="value" validateStatus={props.relationship.validateStatus} help={props.relationship.errorMsg} className="config-form-row">
+            <FormItem label="value" validateStatus={props.relationship.likability.validateStatus}
+                      help={props.relationship.likability.errorMsg} className="config-form-row">
+                <Select className="optional-relationship"
+                        onChange={(event) => props.handleRelationshipValueChange(event, props.relationshipNumber, props.guestNumber)}
+                        value={props.relationship.likability.text}>
+                    <Option value="10">Partner</Option>
+                    <Option value="1">Likes</Option>
+                    <Option value="-1">Dislikes</Option>
+                </Select>
+            </FormItem>
+            <FormItem label="bribe" validateStatus={props.relationship.bribe.validateStatus}
+                      help={props.relationship.bribe.errorMsg} className="config-form-row">
                 <Input
                     placeholder="10"
-                    size="large"
-                    className="optional-relationship"
-                    onChange={(event) => props.handleRelationshipValueChange(event, props.relationshipNumber, props.guestNumber)}
-                    value={props.relationship.likability}/>
-            </FormItem>
-            <FormItem label="bribe" validateStatus={props.relationship.validateStatus} help={props.relationship.errorMsg} className="config-form-row">
-                <Input
-                    placeholder="10"
-                    size="large"
                     className="optional-relationship"
                     onChange={(event) => props.handleRelationshipBribeChange(event, props.relationshipNumber, props.guestNumber)}
-                    value={props.relationship.bribe}/>
+                    value={props.relationship.bribe.text}/>
             </FormItem>
             <Icon className="dynamic-delete-button"
                   type="close"
-                  onClick={() => props.removeRelationship(props.guestNumber, props.relationshipNumber)} />
-            <Divider />
+                  onClick={() => props.removeRelationship(props.guestNumber, props.relationshipNumber)}/>
+            <Divider/>
         </div>
     )
 }
