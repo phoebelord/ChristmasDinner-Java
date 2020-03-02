@@ -1,12 +1,11 @@
 import React, {useState} from "react";
 import {useHistory} from 'react-router-dom';
-import {Button, Divider, Form, Icon, Input, notification, Select} from "antd";
+import FormItem, {Button, Divider, Form, Input, notification} from "antd";
 import {createConfig, editConfig} from "../utils/ApiUtils";
-import FormItem from "antd/es/form/FormItem";
 import "./NewConfig.css"
 import {useLocation} from "react-router";
-
-const {Option} = Select;
+import Table from "./Table";
+import Guest from "./Guest";
 
 function NewConfig(props) {
     const history = useHistory();
@@ -413,116 +412,6 @@ function NewConfig(props) {
                     </FormItem>
                 </Form>
             </div>
-        </div>
-    )
-}
-
-function Guest(props) {
-    const relationshipViews = [];
-    props.guest.relationships.forEach((relationship, index) => {
-        relationshipViews.push(<Relationship
-            key={index}
-            relationship={relationship}
-            relationshipNumber={index}
-            guestNumber={props.guestNumber}
-            removeRelationship={props.removeRelationship}
-            handleRelationshipGuestChange={props.handleRelationshipGuestChange}
-            handleRelationshipValueChange={props.handleRelationshipValueChange}
-            handleRelationshipBribeChange={props.handleRelationshipBribeChange}
-            addRelationship={props.addRelationship}
-            guests={props.guests}/>)
-    });
-
-    return (
-        <div>
-            <FormItem label="Guest Name" validateStatus={props.guest.name.validateStatus} help={props.guest.name.errorMsg}
-                      className="config-form-row">
-                <Input
-                    placeholder={'Guest ' + (props.guestNumber + 1)}
-                    size="large"
-                    className="optional-guest"
-                    onChange={(event) => props.handleGuestChange(event, props.guestNumber)}
-                    value={props.guest.name.text}/>
-            </FormItem>
-            {relationshipViews}
-            <FormItem className="config-form-fow">
-                <Button type="dashed" onClick={() => props.addRelationship(props.guestNumber)}>Add Relationship</Button>
-            </FormItem>
-            <Icon className="dynamic-delete-button"
-                  type="close"
-                  onClick={() => props.removeGuest(props.guestNumber)}/>
-            <Divider/>
-        </div>
-
-    )
-}
-
-function Table(props) {
-    return (
-        <div>
-            <h1>Table:</h1>
-            <FormItem label="Table Shape" validateStatus={props.table.shape.validateStatus} help={props.table.shape.errorMsg}
-                      className="config-form-row indent">
-                <Select onChange={(event) => props.handleTableShapeChange(event, props.tableNumber)}
-                        value={props.table.shape.text}>
-                    <Option value="Circle">Circle</Option>
-                    <Option value="Rectangle">Rectangle</Option>
-                </Select>
-            </FormItem>
-            <FormItem label="Table Capacity" validateStatus={props.table.capacity.validateStatus} help={props.table.capacity.errorMsg}
-                      className="config-form-row indent">
-                <Input
-                    placeholder="10"
-                    size="large"
-                    className="optional-table"
-                    onChange={(event) => props.handleTableCapacityChange(event, props.tableNumber)}
-                    value={props.table.capacity.text}/>
-            </FormItem>
-            <Icon className="dynamic-delete-button"
-                  type="close"
-                  onClick={() => props.removeTable(props.tableNumber)}/>
-            <Divider/>
-        </div>
-    )
-}
-
-function Relationship(props) {
-    return (
-        <div className="indent">
-            <p>Relationship:</p>
-            <FormItem label="Guest Name" validateStatus={props.relationship.guestName.validateStatus}
-                      help={props.relationship.guestName.errorMsg} className="config-form-row">
-                <Select className="optional-relationship"
-                        onChange={(event) => props.handleRelationshipGuestChange(event, props.relationshipNumber, props.guestNumber)}>
-                    {props.guests.filter((guest, index) => {
-                        return index !== props.guestNumber;
-                    }).map((guest, index) =>
-                        <Option key={index} value={guest.name.text}>{guest.name.text}</Option>
-                    )}
-                </Select>
-            </FormItem>
-            <FormItem label="value" validateStatus={props.relationship.likability.validateStatus}
-                      help={props.relationship.likability.errorMsg} className="config-form-row">
-                <Select className="optional-relationship"
-                        onChange={(event) => props.handleRelationshipValueChange(event, props.relationshipNumber, props.guestNumber)}
-                        value={props.relationship.likability.text}>
-                    <Option value="10">Partner</Option>
-                    <Option value="1">Likes</Option>
-                    <Option value="-1">Dislikes</Option>
-                </Select>
-            </FormItem>
-            <FormItem label="bribe" validateStatus={props.relationship.bribe.validateStatus}
-                      help={props.relationship.bribe.errorMsg} className="config-form-row">
-                <Input
-                    placeholder="10"
-                    className="optional-relationship"
-                    onChange={(event) => props.handleRelationshipBribeChange(event, props.relationshipNumber, props.guestNumber)}
-                    value={props.relationship.bribe.text}/>
-            </FormItem>
-            <Icon className="dynamic-delete-button"
-                  type="close"
-                  onClick={() => props.removeRelationship(props.guestNumber, props.relationshipNumber)}/>
-            <Divider/>
         </div>
     )
 }

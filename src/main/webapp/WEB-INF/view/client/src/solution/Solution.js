@@ -1,9 +1,8 @@
 import * as React from 'react';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Tables} from "./Tables";
 import {getSolution} from "../utils/ApiUtils";
 import {useLocation} from "react-router";
-import {useEffect} from "react";
 import LoadingIndicator from "../common/LoadingIndicator";
 import "./Solution.css";
 
@@ -26,7 +25,7 @@ function Solution() {
             })
     };
 
-    if(isLoading) {
+    if (isLoading) {
         return <LoadingIndicator/>
     }
 
