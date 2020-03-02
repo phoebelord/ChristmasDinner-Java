@@ -1,6 +1,7 @@
 import Relationship from "./Relationship";
-import FormItem, {Button, Divider, Icon, Input} from "antd";
+import {Button, Divider, Icon, Input} from "antd";
 import React from "react";
+import FormItem from "antd/lib/form/FormItem";
 
 function Guest(props) {
     const relationshipViews = [];

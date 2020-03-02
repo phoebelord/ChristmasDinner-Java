@@ -79,12 +79,15 @@ public class ConfigService {
       for(int i = 0; i < relationshipRequests.size(); i++) {
         RelationshipRequest relationshipRequest = relationshipRequests.get(i);
         if(i >= relationships.size()) {
-          guest.addRelationship(createRelationship(relationshipRequest, config));
+          guest.addRelationship(createRelationship(relationshipRequest, config, guest.getName()));
         } else {
           Relationship relationship = relationships.get(i);
           relationship.setLikability(relationshipRequest.getLikability());
           Guest otherGuest = guestRepository.findByNameAndConfig(relationshipRequest.getGuestName(), config).orElseThrow(() -> new AppException("Guest doesn't exist: " + relationshipRequest.getGuestName()));
-          relationship.setGuestId(otherGuest.getId());
+          if(guest.getName().equals(otherGuest.getName())) {
+            throw new AppException("Guest: " + guest.getName() + " cannot have relationship with self");
+          }
+           relationship.setGuestId(otherGuest.getId());
           relationship.setBribe(relationshipRequest.getBribe());
           relationshipRepository.save(relationship);
         }
@@ -125,9 +128,12 @@ public class ConfigService {
     return guest;
   }
 
-  private Relationship createRelationship(RelationshipRequest relationshipRequest, Config config) {
+  private Relationship createRelationship(RelationshipRequest relationshipRequest, Config config, String currentGuestName) {
     Relationship relationship = new Relationship();
     String guestName = relationshipRequest.getGuestName();
+    if(guestName.equals(currentGuestName)) {
+      throw new AppException("Guest: " + guestName + " cannot have a relationship with self");
+    }
     Guest otherGuest = guestRepository.findByNameAndConfig(guestName, config).orElseThrow(() -> new AppException("Guest doesn't exist: " + guestName));
     relationship.setGuestId(otherGuest.getId());
     relationship.setLikability(relationshipRequest.getLikability());
@@ -151,7 +157,7 @@ public class ConfigService {
       Guest guest = guestRepository.findByNameAndConfig(guestRequest.getName(), config)
         .orElseThrow(() -> new AppException("Guest doesn't exist: " + guestRequest.getName()));
       guestRequest.getRelationships().forEach(relationshipRequest -> {
-        guest.addRelationship(createRelationship(relationshipRequest, config));
+        guest.addRelationship(createRelationship(relationshipRequest, config, guest.getName()));
       });
       guestRepository.save(guest);
     }

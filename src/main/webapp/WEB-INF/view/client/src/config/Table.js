@@ -1,5 +1,6 @@
-import FormItem, {Divider, Icon, Input, Select} from "antd";
+import {Divider, Icon, Input, Select} from "antd";
 import React from "react";
+import FormItem from "antd/lib/form/FormItem";
 
 const {Option} = Select;
 

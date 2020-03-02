@@ -1,7 +1,6 @@
 package com.phoebelord.controllers;
 
-import com.phoebelord.dao.ConfigRepository;
-import com.phoebelord.dao.UserRepository;
+import com.phoebelord.dao.*;
 import com.phoebelord.exception.ForbiddenException;
 import com.phoebelord.exception.NotFoundException;
 import com.phoebelord.model.Config;
@@ -18,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
@@ -36,8 +36,18 @@ public class ConfigController {
   @Autowired
   UserRepository userRepository;
 
+  @Autowired
+  GuestRepository guestRepository;
+
+  @Autowired
+  RelationshipRepository relationshipRepository;
+
+  @Autowired
+  TableRepository tableRepository;
+
   @PostMapping("/create")
   @PreAuthorize("hasRole('USER')")
+  @Transactional
   public ResponseEntity<?> createConfig(@Valid @RequestBody NewConfigRequest newConfigRequest) {
     Config config = configService.createConfig(newConfigRequest);
     configRepository.save(config);
@@ -51,6 +61,7 @@ public class ConfigController {
 
   @PostMapping("/edit")
   @PreAuthorize("hasRole('USER')")
+  @Transactional
   public ResponseEntity<?> editConfig(@Valid @RequestBody NewConfigRequest newConfigRequest) {
     Config config = configService.editConfig(newConfigRequest);
     configRepository.save(config);
@@ -60,6 +71,25 @@ public class ConfigController {
       .buildAndExpand(config.getId()).toUri();
 
     return ResponseEntity.created(location).body(new ApiResponse(true, "Config edited Successfully"));
+  }
+
+  @DeleteMapping("/delete/{configId}")
+  @PreAuthorize("hasRole('USER')")
+  @Transactional
+  public ResponseEntity<?> deleteConfig(@CurrentUser UserPrincipal currentUser, @PathVariable Integer configId) {
+    Config config = configRepository.findById(configId).orElseThrow(() -> new NotFoundException("Config", "id", configId));
+    if(currentUser.getId() != config.getCreatedBy()) {
+      throw new ForbiddenException("You do not have access to this config");
+    }
+
+    config.getGuests().forEach(guest -> {
+      guest.getRelationships().forEach(relationship -> relationshipRepository.delete(relationship));
+      guestRepository.delete(guest);
+    });
+    config.getTables().forEach(table -> tableRepository.delete(table));
+    configRepository.delete(config);
+
+    return ResponseEntity.noContent().build();
   }
 
   @GetMapping("/{configId}")

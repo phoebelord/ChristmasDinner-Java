@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useEffect} from 'react';
 import "./Tables.css"
-import {Button} from "antd";
+import {Button, Divider} from "antd";
 
 export function Tables(props) {
 

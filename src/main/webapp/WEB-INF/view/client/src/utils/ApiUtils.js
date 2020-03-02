@@ -21,6 +21,24 @@ const request = (options) => {
         }));
 };
 
+const deleteRequest = (options) => {
+    const headers = new Headers();
+    if (localStorage.getItem(ACCESS_TOKEN)) {
+        headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN));
+    }
+
+    const defaults = {headers: headers};
+    options = Object.assign({}, defaults, options);
+
+    return fetch(options.url, options)
+        .then(response => {
+            if(!response.ok) {
+                return Promise.reject(response);
+            }
+            return response;
+        });
+};
+
 export function login(loginRequest) {
     return request({
         url: API_BASE_URL + "/auth/signin",
@@ -93,5 +111,13 @@ export function getSolution(configId) {
     return request({
         url: API_BASE_URL + "/solution/" + configId,
         method: 'GET'
+    })
+}
+
+export function deleteConfig(configId) {
+    console.log(configId);
+    return deleteRequest({
+        url: API_BASE_URL + "/config/delete/" + configId,
+        method: 'DELETE'
     })
 }

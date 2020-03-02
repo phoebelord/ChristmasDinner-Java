@@ -1,11 +1,12 @@
 import React, {useState} from "react";
 import {useHistory} from 'react-router-dom';
-import FormItem, {Button, Divider, Form, Input, notification} from "antd";
+import {Button, Divider, Form, Input, notification} from "antd";
 import {createConfig, editConfig} from "../utils/ApiUtils";
 import "./NewConfig.css"
 import {useLocation} from "react-router";
 import Table from "./Table";
 import Guest from "./Guest";
+import FormItem from "antd/lib/form/FormItem";
 
 function NewConfig(props) {
     const history = useHistory();
@@ -128,7 +129,6 @@ function NewConfig(props) {
             })
         };
 
-        console.log(configData);
         if (location.state) {
             editConfig(configData)
                 .then(response => {
@@ -174,6 +174,11 @@ function NewConfig(props) {
             return {
                 validateStatus: 'error',
                 errorMsg: "Please enter a name for the config"
+            }
+        } else {
+            return {
+                validateStatus: 'success',
+                errorMsg: null
             }
         }
     };
@@ -355,7 +360,37 @@ function NewConfig(props) {
     };
 
     const isFormInvalid = () => {
-        return name.validateStatus !== 'success';
+        let invalid = name.validateStatus !== 'success';
+        guests.forEach(guest => {
+            if (guest.name.validateStatus !== 'success') {
+                invalid = true;
+            }
+            guest.relationships.forEach(relationship => {
+                if (relationship.guestName.validateStatus !== 'success') {
+                    invalid = true;
+                }
+
+                if (relationship.likability.validateStatus !== 'success') {
+                    invalid = true;
+                }
+
+                if (relationship.bribe.validateStatus !== 'success') {
+                    invalid = true;
+                }
+            })
+        });
+
+        tables.forEach(table => {
+            if (table.shape.validateStatus !== 'success') {
+                invalid = true;
+            }
+
+            if (table.capacity.validateStatus !== 'success') {
+                invalid = true;
+            }
+        });
+
+        return invalid;
     };
 
     const guestViews = [];
@@ -407,7 +442,7 @@ function NewConfig(props) {
                         <Button type="primary"
                                 htmlType="submit"
                                 size="large"
-                                disabled={isFormInvalid}
+                                disabled={isFormInvalid()}
                                 className="create-config-form-button">Save Config</Button>
                     </FormItem>
                 </Form>

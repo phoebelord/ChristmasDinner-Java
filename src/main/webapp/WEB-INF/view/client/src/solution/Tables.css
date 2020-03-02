@@ -17,6 +17,8 @@
 .guestList {
     background-image: url("../table.jpg");
     position: relative;
+    margin-bottom: 50px;
+    display: inline-block;
 }
 
 .Circle {
@@ -41,7 +43,6 @@
 }
 
 .table {
-    display: flex;
-    justify-content: center;
+    text-align: center;
     margin: 40px auto 0;
 }
