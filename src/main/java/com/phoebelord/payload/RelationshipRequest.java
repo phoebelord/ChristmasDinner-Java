@@ -18,23 +18,11 @@ public class RelationshipRequest {
     return guestName;
   }
 
-  public void setGuestName(String guestName) {
-    this.guestName = guestName;
-  }
-
   public int getLikability() {
     return likability;
   }
 
-  public void setLikability(int likability) {
-    this.likability = likability;
-  }
-
   public int getBribe() {
     return bribe;
-  }
-
-  public void setBribe(int bribe) {
-    this.bribe = bribe;
   }
 }

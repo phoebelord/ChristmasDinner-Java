@@ -39,9 +39,9 @@ public class ConfigService {
       config.addGuest(createGuest(guestRequest, config));
     });
 
-    addRelationships(newConfigRequest.getGuests(), config);
+    addRelationships((List<GuestRequest>) newConfigRequest.getGuests(), config);
 
-    List<TableRequest> tableRequests = newConfigRequest.getTables();
+    List<TableRequest> tableRequests = (List<TableRequest>) newConfigRequest.getTables();
     int offset = 0;
     for (int i = 0; i < tableRequests.size(); i++) {
       TableRequest currentTableRequest = tableRequests.get(i);
@@ -53,82 +53,124 @@ public class ConfigService {
     return config;
   }
 
-  public Config editConfig(NewConfigRequest newConfigRequest) {
-    Config config = configRepository.findById(newConfigRequest.getId()).orElseThrow(() -> new NotFoundException("Config", "id", newConfigRequest.getId()));
-    config.setName(newConfigRequest.getName());
-    List<Guest> guests = config.getGuests();
+  //todo too long
+  public Config editConfig(ConfigDTO configDTO) {
+    Config config = configRepository.findById(configDTO.getId()).orElseThrow(() -> new NotFoundException("Config", "id", configDTO.getId()));
+    config.setName(configDTO.getName());
 
-    //sort guests
-    List<GuestRequest> newGuests = newConfigRequest.getGuests();
-    for(int i = 0; i < newGuests.size(); i++) {
-      if(i >= guests.size()) {
-        config.addGuest(createGuest(newGuests.get(i), config));
+    List<Guest> currentGuests = config.getGuests();
+    List<GuestDTO> newGuests = configDTO.getGuests();
+
+    List<Guest> deletedGuests = new ArrayList<>();
+    for(Guest guest: currentGuests) {
+      boolean found = newGuests.stream().anyMatch(guestDTO -> guestDTO.getId() == guest.getId());
+      // Guest has been deleted
+      if(!found) {
+        guest.getRelationships().forEach(relationship -> relationshipRepository.delete(relationship));
+        deletedGuests.add(guest);
+        guestRepository.delete(guest);
+      }
+    }
+    currentGuests.removeAll(deletedGuests);
+
+    for(GuestDTO guestDTO: newGuests){
+      // new guest
+      if(guestDTO.getId() == -1) {
+        Guest newGuest = createGuest(guestDTO, config);
+        currentGuests.add(newGuest);
+        guestDTO.setId(newGuest.getId());
       } else {
-        Guest currentGuest = guests.get(i);
-        GuestRequest currentGuestRequest = newGuests.get(i);
-        currentGuest.setName(currentGuestRequest.getName());
+        Guest currentGuest = currentGuests.stream().filter(guest -> guest.getId() == guestDTO.getId()).findAny().get();
+        currentGuest.setName(guestDTO.getName());
         guestRepository.save(currentGuest);
       }
     }
 
-    //sort relationships
-    for(GuestRequest guestRequest: newGuests) {
-      Guest guest = guestRepository.findByNameAndConfig(guestRequest.getName(), config).orElseThrow(() -> new AppException("Guest doesn't exist: " + guestRequest.getName()));
-      List<RelationshipRequest> relationshipRequests = guestRequest.getRelationships();
-      List<Relationship> relationships = guest.getRelationships();
-      for(int i = 0; i < relationshipRequests.size(); i++) {
-        RelationshipRequest relationshipRequest = relationshipRequests.get(i);
-        if(i >= relationships.size()) {
-          guest.addRelationship(createRelationship(relationshipRequest, config, guest.getName()));
-        } else {
-          Relationship relationship = relationships.get(i);
-          relationship.setLikability(relationshipRequest.getLikability());
-          Guest otherGuest = guestRepository.findByNameAndConfig(relationshipRequest.getGuestName(), config).orElseThrow(() -> new AppException("Guest doesn't exist: " + relationshipRequest.getGuestName()));
-          if(guest.getName().equals(otherGuest.getName())) {
-            throw new AppException("Guest: " + guest.getName() + " cannot have relationship with self");
-          }
-           relationship.setGuestId(otherGuest.getId());
-          relationship.setBribe(relationshipRequest.getBribe());
-          relationshipRepository.save(relationship);
+    for(Guest guest: currentGuests) {
+      List<Relationship> currentRelationships = guest.getRelationships();
+      List<RelationshipDTO> relationshipDTOS = newGuests.stream().filter(guestDTO -> guestDTO.getId() == guest.getId()).findAny().get().getRelationships();
+
+      List<Relationship> deletedRelationships = new ArrayList<>();
+      for(Relationship relationship: currentRelationships) {
+        boolean found = relationshipDTOS.stream().anyMatch(relationshipDTO -> relationshipDTO.getId() == relationship.getId());
+        boolean shouldDelete = deletedGuests.stream().anyMatch(deletedGuest -> deletedGuest.getId() == relationship.getGuestId());
+        if(!found || shouldDelete) {
+          relationshipRepository.delete(relationship);
+          deletedRelationships.add(relationship);
         }
       }
-    }
+      currentRelationships.removeAll(deletedRelationships);
 
-    config.setGuests(guests);
-
-    //sort tables
-    List<TableRequest> tableRequests = newConfigRequest.getTables();
-    List<Table> tables = config.getTables();
-    int offset = 0;
-    for(int i = 0; i < tableRequests.size(); i++) {
-      TableRequest tableRequest = tableRequests.get(i);
-      Table table;
-      if(i >= tables.size()) {
-        table = createTable(tableRequest, config, i, offset);
-        config.addTable(table);
-      } else {
-        table = tables.get(i);
-        table.setTableNum(i);
-        table.setCapacity(tableRequest.getCapacity());
-        table.setOffset(offset);
-        table.setShape(tableRequest.getShape());
-        tableRepository.save(table);
+      for(RelationshipDTO relationshipDTO: relationshipDTOS) {
+        if(relationshipDTO.getId() == -1) {
+          Relationship newRelationship = createRelationship(relationshipDTO, config, guest.getName());
+          currentRelationships.add(newRelationship);
+          relationshipDTO.setId(newRelationship.getId());
+        } else {
+          Relationship currentRelationship = currentRelationships.stream().filter(relationship -> relationship.getId() == relationshipDTO.getId()).findAny().get();
+          currentRelationship.setBribe(relationshipDTO.getBribe());
+          currentRelationship.setLikability(relationshipDTO.getLikability());
+          Guest otherGuest = guestRepository.findByNameAndConfig(relationshipDTO.getGuestName(), config).get();
+          if(guest.getId() == otherGuest.getId()) {
+            throw new AppException("Guest: " + guest.getName() + " cannot have relationship with self");
+          }
+          currentRelationship.setGuestId(otherGuest.getId());
+          relationshipRepository.save(currentRelationship);
+        }
       }
 
+      guest.setRelationships(currentRelationships);
+      guestRepository.save(guest);
+    }
+
+    List<Table> currentTables = config.getTables();
+    List<TableDTO> tableDTOs = configDTO.getTables();
+
+    List<Table> deletedTables = new ArrayList<>();
+    for(Table table: currentTables) {
+      boolean found = tableDTOs.stream().anyMatch(tableDTO -> tableDTO.getId() == table.getId());
+      // Table has been deleted
+      if(!found) {
+        tableRepository.delete(table);
+        deletedTables.add(table);
+      }
+    }
+    currentTables.removeAll(deletedTables);
+
+    int offset = 0;
+    for(int i = 0; i < tableDTOs.size(); i++) {
+      TableDTO tableDTO = tableDTOs.get(i);
+      Table table;
+      if(tableDTO.getId() == -1) {
+        table = createTable(tableDTO, config, i, offset);
+        config.addTable(table);
+        tableDTO.setId(table.getId());
+      } else {
+        table = currentTables.stream().filter(currentTable -> currentTable.getId() == tableDTO.getId()).findAny().get();
+        table.setTableNum(i);
+        table.setOffset(offset);
+        table.setCapacity(tableDTO.getCapacity());
+        table.setShape(tableDTO.getShape());
+        tableRepository.save(table);
+      }
       offset += table.getCapacity();
     }
+
+    config.setGuests(currentGuests);
+    config.setTables(currentTables);
     configRepository.save(config);
     return config;
   }
 
-  private Guest createGuest(GuestRequest guestRequest, Config config) {
+  Guest createGuest(GuestRequest guestRequest, Config config) {
     Guest guest = new Guest(guestRequest);
     guest.setConfig(config);
     guestRepository.save(guest);
     return guest;
   }
 
-  private Relationship createRelationship(RelationshipRequest relationshipRequest, Config config, String currentGuestName) {
+
+  Relationship createRelationship(RelationshipRequest relationshipRequest, Config config, String currentGuestName) {
     Relationship relationship = new Relationship();
     String guestName = relationshipRequest.getGuestName();
     if(guestName.equals(currentGuestName)) {
@@ -143,7 +185,7 @@ public class ConfigService {
     return relationship;
   }
 
-  private Table createTable(TableRequest tableRequest, Config config, int index, int offset) {
+  Table createTable(TableRequest tableRequest, Config config, int index, int offset) {
     Table table = new Table(tableRequest);
     table.setConfig(config);
     table.setTableNum(index);
@@ -152,7 +194,7 @@ public class ConfigService {
     return table;
   }
 
-  private void addRelationships(List<GuestRequest> guestRequests, Config config) {
+  void addRelationships(List<GuestRequest> guestRequests, Config config) {
     for (GuestRequest guestRequest : guestRequests) {
       Guest guest = guestRepository.findByNameAndConfig(guestRequest.getName(), config)
         .orElseThrow(() -> new AppException("Guest doesn't exist: " + guestRequest.getName()));
@@ -166,38 +208,41 @@ public class ConfigService {
   public ConfigDTO createConfigDTO(Config config) {
     ConfigDTO configDTO = new ConfigDTO(config);
 
-    List<GuestRequest> guestRequests = new ArrayList<>();
+    List<GuestDTO> guestDTOS = new ArrayList<>();
     for(Guest guest: config.getGuests()) {
-      GuestRequest guestRequest = new GuestRequest();
-      guestRequest.setName(guest.getName());
-      guestRequest.setRelationships(createRelationshipRequests(guest));
-      guestRequests.add(guestRequest);
+      GuestDTO guestDTO = new GuestDTO();
+      guestDTO.setId(guest.getId());
+      guestDTO.setName(guest.getName());
+      guestDTO.setRelationships(createRelationshipDTOs(guest));
+      guestDTOS.add(guestDTO);
     }
-    configDTO.setGuests(guestRequests);
+    configDTO.setGuests(guestDTOS);
 
-    List<TableRequest> tableRequests = new ArrayList<>();
+    List<TableDTO> tableDTOS = new ArrayList<>();
     for(Table table: config.getTables()) {
-      TableRequest tableRequest = new TableRequest();
-      tableRequest.setCapacity(table.getCapacity());
-      tableRequest.setShape(table.getShape());
-      tableRequests.add(tableRequest);
+      TableDTO tableDTO = new TableDTO();
+      tableDTO.setId(table.getId());
+      tableDTO.setCapacity(table.getCapacity());
+      tableDTO.setShape(table.getShape());
+      tableDTOS.add(tableDTO);
     }
-    configDTO.setTables(tableRequests);
+    configDTO.setTables(tableDTOS);
 
     return configDTO;
   }
 
-  private List<RelationshipRequest> createRelationshipRequests(Guest guest) {
-    List<RelationshipRequest> relationshipRequests = new ArrayList<>();
+  private List<RelationshipDTO> createRelationshipDTOs(Guest guest) {
+    List<RelationshipDTO> relationshipDTOS = new ArrayList<>();
     for(Relationship relationship: guest.getRelationships()) {
-      RelationshipRequest relationshipRequest = new RelationshipRequest();
+      RelationshipDTO relationshipDTO = new RelationshipDTO();
+      relationshipDTO.setId(relationship.getId());
       Guest otherGuest = guestRepository.findById(relationship.getGuestId()).orElseThrow(() -> new NotFoundException("User", "Id", relationship.getGuestId()));
-      relationshipRequest.setGuestName(otherGuest.getName());
-      relationshipRequest.setLikability(relationship.getLikability());
-      relationshipRequest.setBribe(relationship.getBribe());
-      relationshipRequests.add(relationshipRequest);
+      relationshipDTO.setGuestName(otherGuest.getName());
+      relationshipDTO.setLikability(relationship.getLikability());
+      relationshipDTO.setBribe(relationship.getBribe());
+      relationshipDTOS.add(relationshipDTO);
     }
-    return relationshipRequests;
+    return relationshipDTOS;
   }
 
 

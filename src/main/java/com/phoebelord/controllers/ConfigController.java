@@ -14,10 +14,10 @@ import com.phoebelord.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
@@ -47,7 +47,6 @@ public class ConfigController {
 
   @PostMapping("/create")
   @PreAuthorize("hasRole('USER')")
-  @Transactional
   public ResponseEntity<?> createConfig(@Valid @RequestBody NewConfigRequest newConfigRequest) {
     Config config = configService.createConfig(newConfigRequest);
     configRepository.save(config);
@@ -61,9 +60,8 @@ public class ConfigController {
 
   @PostMapping("/edit")
   @PreAuthorize("hasRole('USER')")
-  @Transactional
-  public ResponseEntity<?> editConfig(@Valid @RequestBody NewConfigRequest newConfigRequest) {
-    Config config = configService.editConfig(newConfigRequest);
+  public ResponseEntity<?> editConfig(@Valid @RequestBody ConfigDTO configDTO) {
+    Config config = configService.editConfig(configDTO);
     configRepository.save(config);
 
     URI location = ServletUriComponentsBuilder
@@ -75,7 +73,6 @@ public class ConfigController {
 
   @DeleteMapping("/delete/{configId}")
   @PreAuthorize("hasRole('USER')")
-  @Transactional
   public ResponseEntity<?> deleteConfig(@CurrentUser UserPrincipal currentUser, @PathVariable Integer configId) {
     Config config = configRepository.findById(configId).orElseThrow(() -> new NotFoundException("Config", "id", configId));
     if(currentUser.getId() != config.getCreatedBy()) {

@@ -11,7 +11,7 @@ function Relationship(props) {
             <FormItem label="Guest Name" validateStatus={props.relationship.guestName.validateStatus}
                       help={props.relationship.guestName.errorMsg} className="config-form-row">
                 <Select className="optional-relationship"
-                        onChange={(event) => props.handleRelationshipGuestChange(event, props.relationshipNumber, props.guestNumber)}>
+                        onChange={(event) => props.handleRelationshipGuestChange(event, props.relationshipNumber, props.guestNumber)} value={props.relationship.guestName.text}>
                     {props.guests.filter((guest, index) => {
                         return index !== props.guestNumber;
                     }).map((guest, index) =>
@@ -24,9 +24,10 @@ function Relationship(props) {
                 <Select className="optional-relationship"
                         onChange={(event) => props.handleRelationshipValueChange(event, props.relationshipNumber, props.guestNumber)}
                         value={props.relationship.likability.text}>
-                    <Option value="10">Partner</Option>
-                    <Option value="1">Likes</Option>
-                    <Option value="-1">Dislikes</Option>
+                    <Option value="10" label="Partner">Partner</Option>
+                    <Option value="1" label="Likes">Likes</Option>
+                    <Option value="0" label="Neutral">Neutral</Option>
+                    <Option value="-1" label="Dislikes">Dislikes</Option>
                 </Select>
             </FormItem>
             <FormItem label="bribe" validateStatus={props.relationship.bribe.validateStatus}

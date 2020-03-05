@@ -5,28 +5,22 @@ import java.util.List;
 
 public class NewConfigRequest {
 
-  private int id;
-
   @NotBlank
-  private String name;
+  String name;
 
-  private List<GuestRequest> guests;
+  List<? extends GuestRequest> guests;
 
-  private List<TableRequest> tables;
-
-  public int getId() {
-    return id;
-  }
+  List<? extends TableRequest> tables;
 
   public String getName() {
     return name;
   }
 
-  public List<GuestRequest> getGuests() {
+  public List<? extends GuestRequest> getGuests() {
     return guests;
   }
 
-  public List<TableRequest> getTables() {
+  public List<? extends TableRequest> getTables() {
     return tables;
   }
 }

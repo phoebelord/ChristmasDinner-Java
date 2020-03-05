@@ -2,6 +2,7 @@ package com.phoebelord.model;
 
 public enum RelationshipName {
   LIKES("Likes", 1),
+  NEUTRAL("Neutral", 0),
   DISLIKES("Dislikes", -1),
   PARTNER("Partner", 10);
 

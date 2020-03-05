@@ -13,6 +13,7 @@ import {Config} from "../config/Config";
 import PrivateRoute from "../common/PrivateRoute";
 import Solution from "../solution/Solution";
 import {UserHome} from "../user/home/UserHome";
+import EditConfig from "../config/EditConfig";
 
 const { Content } = Layout;
 
@@ -82,7 +83,7 @@ function App(props) {
             <Route path="/signup" component={Signup}/>
             <PrivateRoute authenticated={isAuthenticated} exact path="/config" component={Config} handleLogout={handleLogout}/>
             <PrivateRoute authenticated={isAuthenticated} path="/config/create" component={NewConfig} handleLogout={handleLogout}/>
-            <PrivateRoute authenticated={isAuthenticated} path="/config/edit" component={NewConfig}  handleLogout={handleLogout}/>
+            <PrivateRoute authenticated={isAuthenticated} path="/config/edit" component={EditConfig}  handleLogout={handleLogout}/>
             <PrivateRoute authenticated={isAuthenticated} path="/solution" component={Solution} handleLogout={handleLogout}/>
           </Switch>
         </div>

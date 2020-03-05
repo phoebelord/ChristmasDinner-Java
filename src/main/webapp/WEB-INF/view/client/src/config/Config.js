@@ -1,6 +1,6 @@
 import {useHistory, useLocation} from "react-router";
 import React, {useState} from "react";
-import {Button, Collapse, Divider, notification} from "antd";
+import {Button, Collapse, Divider, notification, Table} from "antd";
 import "./Config.css";
 import {deleteConfig} from "../utils/ApiUtils";
 
@@ -46,6 +46,82 @@ export function Config(props) {
             })
     };
 
+    const getColumns = () => {
+        let columns =  [
+            {
+                title: "",
+                dataIndex: "name",
+                width: 100,
+                fixed: "left"
+            }
+        ];
+        for(let i = 0; i < config.guests.length; i++) {
+            const rel = "relationship" + i;
+            columns.push({
+                title: config.guests[i].name,
+                dataIndex: rel,
+                width: 100,
+                fixed: ""
+            });
+        }
+        return columns;
+    };
+
+    const convertLikability = (value) => {
+        if(value == -1) {
+            return "Dislikes"
+        } else if(value == 1) {
+            return "Likes"
+        } else if(value == 0) {
+            return "Neutral"
+        } else {
+            return "Partner"
+        }
+    };
+
+    const getRelationshipAndBribe = (i,j) => {
+        const guest1 = config.guests[i];
+        const guest2 = config.guests[j];
+
+        const rel = "relationship" + j;
+        let answer;
+        guest1.relationships.forEach(relationship => {
+            if(relationship.guestName === guest2.name) {
+                answer = {
+                    [rel]: convertLikability(relationship.likability) + ", " + relationship.bribe
+                };
+            }
+        });
+
+        if(guest1.name === guest2.name) {
+            answer = {
+                [rel]: "x"
+            };
+        }
+
+        return (answer === undefined) ? {[rel]: ""} : answer;
+    };
+
+    const createRelationshipMatrix = () => {
+        let matrix = [];
+        for(let i = 0; i < config.guests.length; i++) {
+            matrix[i] = new Array(config.guests.length);
+        }
+
+        for(let i = 0; i < config.guests.length; i++) {
+            matrix[i] = {
+                key: i,
+                name: config.guests[i].name
+            };
+
+            for(let j = 0; j < config.guests.length; j++) {
+                matrix[i] = {...matrix[i], ...getRelationshipAndBribe(i, j)}
+            }
+        }
+
+        return matrix;
+    };
+
     return (
         <div className="config-container">
             <div className="titleBar">
@@ -56,26 +132,9 @@ export function Config(props) {
                 </div>
             </div>
             <div>
-                <h2>Guests:</h2>
-                {config.guests.map((guest, index) =>
-                    <div key={index}>
-                        <h3>{index + 1}: {guest.name}</h3>
-                        <Collapse>
-                            <Panel key={index} header="Relationships">
-                                {guest.relationships.map((relationship, index) =>
-                                    <div key={index}>
-                                        <p>Guest Name: {relationship.guestName}</p>
-                                        <p>Likability: {relationship.likability}</p>
-                                        <p>Bribe: {relationship.bribe}</p>
-                                        <Divider/>
-                                    </div>
-                                )}
-                            </Panel>
-                        </Collapse>
-                        <Divider/>
-                    </div>
-                )}
+                <Table dataSource={createRelationshipMatrix()} columns={getColumns()} scroll={{ x: 1500, y: 1500 }} bordered={true} />
             </div>
+
             <div>
                 <h2>Tables:</h2>
                 {config.tables.map((table, index) =>

@@ -1,26 +1,58 @@
 import React, {useState} from "react";
 import {useHistory} from 'react-router-dom';
 import {Button, Divider, Form, Input, notification} from "antd";
-import {createConfig} from "../utils/ApiUtils";
+import {editConfig} from "../utils/ApiUtils";
 import "./NewConfig.css"
 import {useLocation} from "react-router";
 import Table from "./Table";
 import Guest from "./Guest";
 import FormItem from "antd/lib/form/FormItem";
 
-function NewConfig(props) {
+function EditConfig(props) {
     const history = useHistory();
     const location = useLocation();
 
-    const [name, setName] = useState({text: ''});
+    const [name, setName] = useState( {text: location.state.config.name});
 
-    const [guests, setGuests] = useState([]);
+    const [guests, setGuests] = useState(location.state.config.guests.map(guest => {
+        return {
+            id: guest.id,
+            name: {
+                text: guest.name
+            },
+            relationships: guest.relationships.map(relationship => {
+                return {
+                    id: relationship.id,
+                    guestName: {
+                        text: relationship.guestName
+                    },
+                    likability: {
+                        text: relationship.likability.toString()
+                    },
+                    bribe: {
+                        text: relationship.bribe
+                    }
+                }
+            })
+        }
+    }));
 
-    const [tables, setTables] = useState([]);
+    const [tables, setTables] = useState(location.state.config.tables.map(table => {
+        return {
+            id: table.id,
+            shape: {
+                text: table.shape
+            },
+            capacity: {
+                text: table.capacity
+            }
+        }
+    }));
 
     const addGuest = () => {
         const guestss = guests.slice();
         setGuests(guestss.concat([{
+            id: -1,
             name: {
                 text: ''
             },
@@ -37,6 +69,7 @@ function NewConfig(props) {
         const guestss = guests.slice();
         const guestRelationships = guests[guestNumber].relationships.slice();
         guestRelationships.push({
+            id: -1,
             guestName: {
                 text: ""
             },
@@ -62,6 +95,7 @@ function NewConfig(props) {
     const addTable = () => {
         const tabless = tables.slice();
         setTables(tabless.concat([{
+            id: -1,
             shape: {
                 text: ''
             },
@@ -79,13 +113,15 @@ function NewConfig(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         const configData = {
-            id: '',
+            id: location.state.config.id ,
             name: name.text,
             guests: guests.map(guest => {
                 return {
+                    id: guest.id,
                     name: guest.name.text,
                     relationships: guest.relationships.map(relationship => {
                         return {
+                            id: relationship.id,
                             guestName: relationship.guestName.text,
                             likability: relationship.likability.text,
                             bribe: relationship.bribe.text
@@ -95,18 +131,19 @@ function NewConfig(props) {
             }),
             tables: tables.map(table => {
                 return {
+                    id: table.id,
                     shape: table.shape.text,
                     capacity: table.capacity.text
                 }
             })
         };
 
-        createConfig(configData)
+        editConfig(configData)
             .then(response => {
                 history.push("/");
                 notification.success({
                     message: "Christmas Dinner",
-                    description: "Config successfully created."
+                    description: "Config successfully edited."
                 });
             }).catch(error => {
             if (error.status === 401) {
@@ -118,6 +155,8 @@ function NewConfig(props) {
                 })
             }
         })
+
+
     };
 
     const validateName = (nameText) => {
@@ -402,4 +441,4 @@ function NewConfig(props) {
     )
 }
 
-export default NewConfig;
+export default EditConfig;

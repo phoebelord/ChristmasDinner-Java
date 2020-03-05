@@ -2,22 +2,22 @@ package com.phoebelord.payload;
 
 import com.phoebelord.model.Config;
 
-import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class ConfigDTO {
+public class ConfigDTO extends NewConfigRequest{
 
   private int id;
 
-  private String name;
-
-  private List<GuestRequest> guests;
+  List<GuestDTO> guests;
 
   private int numGuests;
 
-  private List<TableRequest> tables;
+  List<TableDTO> tables;
 
   private int numTables;
 
@@ -30,7 +30,11 @@ public class ConfigDTO {
     this.numGuests = config.getGuests().size();
     this.tables = new ArrayList<>();
     this.numTables = config.getTables().size();
-    this.lastModified = LocalDateTime.ofInstant(config.getUpdatedAt(), ZoneId.systemDefault()).toString();
+    this.lastModified = DateTimeFormatter
+      .ofLocalizedDateTime(FormatStyle.SHORT)
+      .withLocale(Locale.UK)
+      .withZone(ZoneId.systemDefault())
+      .format(config.getUpdatedAt());
   }
 
   public ConfigDTO() {
@@ -44,19 +48,15 @@ public class ConfigDTO {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
-  }
-
   public void setName(String name) {
     this.name = name;
   }
 
-  public List<GuestRequest> getGuests() {
+  public List<GuestDTO> getGuests() {
     return guests;
   }
 
-  public void setGuests(List<GuestRequest> guests) {
+  public void setGuests(List<GuestDTO> guests) {
     this.guests = guests;
   }
 
@@ -68,11 +68,11 @@ public class ConfigDTO {
     this.numGuests = numGuests;
   }
 
-  public List<TableRequest> getTables() {
+  public List<TableDTO> getTables() {
     return tables;
   }
 
-  public void setTables(List<TableRequest> tables) {
+  public void setTables(List<TableDTO> tables) {
     this.tables = tables;
   }
 
