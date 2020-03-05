@@ -1,11 +1,16 @@
 package com.phoebelord.model;
 
 import javax.persistence.*;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"guestId", "owner_id"})})
 public class Relationship implements Serializable {
+
+  @ManyToOne(optional = false)
+  private Guest owner;
 
   @Id
   @GeneratedValue
@@ -56,5 +61,13 @@ public class Relationship implements Serializable {
 
   public void setBribe(int bribe) {
     this.bribe = bribe;
+  }
+
+  public Guest getRelationshipOwner() {
+    return owner;
+  }
+
+  public void setOwner(Guest owner) {
+    this.owner = owner;
   }
 }

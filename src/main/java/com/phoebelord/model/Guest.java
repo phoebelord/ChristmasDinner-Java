@@ -20,7 +20,7 @@ public class Guest implements Serializable {
   @NotEmpty
   private String name;
 
-  @OneToMany
+  @OneToMany(mappedBy = "owner")
   private List<Relationship> relationships;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)

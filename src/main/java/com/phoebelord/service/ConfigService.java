@@ -103,7 +103,7 @@ public class ConfigService {
 
       for(RelationshipDTO relationshipDTO: relationshipDTOS) {
         if(relationshipDTO.getId() == -1) {
-          Relationship newRelationship = createRelationship(relationshipDTO, config, guest.getName());
+          Relationship newRelationship = createRelationship(relationshipDTO, config, guest);
           currentRelationships.add(newRelationship);
           relationshipDTO.setId(newRelationship.getId());
         } else {
@@ -170,13 +170,14 @@ public class ConfigService {
   }
 
 
-  Relationship createRelationship(RelationshipRequest relationshipRequest, Config config, String currentGuestName) {
+  Relationship createRelationship(RelationshipRequest relationshipRequest, Config config, Guest relationshipOwner) {
     Relationship relationship = new Relationship();
+    relationship.setOwner(relationshipOwner);
     String guestName = relationshipRequest.getGuestName();
-    if(guestName.equals(currentGuestName)) {
+    Guest otherGuest = guestRepository.findByNameAndConfig(guestName, config).orElseThrow(() -> new AppException("Guest doesn't exist: " + guestName));
+    if(relationshipOwner.getId() == otherGuest.getId()) {
       throw new AppException("Guest: " + guestName + " cannot have a relationship with self");
     }
-    Guest otherGuest = guestRepository.findByNameAndConfig(guestName, config).orElseThrow(() -> new AppException("Guest doesn't exist: " + guestName));
     relationship.setGuestId(otherGuest.getId());
     relationship.setLikability(relationshipRequest.getLikability());
     relationship.setBribe(relationshipRequest.getBribe());
@@ -199,7 +200,7 @@ public class ConfigService {
       Guest guest = guestRepository.findByNameAndConfig(guestRequest.getName(), config)
         .orElseThrow(() -> new AppException("Guest doesn't exist: " + guestRequest.getName()));
       guestRequest.getRelationships().forEach(relationshipRequest -> {
-        guest.addRelationship(createRelationship(relationshipRequest, config, guest.getName()));
+        guest.addRelationship(createRelationship(relationshipRequest, config, guest));
       });
       guestRepository.save(guest);
     }
