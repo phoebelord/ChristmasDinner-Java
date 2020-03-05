@@ -6,7 +6,7 @@ import {deleteConfig} from "../utils/ApiUtils";
 
 const {Panel} = Collapse;
 
-export function Config(props) {
+export function ViewConfig(props) {
     const history = useHistory();
     const location = useLocation();
     const [config, setConfig] = useState(location.state.config);
