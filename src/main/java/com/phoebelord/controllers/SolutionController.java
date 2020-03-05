@@ -5,6 +5,7 @@ import com.phoebelord.algorithms.AlgorithmType;
 import com.phoebelord.dao.ConfigRepository;
 import com.phoebelord.exception.NotFoundException;
 import com.phoebelord.model.Config;
+import com.phoebelord.model.MaximisationType;
 import com.phoebelord.model.Solution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +24,8 @@ public class SolutionController {
 
   @GetMapping(value = "/api/solution/{configId}")
   @ResponseBody
-  public Solution getASolution(@PathVariable int configId) {
+  public Solution getASolution(@PathVariable int configId, @RequestParam String type) {
     Config config = configRepository.findById(configId).orElseThrow(() -> new NotFoundException("Config", "id", configId));
-    return ChristmasDinner.getSolution(config);
+    return ChristmasDinner.getSolution(config, MaximisationType.valueOf(type));
   }
 }

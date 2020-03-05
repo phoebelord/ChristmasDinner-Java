@@ -49,13 +49,13 @@ public class ChristmasDinner {
     }
   }
 
-  public static Solution getSolution(Config config) {
+  public static Solution getSolution(Config config, MaximisationType maximisationType) {
       List<Guest> guests = config.getGuests();
       List<Table> tables = config.getTables();
       System.out.println("\nTables: " + tables);
       System.out.println("\nGuests: " + guests);
 
-      Algorithm algorithm = AlgorithmFactory.createAlgorithm(AlgorithmType.Genetic, guests, tables, MaximisationType.HAPPINESS);
+      Algorithm algorithm = AlgorithmFactory.createAlgorithm(AlgorithmType.Genetic, guests, tables, maximisationType);
       Solution solution = algorithm.calculateSolution();
 
       System.out.println("Arrangement: " + solution.getArrangements());

@@ -17,7 +17,7 @@ public class Guest implements Serializable {
   @GeneratedValue
   private int id;
 
-  @NotEmpty
+  @NotEmpty(message = "Please provide a unique name for each guest")
   private String name;
 
   @OneToMany(mappedBy = "owner")

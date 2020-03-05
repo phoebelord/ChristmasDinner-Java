@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useEffect} from 'react';
 import "./Tables.css"
-import {Button, Divider} from "antd";
+import {Button, Divider, Radio} from "antd";
 
 export function Tables(props) {
 
@@ -73,6 +73,10 @@ export function Tables(props) {
                 <div className="titleBar">
                     <h2>Solution:</h2>
                     <p>Score: {props.solution.happinessScore}</p>
+                    <Radio.Group onChange={props.handleMaxTypeChange} value={props.maxType}>
+                        <Radio.Button value="HAPPINESS">Happiness</Radio.Button>
+                        <Radio.Button value="PROFIT">Profit</Radio.Button>
+                    </Radio.Group>
                     <Button type="dashed" onClick={props.fetchSolution}>Try again</Button>
                 </div>
                 <div className="table">

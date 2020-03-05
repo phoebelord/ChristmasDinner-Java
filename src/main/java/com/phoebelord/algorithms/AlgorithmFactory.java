@@ -34,7 +34,7 @@ public class AlgorithmFactory {
 
     algorithm.setGuests(guests);
     algorithm.setTablesAndSeats(tables);
-    algorithm.setMaximisationType(maximisationType);
+    algorithm.setMaximisationType((maximisationType == null) ? MaximisationType.HAPPINESS : maximisationType);
     return algorithm;
   }
 

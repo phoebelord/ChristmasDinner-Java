@@ -12,10 +12,10 @@ public class User {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int id;
 
-  @NotEmpty
+  @NotEmpty(message = "Please provide an email address")
   private String email;
 
-  @NotEmpty
+  @NotEmpty(message = "Please enter your password")
   private String password;
 
   @ManyToMany(fetch = FetchType.LAZY)

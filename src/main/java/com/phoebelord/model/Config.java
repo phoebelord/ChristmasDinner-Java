@@ -15,7 +15,7 @@ public class Config extends UserDateAudit {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int id;
 
-  @NotBlank
+  @NotBlank(message = "Please provide a name for your config")
   private String name;
 
   @OneToMany

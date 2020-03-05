@@ -11,6 +11,7 @@ function Solution() {
     const [config, setConfig] = useState(location.state.config);
     const [solution, setSolution] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [maxType, setMaxType] = useState("HAPPINESS");
 
     useEffect(() => {
         fetchSolution();
@@ -18,7 +19,7 @@ function Solution() {
 
     const fetchSolution = () => {
         setIsLoading(true);
-        getSolution(config.id)
+        getSolution(config.id, maxType)
             .then(response => {
                 setSolution(response);
                 setIsLoading(false)
@@ -29,10 +30,17 @@ function Solution() {
         return <LoadingIndicator/>
     }
 
+    const handleMaxTypeChange = (e) => {
+        setMaxType(e.target.value);
+    };
+
 
     return (
         <div className="solution-container">
-            <Tables solution={solution} fetchSolution={fetchSolution}/>
+            <Tables solution={solution}
+                    fetchSolution={fetchSolution}
+                    maxType={maxType}
+                    handleMaxTypeChange={handleMaxTypeChange}/>
         </div>
     );
 }
