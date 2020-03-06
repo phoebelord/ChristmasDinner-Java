@@ -9,7 +9,7 @@ import {ConfigForm} from "./ConfigForm";
 function EditConfig(props) {
     const history = useHistory();
     const location = useLocation();
-    const [name, setName] = useState( {text: location.state.config.name});
+    const [name, setName] = useState( {text: location.state.config.name, validateStatus: 'success'});
     const [guests, setGuests] = useState(location.state.config.guests.map(guest => {
         return {
             id: guest.id,

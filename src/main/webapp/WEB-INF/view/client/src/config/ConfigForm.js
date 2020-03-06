@@ -2,14 +2,26 @@ import Guest from "./Guest";
 import Table from "./Table";
 import {Button, Divider, Form, Input} from "antd";
 import FormItem from "antd/lib/form/FormItem";
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 export function ConfigForm(props) {
 
     const removeGuest = (guestNumber) => {
         const guestss = props.guests.slice();
-        props.setGuests([...guestss.slice(0, guestNumber), ...guestss.slice(guestNumber + 1)])
+        props.setGuests([...guestss.slice(0, guestNumber), ...guestss.slice(guestNumber + 1)]);
     };
+
+    useEffect(() => {
+        // Remove any relationships other's have with them
+        const names = props.guests.map(guest => guest.name.text);
+        props.guests.forEach((guest, i) => {
+            guest.relationships.forEach((relationship, j) => {
+                if((!names.includes(relationship.guestName.text) && relationship.guestName.text !== "")){
+                    removeRelationship(i, j);
+                }
+            })
+        });
+    }, [props.guests]);
 
     const removeRelationship = (guestNumber, relationshipNumber) => {
         const guestss = props.guests.slice();
@@ -46,20 +58,6 @@ export function ConfigForm(props) {
         })
     };
 
-    const validateGuestName = (guestName) => {
-        if (guestName.length === 0) {
-            return {
-                validateStatus: 'error',
-                errorMsg: "Please enter a name for the guest"
-            }
-        } else {
-            return {
-                validateStatus: 'success',
-                errorMsg: null
-            }
-        }
-    };
-
     const validateTableShape = (shape) => {
         if (shape === 'Circle' || shape === 'Rectangle') {
             return {
@@ -91,12 +89,19 @@ export function ConfigForm(props) {
     const handleGuestNameChange = (event, index) => {
         const guestss = props.guests.slice();
         const value = event.target.value;
-        let guest = guestss[index];
-        guest.name = {
-            text: value,
-            ...validateGuestName(value)
-        };
-        guestss[index] = {...guest};
+        let originalName = guestss[index].name.text;
+
+        guestss.forEach(guest => {
+            if(guest.name.text === originalName) {
+                guest.name.text = value;
+            }
+            guest.relationships.forEach(relationship => {
+                if(relationship.guestName.text === originalName) {
+                    relationship.guestName.text = value;
+                }
+            })
+        });
+
         props.setGuests(guestss);
     };
 
@@ -214,21 +219,22 @@ export function ConfigForm(props) {
     };
 
     const isFormInvalid = () => {
-        let invalid = props.name.validateStatus && (props.name.validateStatus !== 'success');
+        let invalid = (props.name.validateStatus !== 'success');
+        console.log(invalid);
         props.guests.forEach(guest => {
-            if (guest.name.validateStatus && (guest.name.validateStatus !== 'success')) {
-                invalid = true;
-            }
             guest.relationships.forEach(relationship => {
                 if (relationship.guestName.validateStatus && (relationship.guestName.validateStatus !== 'success')) {
+                    console.log("rel guest name");
                     invalid = true;
                 }
 
                 if (relationship.likability.validateStatus && (relationship.likability.validateStatus !== 'success')) {
+                    console.log("rel value");
                     invalid = true;
                 }
 
                 if (relationship.bribe.validateStatus && (relationship.bribe.validateStatus !== 'success')) {
+                    console.log("rel bribe");
                     invalid = true;
                 }
             })
@@ -236,10 +242,12 @@ export function ConfigForm(props) {
 
         props.tables.forEach(table => {
             if (table.shape.validateStatus && (table.shape.validateStatus !== 'success')) {
+                console.log("shape");
                 invalid = true;
             }
 
             if (table.capacity.validateStatus && (table.capacity.validateStatus !== 'success')) {
+                console.log("capacity");
                 invalid = true;
             }
         });

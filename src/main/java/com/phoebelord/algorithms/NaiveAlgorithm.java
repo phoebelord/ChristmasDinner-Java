@@ -74,7 +74,7 @@ public class NaiveAlgorithm extends Algorithm {
       System.out.printf("%2.2f\n",(counter / noSolutions)*100);
       lastCount = counter;
     }
-    int solutionHappiness = calculateHappiness(elements, seats, tables, MaximisationType.HAPPINESS);
+    int solutionHappiness = calculateHappiness(elements, seats, tables, maximisationType);
     if(solutionHappiness > bestSolution) {
       bestSolution = solutionHappiness;
       solution = new ArrayList<>(elements);

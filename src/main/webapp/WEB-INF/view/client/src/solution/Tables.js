@@ -2,8 +2,11 @@ import * as React from 'react';
 import {useEffect} from 'react';
 import "./Tables.css"
 import {Button, Divider, Radio} from "antd";
+import {useState} from "react";
 
 export function Tables(props) {
+
+    const [maxType, setMaxType] = useState(props.maxType);
 
     useEffect(() => {
         updateLayout();
@@ -72,7 +75,7 @@ export function Tables(props) {
             <div className="tables-container">
                 <div className="titleBar">
                     <h2>Solution:</h2>
-                    <p>Score: {props.solution.happinessScore}</p>
+                    <p>{maxType.toString().charAt(0) + maxType.toString().slice(1).toLowerCase()}: {props.solution.happinessScore}</p>
                     <Radio.Group onChange={props.handleMaxTypeChange} value={props.maxType}>
                         <Radio.Button value="HAPPINESS">Happiness</Radio.Button>
                         <Radio.Button value="PROFIT">Profit</Radio.Button>

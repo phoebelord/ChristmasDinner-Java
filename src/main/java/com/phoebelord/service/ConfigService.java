@@ -33,6 +33,7 @@ public class ConfigService {
   TableRepository tableRepository;
 
   public Config createConfig(NewConfigRequest newConfigRequest) {
+    validateConfigRequest(newConfigRequest);
     Config config = new Config(newConfigRequest);
     configRepository.save(config);
     newConfigRequest.getGuests().forEach(guestRequest -> {
@@ -49,12 +50,12 @@ public class ConfigService {
       config.addTable(table);
       offset += table.getCapacity();
     }
-
     return config;
   }
 
   //todo too long
   public Config editConfig(ConfigDTO configDTO) {
+    validateConfigRequest(configDTO);
     Config config = configRepository.findById(configDTO.getId()).orElseThrow(() -> new NotFoundException("Config", "id", configDTO.getId()));
     config.setName(configDTO.getName());
 
@@ -244,6 +245,19 @@ public class ConfigService {
       relationshipDTOS.add(relationshipDTO);
     }
     return relationshipDTOS;
+  }
+
+  private void validateConfigRequest(NewConfigRequest newConfigRequest) {
+    int totalTableCapacity = newConfigRequest.getTables().stream().mapToInt(TableRequest::getCapacity).sum();
+    if(totalTableCapacity != newConfigRequest.getGuests().size()){
+      throw new AppException("The number of guests is not equal to the number of seats");
+    }
+
+    newConfigRequest.getTables().forEach(table -> {
+      if(table.getShape().equals("Rectangle") && table.getCapacity() % 2 != 0) {
+        throw new AppException("Rectangular tables must have an even number of seats");
+      }
+    });
   }
 
 
