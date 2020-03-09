@@ -12,6 +12,15 @@ public class NewConfigRequest {
 
   List<? extends TableRequest> tables;
 
+  public NewConfigRequest(@NotBlank String name, List<? extends GuestRequest> guests, List<? extends TableRequest> tables) {
+    this.name = name;
+    this.guests = guests;
+    this.tables = tables;
+  }
+
+  public NewConfigRequest() {
+  }
+
   public String getName() {
     return name;
   }

@@ -259,7 +259,5 @@ public class ConfigService {
       }
     });
   }
-
-
 }
 

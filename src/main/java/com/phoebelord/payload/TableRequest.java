@@ -14,6 +14,14 @@ public class TableRequest {
   @Range(min = 2, max = 20)
   int capacity;
 
+  public TableRequest(@NotEmpty String shape, @NotNull @Range(min = 2, max = 20) int capacity) {
+    this.shape = shape;
+    this.capacity = capacity;
+  }
+
+  public TableRequest() {
+  }
+
   public String getShape() {
     return shape;
   }

@@ -10,6 +10,14 @@ public class GuestRequest {
 
   List<? extends RelationshipRequest> relationships;
 
+  public GuestRequest(@NotEmpty String name, List<? extends RelationshipRequest> relationships) {
+    this.name = name;
+    this.relationships = relationships;
+  }
+
+  public GuestRequest() {
+  }
+
   public String getName() {
     return name;
   }
