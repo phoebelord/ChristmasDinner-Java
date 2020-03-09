@@ -21,7 +21,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -54,13 +57,15 @@ public class AuthenticationController {
     Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
+    log.info("Authenticating user: " + loginRequest.getEmail());
     String jwt = jwtTokenProvider.generateToken(authentication);
     return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
   }
 
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-    if(userRepository.existsByEmail(signUpRequest.getEmail())){
+    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+      log.info("Registering new user failed. Email address already in use: " + signUpRequest.getEmail());
       return new ResponseEntity(new ApiResponse(false, "Email address already in use"), HttpStatus.BAD_REQUEST);
     }
 
@@ -74,6 +79,7 @@ public class AuthenticationController {
     User result = userRepository.save(user);
     URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/{email}").buildAndExpand(result.getEmail()).toUri();
 
+    log.info("Registered new user: " + signUpRequest.getEmail());
     return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
   }
 

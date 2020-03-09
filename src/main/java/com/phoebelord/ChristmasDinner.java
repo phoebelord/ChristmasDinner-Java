@@ -5,6 +5,8 @@ import com.phoebelord.algorithms.Algorithm;
 import com.phoebelord.algorithms.AlgorithmFactory;
 import com.phoebelord.algorithms.AlgorithmType;
 import com.phoebelord.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -22,6 +24,8 @@ import java.util.List;
 })
 public class ChristmasDinner {
 
+  private static Logger log = LoggerFactory.getLogger(ChristmasDinner.class);
+
   public static void main(String[] args) {
     SpringApplication.run(ChristmasDinner.class, args);
   }
@@ -30,17 +34,15 @@ public class ChristmasDinner {
     try {
       List<Guest> guests = initialiseFromFile(filename + "/guests.json", Guest.class);
       List<Table> tables = initialiseFromFile(filename + "/tables.json", Table.class);
-      System.out.println("\nTables: " + tables);
-      System.out.println("\nGuests: " + guests);
+      log.info("Calculating solution for " + filename);
 
       Algorithm algorithm = AlgorithmFactory.createAlgorithm(algorithmType, guests, tables, MaximisationType.HAPPINESS);
       long startTime = System.currentTimeMillis();
       Solution solution = algorithm.calculateSolution();
       long endTime = System.currentTimeMillis();
-      System.out.println("Time taken (ms): " + (endTime - startTime));
 
-      System.out.println("Arrangement: " + solution.getArrangements());
-      System.out.println("Score: " + solution.getHappinessScore());
+      log.info("Time taken (ms): " + (endTime - startTime));
+      log.info("Score: " + solution.getHappinessScore());
 
       return solution;
     } catch (IOException e) {
@@ -52,8 +54,8 @@ public class ChristmasDinner {
   public static Solution getSolution(Config config, MaximisationType maximisationType) {
       List<Guest> guests = config.getGuests();
       List<Table> tables = config.getTables();
-      System.out.println("\nTables: " + tables);
-      System.out.println("\nGuests: " + guests);
+
+      log.info("Calculating solution for Config[ID: " + config.getId() + ", Name: " + config.getName() + ", No. Guests: " + config.getGuests().size() + "]");
 
       Solution solution;
       if(guests.size() > 0 && tables.size() > 0) {
@@ -63,9 +65,7 @@ public class ChristmasDinner {
         solution = new Solution();
       }
 
-      System.out.println("Arrangement: " + solution.getArrangements());
-      System.out.println("Score: " + solution.getHappinessScore());
-
+      log.info("Score: " + solution.getHappinessScore());
       return solution;
   }
 
