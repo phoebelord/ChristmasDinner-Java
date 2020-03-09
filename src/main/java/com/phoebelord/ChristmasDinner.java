@@ -55,8 +55,13 @@ public class ChristmasDinner {
       System.out.println("\nTables: " + tables);
       System.out.println("\nGuests: " + guests);
 
-      Algorithm algorithm = AlgorithmFactory.createAlgorithm(AlgorithmType.Genetic, guests, tables, maximisationType);
-      Solution solution = algorithm.calculateSolution();
+      Solution solution;
+      if(guests.size() > 0 && tables.size() > 0) {
+        Algorithm algorithm = AlgorithmFactory.createAlgorithm(AlgorithmType.Genetic, guests, tables, maximisationType);
+        solution = algorithm.calculateSolution();
+      } else {
+        solution = new Solution();
+      }
 
       System.out.println("Arrangement: " + solution.getArrangements());
       System.out.println("Score: " + solution.getHappinessScore());

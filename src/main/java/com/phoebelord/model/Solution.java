@@ -13,6 +13,11 @@ public class Solution {
     this.arrangements = initialiseArrangements(tables, guests);
   }
 
+  public Solution() {
+    arrangements = new ArrayList<>();
+    happinessScore = 0;
+  }
+
   private List<Arrangement> initialiseArrangements(List<Table> tables, List<Guest> guests) {
     List<Arrangement> arrangements = new ArrayList<>();
     for(Table table : tables) {

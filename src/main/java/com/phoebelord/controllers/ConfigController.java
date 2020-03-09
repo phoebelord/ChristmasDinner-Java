@@ -14,7 +14,6 @@ import com.phoebelord.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -60,8 +59,14 @@ public class ConfigController {
 
   @PostMapping("/edit")
   @PreAuthorize("hasRole('USER')")
-  public ResponseEntity<?> editConfig(@Valid @RequestBody ConfigDTO configDTO) {
-    Config config = configService.editConfig(configDTO);
+  public ResponseEntity<?> editConfig(@CurrentUser UserPrincipal currentUser,
+                                      @Valid @RequestBody ConfigDTO configDTO) {
+
+    Config config = configRepository.findById(configDTO.getId()).orElseThrow(() -> new NotFoundException("Config", "id", configDTO.getId()));
+    if(currentUser.getId() != config.getCreatedBy()) {
+      throw new ForbiddenException("You do not have access to this config");
+    }
+    config = configService.editConfig(configDTO);
     configRepository.save(config);
 
     URI location = ServletUriComponentsBuilder
