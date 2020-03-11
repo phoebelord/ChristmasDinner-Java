@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +68,8 @@ public class ConfigController {
       throw new ForbiddenException("You do not have access to this config");
     }
     config = configService.editConfig(configDTO);
+    config.setUpdatedAt(Instant.now());
+    config.setUpdatedBy(currentUser.getId());
     configRepository.save(config);
 
     URI location = ServletUriComponentsBuilder
