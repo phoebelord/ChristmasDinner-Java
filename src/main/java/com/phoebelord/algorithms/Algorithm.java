@@ -1,5 +1,9 @@
 package com.phoebelord.algorithms;
 
+import com.phoebelord.algorithms.genetic.crossover.Crossover;
+import com.phoebelord.algorithms.genetic.crossover.CrossoverType;
+import com.phoebelord.algorithms.genetic.selection.Selection;
+import com.phoebelord.algorithms.genetic.selection.SelectionType;
 import com.phoebelord.model.*;
 
 import java.math.BigDecimal;
@@ -12,6 +16,8 @@ public abstract class Algorithm {
   List<Guest> guests;
   List<Table> tables;
   MaximisationType maximisationType;
+  SelectionType selection;
+  CrossoverType crossover;
 
 
   //doesn't need to be static???
@@ -103,5 +109,13 @@ public abstract class Algorithm {
       }
     }
     return neighbours;
+  }
+
+  public void setSelection(SelectionType selection) {
+    this.selection = selection;
+  }
+
+  public void setCrossover(CrossoverType crossover) {
+    this.crossover = crossover;
   }
 }

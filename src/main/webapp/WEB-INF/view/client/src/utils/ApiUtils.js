@@ -107,9 +107,9 @@ export function getMyConfigs() {
     });
 }
 
-export function getSolution(configId, maxType) {
+export function getSolution(configId, maxType, selection, crossover) {
     return request({
-        url: API_BASE_URL + "/solution/" + configId + "?type=" + maxType,
+        url: API_BASE_URL + "/solution/" + configId + "?maximisation=" + maxType + "&selection=" + selection + "&crossover=" + crossover,
         method: 'GET'
     })
 }

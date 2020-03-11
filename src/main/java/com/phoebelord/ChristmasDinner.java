@@ -4,6 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.phoebelord.algorithms.Algorithm;
 import com.phoebelord.algorithms.AlgorithmFactory;
 import com.phoebelord.algorithms.AlgorithmType;
+import com.phoebelord.algorithms.genetic.crossover.Crossover;
+import com.phoebelord.algorithms.genetic.crossover.CrossoverType;
+import com.phoebelord.algorithms.genetic.selection.Selection;
+import com.phoebelord.algorithms.genetic.selection.SelectionType;
 import com.phoebelord.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,13 +34,13 @@ public class ChristmasDinner {
     SpringApplication.run(ChristmasDinner.class, args);
   }
 
-  public static Solution getSolution(String filename, AlgorithmType algorithmType) {
+  public static Solution getSolution(String filename, AlgorithmType algorithmType, SelectionType selection, CrossoverType crossover) {
     try {
       List<Guest> guests = initialiseFromFile(filename + "/guests.json", Guest.class);
       List<Table> tables = initialiseFromFile(filename + "/tables.json", Table.class);
       log.info("Calculating solution for " + filename);
 
-      Algorithm algorithm = AlgorithmFactory.createAlgorithm(algorithmType, guests, tables, MaximisationType.HAPPINESS);
+      Algorithm algorithm = AlgorithmFactory.createAlgorithm(algorithmType, guests, tables, MaximisationType.HAPPINESS, selection, crossover);
       long startTime = System.currentTimeMillis();
       Solution solution = algorithm.calculateSolution();
       long endTime = System.currentTimeMillis();
@@ -51,7 +55,7 @@ public class ChristmasDinner {
     }
   }
 
-  public static Solution getSolution(Config config, MaximisationType maximisationType) {
+  public static Solution getSolution(Config config, MaximisationType maximisationType, SelectionType selection, CrossoverType crossover) {
       List<Guest> guests = config.getGuests();
       List<Table> tables = config.getTables();
 
@@ -59,7 +63,7 @@ public class ChristmasDinner {
 
       Solution solution;
       if(guests.size() > 0 && tables.size() > 0) {
-        Algorithm algorithm = AlgorithmFactory.createAlgorithm(AlgorithmType.Genetic, guests, tables, maximisationType);
+        Algorithm algorithm = AlgorithmFactory.createAlgorithm(AlgorithmType.Genetic, guests, tables, maximisationType, selection, crossover);
         solution = algorithm.calculateSolution();
       } else {
         solution = new Solution();

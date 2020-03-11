@@ -179,7 +179,7 @@ export function ConfigForm(props) {
     };
 
     const validateRelationshipValue = (value) => {
-        if (value == -1 || value == 1 || value == 10) {
+        if (value == -1 || value == 0 || value == 1 || value == 10) {
             return {
                 validateStatus: 'success',
                 errorMsg: null

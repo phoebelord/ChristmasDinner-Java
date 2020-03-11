@@ -15,7 +15,8 @@
 }
 
 .guestList {
-    background-image: url("../table.jpg");
+    background-image: url("../table5.jpg");
+    background-size: cover;
     position: relative;
     margin-bottom: 50px;
     display: inline-block;

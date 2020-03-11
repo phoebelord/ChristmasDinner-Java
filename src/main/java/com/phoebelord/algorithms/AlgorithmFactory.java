@@ -1,5 +1,9 @@
 package com.phoebelord.algorithms;
 
+import com.phoebelord.algorithms.genetic.crossover.Crossover;
+import com.phoebelord.algorithms.genetic.crossover.CrossoverType;
+import com.phoebelord.algorithms.genetic.selection.Selection;
+import com.phoebelord.algorithms.genetic.selection.SelectionType;
 import com.phoebelord.model.Guest;
 import com.phoebelord.model.MaximisationType;
 import com.phoebelord.model.Table;
@@ -17,7 +21,11 @@ public class AlgorithmFactory {
 
   private static BnBAlgorithm bnBAlgorithm;
 
-  public static Algorithm createAlgorithm(AlgorithmType type, List<Guest> guests, List<Table> tables, MaximisationType maximisationType) {
+  public static Algorithm createAlgorithm(AlgorithmType type, List<Guest> guests,
+                                          List<Table> tables,
+                                          MaximisationType maximisationType,
+                                          SelectionType selection,
+                                          CrossoverType crossover) {
     Algorithm algorithm;
     switch (type) {
       case Naive:
@@ -35,6 +43,8 @@ public class AlgorithmFactory {
     algorithm.setGuests(guests);
     algorithm.setTablesAndSeats(tables);
     algorithm.setMaximisationType((maximisationType == null) ? MaximisationType.HAPPINESS : maximisationType);
+    algorithm.setSelection(selection);
+    algorithm.setCrossover(crossover);
     return algorithm;
   }
 

@@ -76,11 +76,21 @@ export function Tables(props) {
                 <div className="titleBar">
                     <h2>Solution:</h2>
                     <p>{maxType.toString().charAt(0) + maxType.toString().slice(1).toLowerCase()}: {props.solution.happinessScore}</p>
+                    <Button type="dashed" onClick={props.fetchSolution}>Try again</Button>
+                </div>
+                <div className="titleBar">
                     <Radio.Group onChange={props.handleMaxTypeChange} value={props.maxType}>
                         <Radio.Button value="HAPPINESS">Happiness</Radio.Button>
                         <Radio.Button value="PROFIT">Profit</Radio.Button>
                     </Radio.Group>
-                    <Button type="dashed" onClick={props.fetchSolution}>Try again</Button>
+                    <Radio.Group onChange={props.handleSelectionChange} value={props.selection}>
+                        <Radio.Button value="ROULETTE">Roulette</Radio.Button>
+                        <Radio.Button value="TOURNAMENT">Tournament</Radio.Button>
+                    </Radio.Group>
+                    <Radio.Group onChange={props.handleCrossoverChange} value={props.crossover}>
+                        <Radio.Button value="OnePoint">One Point</Radio.Button>
+                        <Radio.Button value="TwoPoint">Two Point</Radio.Button>
+                    </Radio.Group>
                 </div>
                 <div className="table">
                     {props.solution.arrangements.map((arrangement, arrIndex) =>

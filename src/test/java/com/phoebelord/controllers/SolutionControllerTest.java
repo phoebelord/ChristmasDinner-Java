@@ -11,7 +11,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -60,7 +59,7 @@ public class SolutionControllerTest {
 
   @Test
   public void Given_authenticated_When_getSolution_Then_isOkay() throws Exception {
-    mockMvc.perform(get("/api/solution/1?type=HAPPINESS")
+    mockMvc.perform(get("/api/solution/1?maximisation=HAPPINESS&selection=ROULETTE&crossover=TwoPoint")
       .header("Authorization", "Bearer " + getAuthenticationToken(1))
       .contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk())
@@ -69,7 +68,7 @@ public class SolutionControllerTest {
 
   @Test
   public void Given_authenticated_When_getSolutionNotOwner_Then_isForbidden() throws Exception {
-    mockMvc.perform(get("/api/solution/1?type=HAPPINESS")
+    mockMvc.perform(get("/api/solution/1?maximisation=HAPPINESS&selection=ROULETTE&crossover=TwoPoint")
       .header("Authorization", "Bearer " + getAuthenticationToken(2))
       .contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isForbidden());
@@ -77,7 +76,7 @@ public class SolutionControllerTest {
 
   @Test
   public void Given_unauthenticated_When_getSolutionNotOwner_Then_isUnauthorised() throws Exception {
-    mockMvc.perform(get("/api/solution/1?type=HAPPINESS")
+    mockMvc.perform(get("/api/solution/1?maximisation=HAPPINESS&selection=ROULETTE&crossover=TwoPoint")
       .contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isUnauthorized());
   }

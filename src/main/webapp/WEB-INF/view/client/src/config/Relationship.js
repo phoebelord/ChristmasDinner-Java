@@ -19,7 +19,7 @@ function Relationship(props) {
                     )}
                 </Select>
             </FormItem>
-            <FormItem label="value" validateStatus={props.relationship.likability.validateStatus}
+            <FormItem label="Connection" validateStatus={props.relationship.likability.validateStatus}
                       help={props.relationship.likability.errorMsg} className="config-form-row">
                 <Select className="optional-relationship"
                         onChange={(event) => props.handleRelationshipValueChange(event, props.relationshipNumber, props.guestNumber)}
@@ -30,7 +30,7 @@ function Relationship(props) {
                     <Option value="-1" label="Dislikes">Dislikes</Option>
                 </Select>
             </FormItem>
-            <FormItem label="bribe" validateStatus={props.relationship.bribe.validateStatus}
+            <FormItem label="Bribe" validateStatus={props.relationship.bribe.validateStatus}
                       help={props.relationship.bribe.errorMsg} className="config-form-row">
                 <Input
                     placeholder="10"
