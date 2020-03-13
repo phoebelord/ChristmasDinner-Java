@@ -5,6 +5,7 @@ import FormItem from "antd/lib/form/FormItem";
 import React, {useEffect, useState} from "react";
 
 export function ConfigForm(props) {
+    const [currentStep, setCurrentStep] = useState(1);
 
     const removeGuest = (guestNumber) => {
         const guestss = props.guests.slice();
@@ -218,9 +219,125 @@ export function ConfigForm(props) {
         }
     };
 
+    const handleNext = () => {
+        setCurrentStep(currentStep + 1);
+    };
+
+    const handlePrevious = () => {
+        setCurrentStep(currentStep - 1);
+    };
+
+    return (
+        <div className="new-config-container">
+            <div className="new-config-content">
+                <Form onSubmit={props.handleSubmit} className="create-config-form">
+                    <Step1 name={props.name} handleNameChange={handleNameChange} handleNext={handleNext} currentStep={currentStep}/>
+                    <Step2 guests={props.guests}
+                           addGuest={props.addGuest}
+                           removeGuest={removeGuest}
+                           handleGuestChange={handleGuestNameChange}
+                           handleNext={handleNext}
+                           handlePrevious={handlePrevious}
+                           currentStep={currentStep}/>
+                    <Step3 guests={props.guests}
+                           addGuest={props.addGuest}
+                           removeGuest={removeGuest}
+                           handleGuestChange={handleGuestNameChange}
+                           addRelationship={props.addRelationship}
+                           removeRelationship={removeRelationship}
+                           handleRelationshipGuestChange={handleRelationshipGuestChange}
+                           handleRelationshipValueChange={handleRelationshipValueChange}
+                           handleRelationshipBribeChange={handleRelationshipBribeChange}
+                           handleNext={handleNext}
+                           handlePrevious={handlePrevious}
+                           currentStep={currentStep}/>
+                    <Step4 tables={props.tables}
+                           addTable={props.addTable}
+                           removeTable={removeTable}
+                           handleTableShapeChange={handleTableShapeChange}
+                           handleTableCapacityChange={handleTableCapacityChange}
+                           handlePrevious={handlePrevious}
+                           currentStep={currentStep}/>
+                </Form>
+            </div>
+        </div>
+    )
+}
+
+function Step1(props) {
+
     const isFormInvalid = () => {
-        let invalid = (props.name.validateStatus !== 'success');
-        console.log(invalid);
+        return (props.name.validateStatus !== 'success');
+    };
+
+    if(props.currentStep !== 1) {
+        return null;
+    }
+    return (
+        <div className="step1-container">
+            <h1 className="page-title">Create Config</h1>
+            <FormItem label="Config name" validateStatus={props.name.validateStatus} help={props.name.errorMsg}
+                      className="config-form-row">
+                <Input
+                    placeholder='Your config name'
+                    size="large"
+                    onChange={props.handleNameChange}
+                    value={props.name.text}/>
+            </FormItem>
+            <FormItem className="config-form-row next">
+                <Button type="primary" onClick={props.handleNext} disabled={isFormInvalid()}>Next</Button>
+            </FormItem>
+        </div>
+    )
+}
+
+function Step2(props) {
+    const isFormInvalid = () => {
+        let invalid = false;
+        props.guests.forEach(guest => {
+            if(guest.name.text === "") {
+                invalid = true
+            }
+        });
+
+        return invalid;
+    };
+    if(props.currentStep !== 2) {
+        return null;
+    }
+
+    const guestViews = [];
+    props.guests.forEach((guest, index) => {
+        guestViews.push(<Guest
+            key={index} guest={guest}
+            guestNumber={index}
+            removeGuest={props.removeGuest}
+            handleGuestChange={props.handleGuestChange}
+            guests={props.guests}
+        />)
+    });
+    return (
+        <div className="step2-container">
+            <h1 className="page-title">Add Guests</h1>
+            {guestViews}
+            <FormItem className="config-form-row">
+                <Button type="dashed" className="create-config-form-button" onClick={props.addGuest}>Add Guest</Button>
+            </FormItem>
+            <div className="titleBar">
+                <FormItem className="config-form-row">
+                    <Button type="primary" onClick={props.handlePrevious}>Back</Button>
+                </FormItem>
+                <FormItem className="config-form-row">
+                    <Button type="primary" onClick={props.handleNext} disabled={isFormInvalid()}>Next</Button>
+                </FormItem>
+            </div>
+        </div>
+    )
+}
+
+function Step3(props) {
+    const isFormInvalid = () => {
+        let invalid = false;
         props.guests.forEach(guest => {
             guest.relationships.forEach(relationship => {
                 if (relationship.guestName.validateStatus && (relationship.guestName.validateStatus !== 'success')) {
@@ -240,6 +357,47 @@ export function ConfigForm(props) {
             })
         });
 
+        return invalid;
+    };
+
+    if(props.currentStep !== 3) {
+        return null;
+    }
+
+    const guestViews = [];
+    props.guests.forEach((guest, index) => {
+        guestViews.push(<Guest
+            key={index} guest={guest}
+            guestNumber={index}
+            removeGuest={props.removeGuest}
+            handleGuestChange={props.handleGuestChange}
+            addRelationship={props.addRelationship}
+            removeRelationship={props.removeRelationship}
+            handleRelationshipGuestChange={props.handleRelationshipGuestChange}
+            handleRelationshipValueChange={props.handleRelationshipValueChange}
+            handleRelationshipBribeChange={props.handleRelationshipBribeChange}
+            guests={props.guests}
+        />)
+    });
+    return (
+        <div className="step3-container">
+            <h1 className="page-title">Add Relationships</h1>
+            {guestViews}
+            <div className="titleBar">
+                <FormItem className="config-form-row">
+                    <Button type="primary" onClick={props.handlePrevious}>Back</Button>
+                </FormItem>
+                <FormItem className="config-form-row">
+                    <Button type="primary" onClick={props.handleNext} disabled={isFormInvalid()}>Next</Button>
+                </FormItem>
+            </div>
+        </div>
+    )
+}
+
+function Step4(props) {
+    const isFormInvalid = () => {
+        let invalid = false;
         props.tables.forEach(table => {
             if (table.shape.validateStatus && (table.shape.validateStatus !== 'success')) {
                 console.log("shape");
@@ -251,63 +409,36 @@ export function ConfigForm(props) {
                 invalid = true;
             }
         });
-
         return invalid;
     };
 
-    const guestViews = [];
-    props.guests.forEach((guest, index) => {
-        guestViews.push(<Guest
-            key={index} guest={guest}
-            guestNumber={index}
-            removeGuest={removeGuest}
-            handleGuestChange={handleGuestNameChange}
-            addRelationship={props.addRelationship}
-            removeRelationship={removeRelationship}
-            handleRelationshipGuestChange={handleRelationshipGuestChange}
-            handleRelationshipValueChange={handleRelationshipValueChange}
-            handleRelationshipBribeChange={handleRelationshipBribeChange}
-            guests={props.guests}
-        />)
-    });
+    if(props.currentStep !== 4) {
+        return null;
+    }
 
     const tableViews = [];
     props.tables.forEach((table, index) => {
-        tableViews.push(<Table key={index} table={table} tableNumber={index} removeTable={removeTable}
-                               handleTableShapeChange={handleTableShapeChange}
-                               handleTableCapacityChange={handleTableCapacityChange}/>)
+        tableViews.push(<Table key={index} table={table} tableNumber={index} removeTable={props.removeTable}
+                               handleTableShapeChange={props.handleTableShapeChange}
+                               handleTableCapacityChange={props.handleTableCapacityChange}/>)
     });
-
     return (
-        <div className="new-config-container">
-            <h1 className="page-title">Create Config</h1>
-            <div className="new-config-content">
-                <Form onSubmit={props.handleSubmit} className="create-config-form">
-                    <FormItem label="Config name" validateStatus={props.name.validateStatus} help={props.name.errorMsg}
-                              className="config-form-row">
-                        <Input
-                            placeholder='Your config name'
-                            size="large"
-                            onChange={handleNameChange}
-                            value={props.name.text}/>
-                    </FormItem>
-                    <Divider/>
-                    {guestViews}
-                    <FormItem className="config-form-fow">
-                        <Button type="dashed" onClick={props.addGuest}>Add Guest</Button>
-                    </FormItem>
-                    {tableViews}
-                    <FormItem className="config-form-fow">
-                        <Button type="dashed" onClick={props.addTable}>Add Table</Button>
-                    </FormItem>
-                    <FormItem className="config-form-row">
-                        <Button type="primary"
-                                htmlType="submit"
-                                size="large"
-                                disabled={isFormInvalid()}
-                                className="create-config-form-button">Save Config</Button>
-                    </FormItem>
-                </Form>
+        <div className="step4-container">
+            <h1 className="page-title">Add Tables</h1>
+            {tableViews}
+            <FormItem className="config-form-row">
+                <Button type="dashed" className="create-config-form-button" onClick={props.addTable}>Add Table</Button>
+            </FormItem>
+            <div className="titleBar">
+                <FormItem className="config-form-row">
+                    <Button type="dashed" onClick={props.handlePrevious}>Back</Button>
+                </FormItem>
+                <FormItem className="config-form-row">
+                    <Button type="primary"
+                            htmlType="submit"
+                            disabled={isFormInvalid()}
+                            className="create-config-form-button">Save</Button>
+                </FormItem>
             </div>
         </div>
     )

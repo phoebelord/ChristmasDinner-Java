@@ -7,6 +7,7 @@ const {Option} = Select;
 function Relationship(props) {
     return (
         <div className="indent">
+            {props.relationshipNumber > 0 ? <Divider/> : null}
             <p>Relationship:</p>
             <FormItem label="Guest Name" validateStatus={props.relationship.guestName.validateStatus}
                       help={props.relationship.guestName.errorMsg} className="config-form-row">
@@ -18,6 +19,9 @@ function Relationship(props) {
                         <Option key={index} value={guest.name.text}>{guest.name.text}</Option>
                     )}
                 </Select>
+                <Icon className="dynamic-delete-button"
+                      type="delete"
+                      onClick={() => props.removeRelationship(props.guestNumber, props.relationshipNumber)}/>
             </FormItem>
             <FormItem label="Connection" validateStatus={props.relationship.likability.validateStatus}
                       help={props.relationship.likability.errorMsg} className="config-form-row">
@@ -38,10 +42,6 @@ function Relationship(props) {
                     onChange={(event) => props.handleRelationshipBribeChange(event, props.relationshipNumber, props.guestNumber)}
                     value={props.relationship.bribe.text}/>
             </FormItem>
-            <Icon className="dynamic-delete-button"
-                  type="close"
-                  onClick={() => props.removeRelationship(props.guestNumber, props.relationshipNumber)}/>
-            <Divider/>
         </div>
     )
 }

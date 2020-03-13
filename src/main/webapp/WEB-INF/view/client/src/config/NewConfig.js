@@ -8,8 +8,20 @@ import {ConfigForm} from "./ConfigForm";
 function NewConfig(props) {
     const history = useHistory();
     const [name, setName] = useState({text: ''});
-    const [guests, setGuests] = useState([]);
-    const [tables, setTables] = useState([]);
+    const [guests, setGuests] = useState([{
+        name: {
+            text: ''
+        },
+        relationships: []
+    }]);
+    const [tables, setTables] = useState([{
+        shape: {
+            text: ''
+        },
+        capacity: {
+            text: null
+        }
+    }]);
 
     const addGuest = () => {
         const guestss = guests.slice();

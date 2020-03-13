@@ -6,6 +6,11 @@
     width: 100%;
 }
 
+.create-config-form-button:hover {
+    color: #409456;
+    border-color: #409456;
+}
+
 .create-config-form-button[disabled], .create-config-form-button[disabled]:hover, .create-config-form-button[disabled]:focus {
     opacity: 0.6;
     color: #fff;
@@ -23,13 +28,13 @@
     transition: all .3s;
 }
 
-.optional-guest .optional-table {
-    width: calc(100% - 35px);
-    margin-right: 8px;
+.optional-guest, .optional-table, .optional-relationship {
+    width: calc(100% - 35px) !important;
+    margin-right: 8px !important;
 }
 
 .dynamic-delete-button:hover {
-    color: #777;
+    color: #ff4d4f;
 }
 
 .dynamic-delete-button[disabled] {
@@ -48,4 +53,13 @@
 .indent {
     width: 90%;
     margin-left: 10%;
+}
+
+.titleBar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.next {
+    float: right;
 }

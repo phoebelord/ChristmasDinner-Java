@@ -1,10 +1,11 @@
 import {useHistory, useLocation} from "react-router";
 import React, {useState} from "react";
-import {Button, Collapse, Divider, notification, Table} from "antd";
+import {Button, Divider, notification, Table, Modal} from "antd";
 import "./Config.css";
 import {deleteConfig} from "../utils/ApiUtils";
 
-const {Panel} = Collapse;
+const {confirm} = Modal;
+
 
 export function ViewConfig(props) {
     const history = useHistory();
@@ -25,7 +26,7 @@ export function ViewConfig(props) {
         })
     };
 
-    const handleDeleteCLick = () => {
+    const handleDeleteClick = () => {
         deleteConfig(config.id)
             .then(response => {
                 history.push("/");
@@ -130,6 +131,20 @@ export function ViewConfig(props) {
         return matrix;
     };
 
+    function showDeleteConfirm() {
+        confirm({
+            title: 'Are you sure you want to delete this config?',
+            content: 'This action cannot be undone',
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                handleDeleteClick();
+            },
+            onCancel() {},
+        });
+    }
+
     return (
         <div className="config-container">
             <div className="titleBar">
@@ -154,7 +169,7 @@ export function ViewConfig(props) {
             </div>
             <div className="lastModified titleBar">
                 <p>Last Modified: {config.lastModified}</p>
-                <Button type="dashed" onClick={handleDeleteCLick}>Delete</Button>
+                <Button type="danger" onClick={showDeleteConfirm}>Delete</Button>
             </div>
         </div>
     )
