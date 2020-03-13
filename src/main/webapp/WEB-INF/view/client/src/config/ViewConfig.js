@@ -51,8 +51,12 @@ export function ViewConfig(props) {
             {
                 title: "",
                 dataIndex: "name",
-                width: 100,
-                fixed: "left"
+                width: "100px",
+                render: (text) => (
+                    <div style={{ wordWrap: 'break-word', wordBreak: 'break-word' }}>
+                        {text}
+                    </div>
+                )
             }
         ];
         for(let i = 0; i < config.guests.length; i++) {
@@ -60,8 +64,12 @@ export function ViewConfig(props) {
             columns.push({
                 title: config.guests[i].name,
                 dataIndex: rel,
-                width: 100,
-                fixed: ""
+                width: "100px",
+                render: (text) => (
+                    <div style={{ wordWrap: 'break-word', wordBreak: 'break-word' }}>
+                        {text}
+                    </div>
+                )
             });
         }
         return columns;
@@ -132,7 +140,7 @@ export function ViewConfig(props) {
                 </div>
             </div>
             <div>
-                <Table dataSource={createRelationshipMatrix()} columns={getColumns()} scroll={{ x: 1500, y: 1500 }} bordered={true} />
+                <Table dataSource={createRelationshipMatrix()} columns={getColumns()} scroll={{  x: 'max content' }} bordered={true} />
             </div>
 
             <div>
