@@ -1,8 +1,10 @@
 import Guest from "./Guest";
 import Table from "./Table";
-import {Button, Divider, Form, Input} from "antd";
+import {Button, Steps, Form, Input} from "antd";
 import FormItem from "antd/lib/form/FormItem";
 import React, {useEffect, useState} from "react";
+
+const { Step } = Steps;
 
 export function ConfigForm(props) {
     const [currentStep, setCurrentStep] = useState(1);
@@ -230,6 +232,12 @@ export function ConfigForm(props) {
     return (
         <div className="new-config-container">
             <div className="new-config-content">
+                <Steps current={currentStep - 1}>
+                    <Step title="Step 1" description="Config Name" />
+                    <Step title="Step 2" description="Add Guests" />
+                    <Step title="Step 3" description="Add Relationships" />
+                    <Step title="Step 4" description="Add Tables" />
+                </Steps>
                 <Form onSubmit={props.handleSubmit} className="create-config-form">
                     <Step1 name={props.name} handleNameChange={handleNameChange} handleNext={handleNext} currentStep={currentStep}/>
                     <Step2 guests={props.guests}
@@ -275,7 +283,6 @@ function Step1(props) {
     }
     return (
         <div className="step1-container">
-            <h1 className="page-title">Create Config</h1>
             <FormItem label="Config name" validateStatus={props.name.validateStatus} help={props.name.errorMsg}
                       className="config-form-row">
                 <Input
@@ -318,7 +325,6 @@ function Step2(props) {
     });
     return (
         <div className="step2-container">
-            <h1 className="page-title">Add Guests</h1>
             {guestViews}
             <FormItem className="config-form-row">
                 <Button type="dashed" className="create-config-form-button" onClick={props.addGuest}>Add Guest</Button>
@@ -341,17 +347,14 @@ function Step3(props) {
         props.guests.forEach(guest => {
             guest.relationships.forEach(relationship => {
                 if (relationship.guestName.validateStatus && (relationship.guestName.validateStatus !== 'success')) {
-                    console.log("rel guest name");
                     invalid = true;
                 }
 
                 if (relationship.likability.validateStatus && (relationship.likability.validateStatus !== 'success')) {
-                    console.log("rel value");
                     invalid = true;
                 }
 
                 if (relationship.bribe.validateStatus && (relationship.bribe.validateStatus !== 'success')) {
-                    console.log("rel bribe");
                     invalid = true;
                 }
             })
@@ -381,7 +384,6 @@ function Step3(props) {
     });
     return (
         <div className="step3-container">
-            <h1 className="page-title">Add Relationships</h1>
             {guestViews}
             <div className="titleBar">
                 <FormItem className="config-form-row">
@@ -424,20 +426,18 @@ function Step4(props) {
     });
     return (
         <div className="step4-container">
-            <h1 className="page-title">Add Tables</h1>
             {tableViews}
             <FormItem className="config-form-row">
                 <Button type="dashed" className="create-config-form-button" onClick={props.addTable}>Add Table</Button>
             </FormItem>
             <div className="titleBar">
                 <FormItem className="config-form-row">
-                    <Button type="dashed" onClick={props.handlePrevious}>Back</Button>
+                    <Button type="primary" onClick={props.handlePrevious}>Back</Button>
                 </FormItem>
                 <FormItem className="config-form-row">
                     <Button type="primary"
                             htmlType="submit"
-                            disabled={isFormInvalid()}
-                            className="create-config-form-button">Save</Button>
+                            disabled={isFormInvalid()}>Save</Button>
                 </FormItem>
             </div>
         </div>

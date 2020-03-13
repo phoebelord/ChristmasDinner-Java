@@ -97,7 +97,7 @@ export function ViewConfig(props) {
         guest1.relationships.forEach(relationship => {
             if(relationship.guestName === guest2.name) {
                 answer = {
-                    [rel]: convertLikability(relationship.likability) + ", " + relationship.bribe
+                    [rel]: convertLikability(relationship.likability) + ", £" + relationship.bribe
                 };
             }
         });

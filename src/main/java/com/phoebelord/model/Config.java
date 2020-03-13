@@ -19,9 +19,11 @@ public class Config extends UserDateAudit {
   private String name;
 
   @OneToMany
+  @OrderBy("id asc")
   private List<Guest> guests;
 
   @OneToMany
+  @OrderBy("id asc")
   private List<Table> tables;
 
   public Config() {

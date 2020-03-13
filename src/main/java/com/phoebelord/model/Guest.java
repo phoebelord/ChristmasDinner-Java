@@ -21,6 +21,7 @@ public class Guest implements Serializable {
   private String name;
 
   @OneToMany(mappedBy = "owner")
+  @OrderBy("id asc")
   private List<Relationship> relationships;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
