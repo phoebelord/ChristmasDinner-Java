@@ -66,7 +66,7 @@ public abstract class Algorithm {
     return (x % y + y) % y;
   }
 
-  public abstract Solution calculateSolution();
+  public abstract Solution[] calculateSolution();
 
   public void setGuests(List<Guest> guests) {
     this.guests = guests;

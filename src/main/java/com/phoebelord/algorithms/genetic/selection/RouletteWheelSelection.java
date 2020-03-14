@@ -19,7 +19,7 @@ public class RouletteWheelSelection implements Selection {
     double[] cumulativeHappiness = getCumulativeHappiness(population, offset);
     List<ArrangementChromosome> selected = new ArrayList<>();
     selected.add(Collections.max(population)); //elitism
-    for(int i = 0; i < selectionSize; i++) {
+    for(int i = 1; i < selectionSize; i++) {
       double probability = random.nextDouble();
       int index = Arrays.binarySearch(cumulativeHappiness, probability);
       if(index < 0) {

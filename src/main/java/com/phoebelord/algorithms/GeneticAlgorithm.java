@@ -24,19 +24,20 @@ public class GeneticAlgorithm extends Algorithm {
   private final int GENERATION_SIZE = 100;
   private final int SELECTION_SIZE = 50;
   private final int MAX_ITERATIONS = 1000;
-  private final float RATE_OF_MUTATION = 0.1f;
+  private final float RATE_OF_MUTATION = 0.01f;
   private int chromosomeSize;
 
   private Random random;
 
   @Override
-  public Solution calculateSolution() {
+  public Solution[] calculateSolution() {
     List<ArrangementChromosome> currentGeneration = initialisePopulation();
-    ArrangementChromosome bestChromosome = currentGeneration.get(0);
+    Map<Integer, ArrangementChromosome> bestChromosomes = new HashMap<>();
+    ArrangementChromosome bestChromosome;
     for (int i = 0; i < MAX_ITERATIONS; i++) {
       List<ArrangementChromosome> selection = getSelection(currentGeneration, SelectionType.ROULETTE);
       List<ArrangementChromosome> nextGeneration = new ArrayList<>();
-      nextGeneration.add(Collections.max(selection)); //elitism
+      nextGeneration.add(Collections.max(currentGeneration)); //elitism
       int currentGenerationSize = 1;
       while (currentGenerationSize < GENERATION_SIZE) {
         List<ArrangementChromosome> parents = GeneticAlgorithmUtils.getRandomElements(selection, 2);
@@ -44,12 +45,24 @@ public class GeneticAlgorithm extends Algorithm {
         nextGeneration.addAll(children);
         currentGenerationSize += 2;
       }
+      nextGeneration.remove(Collections.min(nextGeneration));
       nextGeneration = performMutation(nextGeneration);
-      bestChromosome = Collections.max(nextGeneration); // TODO stop if no improvement in 10 gens
+      bestChromosome = Collections.max(nextGeneration);
+      if(!bestChromosomes.containsKey(bestChromosome.getFitness())) {
+        bestChromosome.setGenerationNumber(i);
+        bestChromosomes.put(bestChromosome.getFitness(), bestChromosome);
+      }
       //System.out.println(bestChromosome);
       currentGeneration = new ArrayList<>(nextGeneration);
     }
-    return new Solution(tables, bestChromosome.getGuestList(guests), bestChromosome.getFitness());
+
+    List<Solution> solutions = new ArrayList<>();
+    bestChromosomes.values().forEach(chromosome -> {
+      solutions.add(new Solution(tables, chromosome.getGuestList(guests), chromosome.getFitness(), chromosome.getGenerationNumber()));
+    });
+
+    Collections.sort(solutions);
+    return solutions.toArray(new Solution[0]);
   }
 
   private List<ArrangementChromosome> initialisePopulation() {
@@ -72,7 +85,11 @@ public class GeneticAlgorithm extends Algorithm {
   }
 
   private List<ArrangementChromosome> performMutation(List<ArrangementChromosome> chromosomes) {
-    return chromosomes.stream().map(this::mutate).collect(Collectors.toList());
+    ArrangementChromosome elite = Collections.max(chromosomes);
+    chromosomes.remove(elite);
+    chromosomes = chromosomes.stream().map(this::mutate).collect(Collectors.toList());
+    chromosomes.add(elite);
+    return chromosomes;
   }
   private ArrangementChromosome mutate(ArrangementChromosome arrangement) {
     float mutate = random.nextFloat();

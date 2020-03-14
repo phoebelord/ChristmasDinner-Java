@@ -27,7 +27,7 @@ public class BnBAlgorithm extends Algorithm {
   private BigDecimal noSolutions;
 
   @Override
-  public Solution calculateSolution() {
+  public Solution[] calculateSolution() {
     bestSoFar = Integer.MAX_VALUE;
     initialiseCounters();
     for (int i = 0; i < guests.size(); i++) {
@@ -41,7 +41,7 @@ public class BnBAlgorithm extends Algorithm {
     }
     System.out.println("Pruned: " + pruned);
     System.out.println("Counter: " + counter);
-    return new Solution(tables, guestList, Algorithm.calculateHappiness(guestList, seats, tables, MaximisationType.HAPPINESS));
+    return new Solution[]{new Solution(tables, guestList, calculateHappiness(guestList, seats, tables, MaximisationType.HAPPINESS))};
   }
 
   private void bnb(int level, List<Integer> partialSolution, int currentHappiness) {

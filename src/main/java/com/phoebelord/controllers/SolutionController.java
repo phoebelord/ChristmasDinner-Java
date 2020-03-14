@@ -35,7 +35,7 @@ public class SolutionController {
                                 @RequestParam String algorithm,
                                 @RequestParam String selection,
                                 @RequestParam String crossover) {
-    return new Solution[]{ChristmasDinner.getSolution(dataSet, AlgorithmType.valueOf(algorithm), SelectionType.valueOf(selection), CrossoverType.valueOf(crossover))};
+    return ChristmasDinner.getSolution(dataSet, AlgorithmType.valueOf(algorithm), SelectionType.valueOf(selection), CrossoverType.valueOf(crossover));
   }
 
 
@@ -43,7 +43,7 @@ public class SolutionController {
   @GetMapping(value = "/api/solution/{configId}")
   @PreAuthorize("hasRole('USER')")
   @ResponseBody
-  public Solution getASolution(@CurrentUser UserPrincipal currentUser,
+  public Solution[] getASolution(@CurrentUser UserPrincipal currentUser,
                                @PathVariable int configId,
                                @RequestParam String maximisation,
                                @RequestParam String selection,

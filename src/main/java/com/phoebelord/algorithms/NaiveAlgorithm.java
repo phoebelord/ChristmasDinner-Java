@@ -24,10 +24,10 @@ public class NaiveAlgorithm extends Algorithm {
   private float noSolutions;
 
   @Override
-  public Solution calculateSolution() {
+  public Solution[] calculateSolution() {
     initialiseCounters();
     calculateAllSolutions(guests);
-    return new Solution(tables, solution, bestSolution);
+    return new Solution[]{new Solution(tables, solution, bestSolution)};
   }
 
   private void calculateAllSolutions(int n, List<Guest> elements) {

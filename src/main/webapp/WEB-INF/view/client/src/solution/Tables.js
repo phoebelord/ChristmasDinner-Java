@@ -1,12 +1,13 @@
 import * as React from 'react';
 import {useEffect} from 'react';
 import "./Tables.css"
-import {Button, Divider, Radio} from "antd";
+import {Button, Divider, Pagination, Radio} from "antd";
 import {useState} from "react";
 
 export function Tables(props) {
 
     const [maxType, setMaxType] = useState(props.maxType);
+    const [currentGeneration, setCurrentGeneration] = useState(props.solutions.length - 1);
 
     useEffect(() => {
         updateLayout();
@@ -70,13 +71,17 @@ export function Tables(props) {
         return "translate(-50%, -50%)"
     }
 
-    if (props.solution) {
+    const handleChange = (page, size) => {
+        setCurrentGeneration(page - 1);
+    };
+
+    if (props.solutions) {
         return (
             <div className="tables-container">
                 <div className="titleBar">
-                    <h2>Solution:</h2>
-                    <p>{maxType.toString().charAt(0) + maxType.toString().slice(1).toLowerCase()}: {props.solution.happinessScore}</p>
-                    <Button type="dashed" onClick={props.fetchSolution}>Try again</Button>
+                    <h2>Gen: {props.solutions[currentGeneration].generationNumber}</h2>
+                    <p>{maxType.toString().charAt(0) + maxType.toString().slice(1).toLowerCase()}: {props.solutions[currentGeneration].happinessScore}</p>
+                    <Button type="dashed" onClick={props.fetchSolutions}>Try again</Button>
                 </div>
                 <div className="titleBar">
                     <Radio.Group onChange={props.handleMaxTypeChange} value={props.maxType}>
@@ -93,7 +98,7 @@ export function Tables(props) {
                     </Radio.Group>
                 </div>
                 <div className="table">
-                    {props.solution.arrangements.map((arrangement, arrIndex) =>
+                    {props.solutions[currentGeneration].arrangements.map((arrangement, arrIndex) =>
                         <div key={arrIndex} className={"mt-5 mb-5 guestList " + arrangement.shape}>
                             {arrangement.names.map((name, nameIndex) => {
                                 return (
@@ -109,7 +114,9 @@ export function Tables(props) {
                     )}
                     <br/>
                 </div>
-
+                <div className="solutionPicker">
+                    <Pagination defaultCurrent={props.solutions.length} total={props.solutions.length} defaultPageSize={1} onChange={handleChange}/>
+                </div>
             </div>
         )
     } else {

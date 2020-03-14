@@ -34,7 +34,7 @@ public class ChristmasDinner {
     SpringApplication.run(ChristmasDinner.class, args);
   }
 
-  public static Solution getSolution(String filename, AlgorithmType algorithmType, SelectionType selection, CrossoverType crossover) {
+  public static Solution[] getSolution(String filename, AlgorithmType algorithmType, SelectionType selection, CrossoverType crossover) {
     try {
       List<Guest> guests = initialiseFromFile(filename + "/guests.json", Guest.class);
       List<Table> tables = initialiseFromFile(filename + "/tables.json", Table.class);
@@ -42,35 +42,35 @@ public class ChristmasDinner {
 
       Algorithm algorithm = AlgorithmFactory.createAlgorithm(algorithmType, guests, tables, MaximisationType.HAPPINESS, selection, crossover);
       long startTime = System.currentTimeMillis();
-      Solution solution = algorithm.calculateSolution();
+      Solution[] solutions = algorithm.calculateSolution();
       long endTime = System.currentTimeMillis();
 
       log.info("Time taken (ms): " + (endTime - startTime));
-      log.info("Score: " + solution.getHappinessScore());
+      log.info("Score: " + solutions[solutions.length - 1].getHappinessScore());
 
-      return solution;
+      return solutions;
     } catch (IOException e) {
       e.printStackTrace();
       return null;
     }
   }
 
-  public static Solution getSolution(Config config, MaximisationType maximisationType, SelectionType selection, CrossoverType crossover) {
+  public static Solution[] getSolution(Config config, MaximisationType maximisationType, SelectionType selection, CrossoverType crossover) {
       List<Guest> guests = config.getGuests();
       List<Table> tables = config.getTables();
 
       log.info("Calculating solution for Config[ID: " + config.getId() + ", Name: " + config.getName() + ", No. Guests: " + config.getGuests().size() + "]");
 
-      Solution solution;
+      Solution[] solutions;
       if(guests.size() > 0 && tables.size() > 0) {
         Algorithm algorithm = AlgorithmFactory.createAlgorithm(AlgorithmType.Genetic, guests, tables, maximisationType, selection, crossover);
-        solution = algorithm.calculateSolution();
+        solutions = algorithm.calculateSolution();
       } else {
-        solution = new Solution();
+        solutions = new Solution[0];
       }
 
-      log.info("Score: " + solution.getHappinessScore());
-      return solution;
+      log.info("Score: " + solutions[solutions.length - 1].getHappinessScore());
+      return solutions;
   }
 
   private static <T> List<T> initialiseFromFile(String filename, Class<T> clazz) throws IOException {

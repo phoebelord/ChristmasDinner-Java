@@ -9,21 +9,22 @@ import "./Solution.css";
 function Solution() {
     const location = useLocation();
     const [config, setConfig] = useState(location.state.config);
-    const [solution, setSolution] = useState(null);
+    const [solutions, setSolutions] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [maxType, setMaxType] = useState("HAPPINESS");
     const [selection, setSelection] = useState("ROULETTE");
     const [crossover, setCrossover] = useState("TwoPoint");
 
     useEffect(() => {
-        fetchSolution();
+        fetchSolutions();
     }, []);
 
-    const fetchSolution = () => {
+    const fetchSolutions = () => {
         setIsLoading(true);
         getSolution(config.id, maxType, selection, crossover)
             .then(response => {
-                setSolution(response);
+                console.log(response);
+                setSolutions(response);
                 setIsLoading(false)
             })
     };
@@ -47,8 +48,8 @@ function Solution() {
 
     return (
         <div className="solution-container">
-            <Tables solution={solution}
-                    fetchSolution={fetchSolution}
+            <Tables solutions={solutions}
+                    fetchSolutions={fetchSolutions}
                     maxType={maxType}
                     handleMaxTypeChange={handleMaxTypeChange}
                     selection={selection}
