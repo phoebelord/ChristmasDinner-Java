@@ -95,7 +95,7 @@ public class ConfigControllerTest {
 
     List<Config> configs = new ArrayList<>();
     configs.add(config);
-    given(configRepository.findAllByCreatedBy(1)).willReturn(configs);
+    given(configRepository.findAllByCreatedByOrderByUpdatedAt(1)).willReturn(configs);
 
 
     ConfigDTO configDTO = new ConfigDTO();

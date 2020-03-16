@@ -65,11 +65,11 @@ public class ChristmasDinner {
       if(guests.size() > 0 && tables.size() > 0) {
         Algorithm algorithm = AlgorithmFactory.createAlgorithm(AlgorithmType.Genetic, guests, tables, maximisationType, selection, crossover);
         solutions = algorithm.calculateSolution();
+        log.info("Score: " + solutions[solutions.length - 1].getHappinessScore());
       } else {
         solutions = new Solution[0];
       }
 
-      log.info("Score: " + solutions[solutions.length - 1].getHappinessScore());
       return solutions;
   }
 

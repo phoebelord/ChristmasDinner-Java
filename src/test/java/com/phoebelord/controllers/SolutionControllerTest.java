@@ -62,8 +62,7 @@ public class SolutionControllerTest {
     mockMvc.perform(get("/api/solution/1?maximisation=HAPPINESS&selection=ROULETTE&crossover=TwoPoint")
       .header("Authorization", "Bearer " + getAuthenticationToken(1))
       .contentType(MediaType.APPLICATION_JSON))
-      .andExpect(status().isOk())
-      .andExpect(jsonPath("$.happinessScore", is(0)));
+      .andExpect(status().isOk());
   }
 
   @Test

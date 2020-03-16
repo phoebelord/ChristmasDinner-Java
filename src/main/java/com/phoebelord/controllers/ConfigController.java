@@ -120,7 +120,7 @@ public class ConfigController {
   public List<ConfigDTO> getCurrentUserConfigs(@CurrentUser UserPrincipal currentUser) {
     log.info(currentUser.getUsername() + " viewed all configs");
     User user = userRepository.findById(currentUser.getId()).orElseThrow(() -> new NotFoundException("User", "id", currentUser.getId()));
-    List<Config> configs = configRepository.findAllByCreatedBy(user.getId());
+    List<Config> configs = configRepository.findAllByCreatedByOrderByUpdatedAt(user.getId());
     List<ConfigDTO> configResponses = new ArrayList<>();
     configs.forEach(config -> configResponses.add(new ConfigDTO(config)));
     return configResponses;

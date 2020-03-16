@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface ConfigRepository extends JpaRepository<Config, Integer> {
 
-  List<Config> findAllByCreatedBy(int userId);
+  List<Config> findAllByCreatedByOrderByUpdatedAt(int userId);
 }
