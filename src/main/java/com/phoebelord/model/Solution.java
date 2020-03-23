@@ -28,7 +28,7 @@ public class Solution implements Comparable {
   private List<Arrangement> initialiseArrangements(List<Table> tables, List<Guest> guests) {
     List<Arrangement> arrangements = new ArrayList<>();
     for(Table table : tables) {
-      Arrangement arrangement = new Arrangement(table.getShape(), guests.subList(table.getOffset(), table.getOffset() + table.getCapacity()).stream().map(Guest::getName).collect(Collectors.toList()));
+      Arrangement arrangement = new Arrangement(table.getShape(), guests.subList(table.getOffset(), table.getOffset() + table.getCapacity()));
       arrangements.add(arrangement);
     }
     return arrangements;

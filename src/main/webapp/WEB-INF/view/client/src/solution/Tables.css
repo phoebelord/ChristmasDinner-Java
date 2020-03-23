@@ -1,5 +1,4 @@
 .guest {
-    background-color: #1890ff;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -7,7 +6,7 @@
 }
 
 .shape {
-    background-color: #1890ff;
+    background-color: #00FF3D;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -51,4 +50,31 @@
 .solutionPicker {
     text-align: center;
     margin-bottom: 30px;
+}
+
+
+.happiness-4, .happiness-5, .happiness-6, .happiness-8, .happiness-10, .happiness-11, .happiness-12, .happiness-17, .happiness-18, .happiness-19, .happiness-20, .happiness-21, .happiness-22 {
+    background-color: #87FF3E;
+}
+
+.happiness-1, .happiness-2, .happiness-3 {
+    background-color: #C8FF3F;
+}
+
+.happiness--3, .happiness--2, .happiness--1 {
+    background-color: #dd1a1a;
+}
+
+.happiness-0 {
+    background-color: #FAFF40;
+}
+
+
+.Rectangle .happiness-23, .Rectangle .happiness-5, .Circle .happiness-22, .Circle .happiness-4 {
+    background-color: #00FF3D !important;
+}
+
+.Rectangle .happiness--5, .Circle .happiness--4 {
+    background-color: #8c0004 !important;
+    color: white;
 }

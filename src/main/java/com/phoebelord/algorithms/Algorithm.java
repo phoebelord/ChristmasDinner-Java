@@ -103,7 +103,7 @@ public abstract class Algorithm {
     if(table.getShape().equals("Rectangle")) {
       //also across from someone
       int peoplePerSide = (table.getCapacity() - 2) / 2;
-      if((i != table.getCapacity() - 1) && (i != peoplePerSide + 1)) {
+      if((i != table.getCapacity() - 1) && (i != peoplePerSide)) {
         int neighbour = (-i + 2 * (peoplePerSide));
         neighbours.add(neighbour + table.getOffset());
       }

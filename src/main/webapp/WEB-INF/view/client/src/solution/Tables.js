@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useEffect} from 'react';
 import "./Tables.css"
-import {Button, Divider, Pagination, Radio} from "antd";
+import {Button, Divider, Pagination, Popover, Radio} from "antd";
 import {useState} from "react";
 
 export function Tables(props) {
@@ -75,6 +75,7 @@ export function Tables(props) {
         setCurrentGeneration(page - 1);
     };
 
+    console.log(props.solutions);
     if (props.solutions) {
         return (
             <div className="tables-container">
@@ -100,15 +101,26 @@ export function Tables(props) {
                 <div className="table">
                     {props.solutions[currentGeneration].arrangements.map((arrangement, arrIndex) =>
                         <div key={arrIndex} className={"mt-5 mb-5 guestList " + arrangement.shape}>
-                            {arrangement.names.map((name, nameIndex) => {
-                                return (
-                                    <div key={nameIndex} className="guest">
-                                        Seat {nameIndex}: {name}
+                            {arrangement.guests.map((guest, nameIndex) => {
+                                let content = (
+                                    <div>
+                                        {guest.relationships.map((relationship, relIndex) => {
+                                            return (
+                                                <p key={relIndex}>{relationship}</p>
+                                            )
+                                        })}
                                     </div>
+                                );
+                                return (
+                                    <Popover content={content} title={guest.name}>
+                                        <div key={nameIndex} className={"guest happiness-" + guest.happiness}>
+                                            Seat {nameIndex}: {guest.name}, {guest.happiness}
+                                        </div>
+                                    </Popover>
                                 )
                             })}
                             <div className="shape">
-                                Shape: {arrangement.shape}
+                                Happiness: {arrangement.happiness}
                             </div>
                         </div>
                     )}
