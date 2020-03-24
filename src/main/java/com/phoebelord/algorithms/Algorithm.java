@@ -22,6 +22,14 @@ public abstract class Algorithm {
 
   //doesn't need to be static???
   public static int calculateHappiness(List<Guest> guests, List<Seat> seats, List<Table> tables, MaximisationType maximisationType) {
+    if(maximisationType == MaximisationType.HAPPINESS) {
+      return calculateHappiness(guests, seats, tables);
+    } else {
+      return calculateProfit(guests, seats);
+    }
+  }
+
+  private static int calculateHappiness(List<Guest> guests, List<Seat> seats, List<Table> tables) {
     int total = 0;
     for (int i = 0; i < guests.size(); i++) {
       int guestHappiness = 0;
@@ -30,12 +38,33 @@ public abstract class Algorithm {
       Table table = tables.get(seats.get(i).getTableNum());
       for (int neighbouringSeat : neighbouringSeats) {
         Guest neighbour = guests.get(neighbouringSeat);
-        int relationship =  currentGuest.getRelationshipWith(neighbour, maximisationType);
+        int relationship =  currentGuest.getRelationshipWith(neighbour, MaximisationType.HAPPINESS);
         guestHappiness += (isNextTo(i, neighbouringSeat, table.getOffset(), table.getCapacity()) ? 2 * relationship : relationship);
       }
       total += guestHappiness;
     }
     return total;
+  }
+
+  private static  int calculateProfit(List<Guest> guests, List<Seat> seats) {
+    int total = 0;
+    for(int i = 0; i < guests.size(); i++) {
+      Guest currentGuest = guests.get(i);
+      int guestProfit = 0;
+      List<Integer> neighbouringSeats = seats.get(i).getNeighbours();
+      for(Relationship relationship: currentGuest.getRelationships()) {
+        int otherGuestId = relationship.getGuestId();
+        boolean isNextTo = neighbouringSeats.stream().anyMatch(neighbouringSeat -> guests.get(neighbouringSeat).getId() == otherGuestId);
+        if(isNextTo && relationship.getLikability() != RelationshipName.DISLIKES.likability) {
+          guestProfit += relationship.getBribe();
+        } else if(!isNextTo && relationship.getLikability() == RelationshipName.DISLIKES.likability){
+          guestProfit += relationship.getBribe();
+        }
+      }
+      total += guestProfit;
+    }
+
+    return  total;
   }
 
   public static boolean isNextTo(int seatNum, int otherSeatNum, int offset, int tableSize) {

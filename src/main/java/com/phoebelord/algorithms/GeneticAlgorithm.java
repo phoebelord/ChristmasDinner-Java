@@ -58,7 +58,7 @@ public class GeneticAlgorithm extends Algorithm {
 
     List<Solution> solutions = new ArrayList<>();
     bestChromosomes.values().forEach(chromosome -> {
-      solutions.add(new Solution(tables, chromosome.getGuestList(guests), chromosome.getFitness(), chromosome.getGenerationNumber()));
+      solutions.add(new Solution(tables, chromosome.getGuestList(guests), chromosome.getFitness(), chromosome.getGenerationNumber(), maximisationType));
     });
 
     Collections.sort(solutions);

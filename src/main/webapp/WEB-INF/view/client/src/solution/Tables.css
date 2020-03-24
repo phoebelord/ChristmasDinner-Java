@@ -53,28 +53,28 @@
 }
 
 
-.happiness-4, .happiness-5, .happiness-6, .happiness-8, .happiness-10, .happiness-11, .happiness-12, .happiness-17, .happiness-18, .happiness-19, .happiness-20, .happiness-21, .happiness-22 {
+.Happiness-happiness-4, .Happiness-happiness-5, .Happiness-happiness-6, .Happiness-happiness-8, .Happiness-happiness-10, .Happiness-happiness-11, .Happiness-happiness-12, .Happiness-happiness-17, .Happiness-happiness-18, .Happiness-happiness-19, .Happiness-happiness-20, .Happiness-happiness-21, .Happiness-happiness-22 {
     background-color: #87FF3E;
 }
 
-.happiness-1, .happiness-2, .happiness-3 {
+.Happiness-happiness-1, .Happiness-happiness-2, .Happiness-happiness-3 {
     background-color: #C8FF3F;
 }
 
-.happiness--3, .happiness--2, .happiness--1 {
+.Happiness-happiness--3, .Happiness-happiness--2, .Happiness-happiness--1 {
     background-color: #dd1a1a;
 }
 
-.happiness-0 {
-    background-color: #FAFF40;
+.Happiness-happiness-0, .Profit-happiness-0 {
+    background-color: #FAFF40 !important;
 }
 
 
-.Rectangle .happiness-23, .Rectangle .happiness-5, .Circle .happiness-22, .Circle .happiness-4 {
-    background-color: #00FF3D !important;
+.Rectangle .Happiness-happiness-23, .Rectangle .Happiness-happiness-5, .Circle .Happiness-happiness-22, .Circle .Happiness-happiness-4, div[class^="guest Profit-happiness-"] {
+    background-color: #00FF3D;
 }
 
-.Rectangle .happiness--5, .Circle .happiness--4 {
+.Rectangle .Happiness-happiness--5, .Circle .Happiness-happiness--4 {
     background-color: #8c0004 !important;
     color: white;
 }

@@ -76,12 +76,13 @@ export function Tables(props) {
     };
 
     console.log(props.solutions);
+    let maxString = maxType.toString().charAt(0) + maxType.toString().slice(1).toLowerCase();
     if (props.solutions) {
         return (
             <div className="tables-container">
                 <div className="titleBar">
                     <h2>Gen: {props.solutions[currentGeneration].generationNumber}</h2>
-                    <p>{maxType.toString().charAt(0) + maxType.toString().slice(1).toLowerCase()}: {props.solutions[currentGeneration].happinessScore}</p>
+                    <p>{maxString}: {props.solutions[currentGeneration].happinessScore}</p>
                     <Button type="dashed" onClick={props.fetchSolutions}>Try again</Button>
                 </div>
                 <div className="titleBar">
@@ -113,14 +114,14 @@ export function Tables(props) {
                                 );
                                 return (
                                     <Popover content={content} title={guest.name}>
-                                        <div key={nameIndex} className={"guest happiness-" + guest.happiness}>
+                                        <div key={nameIndex} className={"guest " + maxString + "-happiness-" + guest.happiness}>
                                             Seat {nameIndex}: {guest.name}, {guest.happiness}
                                         </div>
                                     </Popover>
                                 )
                             })}
                             <div className="shape">
-                                Happiness: {arrangement.happiness}
+                                {maxString}: {arrangement.happiness}
                             </div>
                         </div>
                     )}
