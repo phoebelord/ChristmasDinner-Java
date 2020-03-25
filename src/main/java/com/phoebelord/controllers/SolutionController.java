@@ -2,9 +2,7 @@ package com.phoebelord.controllers;
 
 import com.phoebelord.ChristmasDinner;
 import com.phoebelord.algorithms.AlgorithmType;
-import com.phoebelord.algorithms.genetic.crossover.Crossover;
 import com.phoebelord.algorithms.genetic.crossover.CrossoverType;
-import com.phoebelord.algorithms.genetic.selection.Selection;
 import com.phoebelord.algorithms.genetic.selection.SelectionType;
 import com.phoebelord.dao.ConfigRepository;
 import com.phoebelord.exception.ForbiddenException;

@@ -1,7 +1,6 @@
 package com.phoebelord.algorithms;
 
 import com.phoebelord.model.Guest;
-import com.phoebelord.model.MaximisationType;
 import com.phoebelord.model.Solution;
 import com.phoebelord.model.Table;
 import org.springframework.context.annotation.Scope;

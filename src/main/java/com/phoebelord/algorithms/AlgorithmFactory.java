@@ -1,8 +1,6 @@
 package com.phoebelord.algorithms;
 
-import com.phoebelord.algorithms.genetic.crossover.Crossover;
 import com.phoebelord.algorithms.genetic.crossover.CrossoverType;
-import com.phoebelord.algorithms.genetic.selection.Selection;
 import com.phoebelord.algorithms.genetic.selection.SelectionType;
 import com.phoebelord.model.Guest;
 import com.phoebelord.model.MaximisationType;
