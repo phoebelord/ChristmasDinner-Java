@@ -11,3 +11,7 @@
     display: flex;
     justify-content: right;
 }
+
+.editButton {
+    margin-right: 10px;
+}

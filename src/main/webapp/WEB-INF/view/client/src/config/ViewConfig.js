@@ -150,7 +150,7 @@ export function ViewConfig(props) {
             <div className="titleBar">
                 <h1>{config.name}</h1>
                 <div>
-                    <Button type="dashed" onClick={handleEditClick}>Edit</Button>
+                    <Button type="dashed" onClick={handleEditClick} className={"editButton"}>Edit</Button>
                     <Button type="dashed" onClick={handleSolutionClick}>Get solution</Button>
                 </div>
             </div>

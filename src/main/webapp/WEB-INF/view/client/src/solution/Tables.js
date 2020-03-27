@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useEffect} from 'react';
 import "./Tables.css"
-import {Button, Col, Collapse, Divider, Form, Input, InputNumber, Pagination, Popover, Radio, Row, Select} from "antd";
+import {Button, Col, Collapse, Form, Input, Pagination, Popover, Radio, Row, Select} from "antd";
 import {useState} from "react";
 import FormItem from "antd/lib/form/FormItem";
 const { Panel } = Collapse;
