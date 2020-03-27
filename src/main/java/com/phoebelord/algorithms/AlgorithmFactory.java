@@ -19,11 +19,16 @@ public class AlgorithmFactory {
 
   private static BnBAlgorithm bnBAlgorithm;
 
-  public static Algorithm createAlgorithm(AlgorithmType type, List<Guest> guests,
+  public static Algorithm createAlgorithm(AlgorithmType type,
+                                          List<Guest> guests,
                                           List<Table> tables,
                                           MaximisationType maximisationType,
                                           SelectionType selection,
-                                          CrossoverType crossover) {
+                                          CrossoverType crossover,
+                                          int iterations,
+                                          int selectionSize,
+                                          int generationSize,
+                                          float mutationRate) {
     Algorithm algorithm;
     switch (type) {
       case Naive:
@@ -43,6 +48,11 @@ public class AlgorithmFactory {
     algorithm.setMaximisationType((maximisationType == null) ? MaximisationType.HAPPINESS : maximisationType);
     algorithm.setSelection(selection);
     algorithm.setCrossover(crossover);
+    algorithm.setMAX_ITERATIONS(iterations);
+    algorithm.setSELECTION_SIZE(selectionSize);
+    algorithm.setGENERATION_SIZE(generationSize);
+    algorithm.setRATE_OF_MUTATION(mutationRate);
+
     return algorithm;
   }
 

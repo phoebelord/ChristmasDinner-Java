@@ -21,10 +21,6 @@ import java.util.stream.Collectors;
 @Scope("prototype")
 public class GeneticAlgorithm extends Algorithm {
 
-  private final int GENERATION_SIZE = 100;
-  private final int SELECTION_SIZE = 50;
-  private final int MAX_ITERATIONS = 1000;
-  private final float RATE_OF_MUTATION = 0.01f;
   private int chromosomeSize;
 
   private Random random;

@@ -78,3 +78,12 @@
     background-color: #8c0004 !important;
     color: white;
 }
+
+.advanced-settings-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.maximisation-buttons {
+    margin-right: 10px;
+}

@@ -32,7 +32,7 @@ const deleteRequest = (options) => {
 
     return fetch(options.url, options)
         .then(response => {
-            if(!response.ok) {
+            if (!response.ok) {
                 return Promise.reject(response);
             }
             return response;
@@ -63,7 +63,7 @@ export function checkEmailAvailability(email) {
 }
 
 export function getCurrentUser() {
-    if(!localStorage.getItem(ACCESS_TOKEN)) {
+    if (!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
 
@@ -97,7 +97,7 @@ export function getConfig(configId) {
 }
 
 export function getMyConfigs() {
-    if(!localStorage.getItem(ACCESS_TOKEN)) {
+    if (!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
 
@@ -107,9 +107,9 @@ export function getMyConfigs() {
     });
 }
 
-export function getSolution(configId, maxType, selection, crossover) {
+export function getSolution(configId, maxType, selection, crossover, iterations, selectionSize, generationSize, mutationRate) {
     return request({
-        url: API_BASE_URL + "/solution/" + configId + "?maximisation=" + maxType + "&selection=" + selection + "&crossover=" + crossover,
+        url: API_BASE_URL + "/solution/" + configId + "?maximisation=" + maxType + "&selection=" + selection + "&crossover=" + crossover + "&iterations=" + iterations + "&selectionSize=" + selectionSize + "&generationSize=" + generationSize + "&mutationRate=" + mutationRate,
         method: 'GET'
     })
 }

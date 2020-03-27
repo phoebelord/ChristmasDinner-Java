@@ -32,53 +32,39 @@ public class ChristmasDinner {
     SpringApplication.run(ChristmasDinner.class, args);
   }
 
-  public static Solution[] getSolution(String filename, AlgorithmType algorithmType, SelectionType selection, CrossoverType crossover) {
-    try {
-      List<Guest> guests = initialiseFromFile(filename + "/guests.json", Guest.class);
-      List<Table> tables = initialiseFromFile(filename + "/tables.json", Table.class);
-      log.info("Calculating solution for " + filename);
+  public static Solution[] getSolution(Config config,
+                                       MaximisationType maximisationType,
+                                       SelectionType selection,
+                                       CrossoverType crossover,
+                                       int iterations,
+                                       int selectionSize,
+                                       int generationSize,
+                                       float mutationRate) {
+    List<Guest> guests = config.getGuests();
+    List<Table> tables = config.getTables();
 
-      Algorithm algorithm = AlgorithmFactory.createAlgorithm(algorithmType, guests, tables, MaximisationType.HAPPINESS, selection, crossover);
-      long startTime = System.currentTimeMillis();
-      Solution[] solutions = algorithm.calculateSolution();
-      long endTime = System.currentTimeMillis();
+    log.info("Calculating solution for Config[ID: " + config.getId() + ", Name: " + config.getName() + ", No. Guests: " + config.getGuests().size() + "]");
 
-      log.info("Time taken (ms): " + (endTime - startTime));
+    Solution[] solutions;
+    if (guests.size() > 0 && tables.size() > 0) {
+      Algorithm algorithm = AlgorithmFactory.createAlgorithm(AlgorithmType.Genetic, guests, tables, maximisationType, selection, crossover, iterations, selectionSize, generationSize, mutationRate);
+      solutions = algorithm.calculateSolution();
       log.info("Score: " + solutions[solutions.length - 1].getHappinessScore());
-
-      return solutions;
-    } catch (IOException e) {
-      e.printStackTrace();
-      return null;
+    } else {
+      solutions = new Solution[0];
     }
-  }
 
-  public static Solution[] getSolution(Config config, MaximisationType maximisationType, SelectionType selection, CrossoverType crossover) {
-      List<Guest> guests = config.getGuests();
-      List<Table> tables = config.getTables();
-
-      log.info("Calculating solution for Config[ID: " + config.getId() + ", Name: " + config.getName() + ", No. Guests: " + config.getGuests().size() + "]");
-
-      Solution[] solutions;
-      if(guests.size() > 0 && tables.size() > 0) {
-        Algorithm algorithm = AlgorithmFactory.createAlgorithm(AlgorithmType.Genetic, guests, tables, maximisationType, selection, crossover);
-        solutions = algorithm.calculateSolution();
-        log.info("Score: " + solutions[solutions.length - 1].getHappinessScore());
-      } else {
-        solutions = new Solution[0];
-      }
-
-      return solutions;
+    return solutions;
   }
 
   private static <T> List<T> initialiseFromFile(String filename, Class<T> clazz) throws IOException {
     ObjectMapper mapper = new ObjectMapper();
-    return mapper.readValue(getResource("data/" + filename), mapper.getTypeFactory(). constructCollectionType(List.class, clazz));
+    return mapper.readValue(getResource("data/" + filename), mapper.getTypeFactory().constructCollectionType(List.class, clazz));
   }
 
   private static URL getResource(String filename) throws FileNotFoundException {
     URL resource = ClassLoader.getSystemClassLoader().getResource(filename);
-    if(resource != null) {
+    if (resource != null) {
       return ClassLoader.getSystemClassLoader().getResource(filename);
     } else {
       throw new FileNotFoundException("Resource " + filename + " not found");

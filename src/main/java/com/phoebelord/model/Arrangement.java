@@ -8,9 +8,9 @@ public class Arrangement {
   private int happiness;
   private List<ArrangementGuest> guests;
 
-  public Arrangement(String shape, List<Guest> guests, MaximisationType maximisationType) {
+  public Arrangement(String shape, List<Guest> guests, MaximisationType maximisationType, int from, int to) {
     this.shape = shape;
-    this.guests = guests.stream().map(guest -> new ArrangementGuest(guest, guests, shape, maximisationType)).collect(Collectors.toList());
+    this.guests = guests.subList(from, to).stream().map(guest -> new ArrangementGuest(guest, guests, shape, maximisationType, from, to)).collect(Collectors.toList());
     this.happiness = this.guests.stream().mapToInt(ArrangementGuest::getHappiness).sum();
   }
 

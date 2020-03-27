@@ -16,6 +16,10 @@ public abstract class Algorithm {
   MaximisationType maximisationType;
   SelectionType selection;
   CrossoverType crossover;
+  int GENERATION_SIZE;
+  int SELECTION_SIZE;
+  int MAX_ITERATIONS;
+  float RATE_OF_MUTATION;
 
 
   //doesn't need to be static???
@@ -144,5 +148,21 @@ public abstract class Algorithm {
 
   public void setCrossover(CrossoverType crossover) {
     this.crossover = crossover;
+  }
+
+  public void setGENERATION_SIZE(int GENERATION_SIZE) {
+    this.GENERATION_SIZE = GENERATION_SIZE;
+  }
+
+  public void setSELECTION_SIZE(int SELECTION_SIZE) {
+    this.SELECTION_SIZE = SELECTION_SIZE;
+  }
+
+  public void setMAX_ITERATIONS(int MAX_ITERATIONS) {
+    this.MAX_ITERATIONS = MAX_ITERATIONS;
+  }
+
+  public void setRATE_OF_MUTATION(float RATE_OF_MUTATION) {
+    this.RATE_OF_MUTATION = RATE_OF_MUTATION;
   }
 }

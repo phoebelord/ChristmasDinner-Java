@@ -59,7 +59,7 @@ public class SolutionControllerTest {
 
   @Test
   public void Given_authenticated_When_getSolution_Then_isOkay() throws Exception {
-    mockMvc.perform(get("/api/solution/1?maximisation=HAPPINESS&selection=ROULETTE&crossover=TwoPoint")
+    mockMvc.perform(get("/api/solution/1?maximisation=HAPPINESS&selection=ROULETTE&crossover=TwoPoint&iterations=1000&selectionSize=50&generationSize=100&mutationRate=0.01")
       .header("Authorization", "Bearer " + getAuthenticationToken(1))
       .contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk());
@@ -67,7 +67,7 @@ public class SolutionControllerTest {
 
   @Test
   public void Given_authenticated_When_getSolutionNotOwner_Then_isForbidden() throws Exception {
-    mockMvc.perform(get("/api/solution/1?maximisation=HAPPINESS&selection=ROULETTE&crossover=TwoPoint")
+    mockMvc.perform(get("/api/solution/1?maximisation=HAPPINESS&selection=ROULETTE&crossover=TwoPoint&iterations=1000&selectionSize=50&generationSize=100&mutationRate=0.01")
       .header("Authorization", "Bearer " + getAuthenticationToken(2))
       .contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isForbidden());
@@ -75,7 +75,7 @@ public class SolutionControllerTest {
 
   @Test
   public void Given_unauthenticated_When_getSolutionNotOwner_Then_isUnauthorised() throws Exception {
-    mockMvc.perform(get("/api/solution/1?maximisation=HAPPINESS&selection=ROULETTE&crossover=TwoPoint")
+    mockMvc.perform(get("/api/solution/1?maximisation=HAPPINESS&selection=ROULETTE&crossover=TwoPoint&iterations=1000&selectionSize=50&generationSize=100&mutationRate=0.01")
       .contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isUnauthorized());
   }

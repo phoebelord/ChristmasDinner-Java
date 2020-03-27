@@ -1,8 +1,11 @@
 import * as React from 'react';
 import {useEffect} from 'react';
 import "./Tables.css"
-import {Button, Divider, Pagination, Popover, Radio} from "antd";
+import {Button, Col, Collapse, Divider, Form, Input, InputNumber, Pagination, Popover, Radio, Row, Select} from "antd";
 import {useState} from "react";
+import FormItem from "antd/lib/form/FormItem";
+const { Panel } = Collapse;
+const {Option} = Select;
 
 export function Tables(props) {
 
@@ -75,6 +78,13 @@ export function Tables(props) {
         setCurrentGeneration(page - 1);
     };
 
+    const validateForm = () => {
+        return props.iterations.validateStatus === 'success' &&
+            props.selectionSize.validateStatus === 'success' &&
+            props.generationSize.validateStatus === 'success' &&
+            props.mutationRate.validateStatus === 'success'
+    };
+
     console.log(props.solutions);
     let maxString = maxType.toString().charAt(0) + maxType.toString().slice(1).toLowerCase();
     if (props.solutions) {
@@ -83,21 +93,64 @@ export function Tables(props) {
                 <div className="titleBar">
                     <h2>Gen: {props.solutions[currentGeneration].generationNumber}</h2>
                     <p>{maxString}: {props.solutions[currentGeneration].happinessScore}</p>
-                    <Button type="dashed" onClick={props.fetchSolutions}>Try again</Button>
+                    <div>
+                        <Radio.Group onChange={props.handleMaxTypeChange} value={props.maxType} className={"maximisation-buttons"}>
+                            <Radio.Button value="HAPPINESS">Happiness</Radio.Button>
+                            <Radio.Button value="PROFIT">Profit</Radio.Button>
+                        </Radio.Group>
+                        <Button type="dashed" onClick={props.fetchSolutions} disabled={!validateForm()}>Try again</Button>
+                    </div>
                 </div>
-                <div className="titleBar">
-                    <Radio.Group onChange={props.handleMaxTypeChange} value={props.maxType}>
-                        <Radio.Button value="HAPPINESS">Happiness</Radio.Button>
-                        <Radio.Button value="PROFIT">Profit</Radio.Button>
-                    </Radio.Group>
-                    <Radio.Group onChange={props.handleSelectionChange} value={props.selection}>
-                        <Radio.Button value="ROULETTE">Roulette</Radio.Button>
-                        <Radio.Button value="TOURNAMENT">Tournament</Radio.Button>
-                    </Radio.Group>
-                    <Radio.Group onChange={props.handleCrossoverChange} value={props.crossover}>
-                        <Radio.Button value="OnePoint">One Point</Radio.Button>
-                        <Radio.Button value="TwoPoint">Two Point</Radio.Button>
-                    </Radio.Group>
+                <div className="advanced-settings-container">
+                    <Collapse>
+                        <Panel header="Advanced Settings">
+                            <p>Warning: changing these fields may impact performance!</p>
+                            <Form>
+                                <Row gutter={[24, 24]}>
+                                    <Col span={12}>
+                                        <FormItem label="Selection Method">
+                                            <Select onChange={props.handleSelectionChange} value={props.selection}>
+                                                <Option value={"TOURNAMENT"}>Tournament</Option>
+                                                <Option value={"ROULETTE"}>Roulette</Option>
+                                            </Select>
+                                        </FormItem>
+                                    </Col>
+                                    <Col span={12}>
+                                        <FormItem label="Crossover Method">
+                                            <Select onChange={props.handleCrossoverChange} value={props.crossover}>
+                                                <Option value={"OnePoint"}>One Point</Option>
+                                                <Option value={"TwoPoint"}>Two Point</Option>
+                                            </Select>
+                                        </FormItem>
+                                    </Col>
+                                </Row>
+                                <Row gutter={[24, 24]}>
+                                    <Col span={12}>
+                                        <FormItem label="Iterations" validateStatus={props.iterations.validateStatus} help={props.iterations.errorMsg}>
+                                            <Input onChange={props.handleIterationsChange} value={props.iterations.value}/>
+                                        </FormItem>
+                                    </Col>
+                                    <Col span={12}>
+                                        <FormItem label="Generation Size" validateStatus={props.generationSize.validateStatus} help={props.generationSize.errorMsg}>
+                                            <Input onChange={props.handleGenerationSizeChange} value={props.generationSize.value}/>
+                                        </FormItem>
+                                    </Col>
+                                </Row>
+                                <Row gutter={[24, 24]}>
+                                    <Col span={12}>
+                                        <FormItem label="Selection Size" validateStatus={props.selectionSize.validateStatus} help={props.selectionSize.errorMsg}>
+                                            <Input onChange={props.handleSelectionSizeChange} value={props.selectionSize.value}/>
+                                        </FormItem>
+                                    </Col>
+                                    <Col span={12}>
+                                        <FormItem label="Mutation Rate" validateStatus={props.mutationRate.validateStatus} help={props.mutationRate.errorMsg}>
+                                            <Input onChange={props.handleMutationRateChange} value={props.mutationRate.value}/>
+                                        </FormItem>
+                                    </Col>
+                                </Row>
+                            </Form>
+                        </Panel>
+                    </Collapse>
                 </div>
                 <div className="table">
                     {props.solutions[currentGeneration].arrangements.map((arrangement, arrIndex) =>
@@ -115,7 +168,7 @@ export function Tables(props) {
                                 return (
                                     <Popover content={content} title={guest.name}>
                                         <div key={nameIndex} className={"guest " + maxString + "-happiness-" + guest.happiness}>
-                                            Seat {nameIndex}: {guest.name}, {guest.happiness}
+                                            Seat {nameIndex}: {guest.name}
                                         </div>
                                     </Popover>
                                 )
@@ -135,6 +188,4 @@ export function Tables(props) {
     } else {
         return null;
     }
-
-
 }
